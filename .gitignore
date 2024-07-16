@@ -50,3 +50,12 @@ sysinfo.txt
 
 # Include meta files
 !*.meta
+/ProjectSettings
+/Temp
+/UserSettings
+/Assembly-CSharp.csproj
+/.vscode
+/Library
+/Logs
+/Packages
+/.vscode

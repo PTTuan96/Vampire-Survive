@@ -59,8 +59,6 @@ public class PlayerActions : MonoBehaviourSingleton<PlayerActions>
     private void OnEnable()
     {
         actionsController.Enable();
-
-        
     }
 
     private void OnDisable()
@@ -74,9 +72,9 @@ public class PlayerActions : MonoBehaviourSingleton<PlayerActions>
         // actionsController.Player.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
 
         // No need to -= ctx here at onDisable beacuse it can use for another class to call
-        actionsController.Player.Movement.started += ctx => StartMove(ctx);
-        actionsController.Player.Movement.performed += ctx => OnMove(ctx);
-        actionsController.Player.Movement.canceled += ctx => EndMove(ctx); 
+        // actionsController.Player.Movement.started += ctx => StartMove(ctx);
+        // actionsController.Player.Movement.performed += ctx => OnMove(ctx);
+        // actionsController.Player.Movement.canceled += ctx => EndMove(ctx); 
 
         // Axis movement
         actionsController.PlayerAxis.HorizontalMovement.started += ctx => StartMoveAxis(ctx, "Horizontal");

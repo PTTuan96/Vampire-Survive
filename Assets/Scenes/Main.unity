@@ -468,6 +468,8 @@ GameObject:
   - component: {fileID: 354371509}
   - component: {fileID: 354371512}
   - component: {fileID: 354371511}
+  - component: {fileID: 354371515}
+  - component: {fileID: 354371516}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -614,6 +616,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5215a98fa2d4e364e8f316879880c01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &354371515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354371504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620156e09444685469eeff8d184406bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &354371516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354371504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552e7924e92745e43acb6af8f6b8bad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxHealth: 100
+  m_CurrentHealth: 100
+  m_ResetOnStart: 0
+  Died:
+    m_PersistentCalls:
+      m_Calls: []
+  HealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DamageMultiplier: 1
 --- !u!1 &405364769
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +987,7 @@ GameObject:
   - component: {fileID: 635593213}
   - component: {fileID: 635593214}
   m_Layer: 0
-  m_Name: Slider
+  m_Name: Health Bar Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,6 +1219,63 @@ Transform:
   - {fileID: 1951941031}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1262458452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8332488362341025653, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_Name
+      value: Enemy-Green Bee
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898382495469630720, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
 --- !u!1 &1548796277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,6 +1324,8 @@ GameObject:
   - component: {fileID: 1559822332}
   - component: {fileID: 1559822331}
   - component: {fileID: 1559822330}
+  - component: {fileID: 1559822334}
+  - component: {fileID: 1559822333}
   m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
@@ -1321,6 +1416,73 @@ Canvas:
   m_SortingLayerID: -1994096103
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1559822333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559822328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323a5974443ffae4580cb2d4b16bb8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Health: {fileID: 354371516}
+  m_HealthSlider: {fileID: 635593214}
+  m_HealthLabel: {fileID: 0}
+  m_LerpDuration: 0.5
+--- !u!114 &1559822334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559822328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_FillRect: {fileID: 0}
+  m_HandleRect: {fileID: 0}
+  m_Direction: 0
+  m_MinValue: 0
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1646366639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,7 +1583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1923328559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131411,3 +131573,4 @@ SceneRoots:
   - {fileID: 354371505}
   - {fileID: 22516783}
   - {fileID: 1923328560}
+  - {fileID: 1262458452}
