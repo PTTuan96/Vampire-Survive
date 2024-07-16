@@ -13,7 +13,7 @@ public class SwepDetection : MonoBehaviour
     [SerializeField]
     private GameObject trail;
 
-    private PlayerController playerController;
+    private PlayerActions playerController;
 
     private Vector2 startPosition;
     private float startTime;
@@ -24,7 +24,7 @@ public class SwepDetection : MonoBehaviour
 
     private void Awake()
     {
-        playerController = PlayerController.Instance;
+        playerController = PlayerActions.Instance;
     }
 
     private void OnEnable()

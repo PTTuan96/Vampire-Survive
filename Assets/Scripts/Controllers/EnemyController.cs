@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision2D.gameObject.CompareTag("Player") && hitCounter <= 0f)
         {
-            Player.instance.ApplyDamage(damage);
+            // Player.instance.ApplyDamage(damage);
 
             hitCounter = hitWaitTime;
         }

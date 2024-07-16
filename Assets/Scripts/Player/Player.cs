@@ -1,37 +1,52 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerInput), typeof(PlayerAudio), typeof(PlayerMovement))]
+
 public class Player : MonoBehaviour
 {
-    public static Player instance;
+    [SerializeField]
+    [Tooltip("LayerMask to identify obstacles in the game environment.")]
+    LayerMask m_ObstacleLayer;
+
+    PlayerInput m_PlayerInput;
+    PlayerMovement m_PlayerMovement;
+    PlayerAudio m_PlayerAudio;
+    PlayerFX m_PlayerFX;
 
     private void Awake()
     {
-        instance = this;
+        Initialize();
     }
 
-    public Attributes attributes;
-    [SerializeField] private float maxHealth = 100f;
-    public Slider healthSlider;
-
-    private void Start()
+    // Sets up component references.
+    private void Initialize()
     {
-        // Example of accessing the player's attributes
-        // maxHealth = 100f; // Set the maximum health
-        attributes.CurrentHealth = maxHealth; // Initialize current health to max health
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = attributes.CurrentHealth;
+        m_PlayerInput = GetComponent<PlayerInput>();
+        m_PlayerMovement = GetComponent<PlayerMovement>();
+        m_PlayerAudio = GetComponent<PlayerAudio>();
+        m_PlayerFX = GetComponent<PlayerFX>();
     }
 
-    // Example methods to take damage and heal
-    public void ApplyDamage(float damage)
-    {   
-        attributes.TakeDamage(damage);
-        healthSlider.value = attributes.CurrentHealth;
-    }
-
-    public void ApplyHeal(float healAmount)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        attributes.Heal(healAmount);
+        if(m_ObstacleLayer.ContainsLayer(hit.gameObject))
+        {
+            // Play a random audio clip on collision.
+            // m_PlayerAudio.PlayRandomClip();
+
+            // Trigger visual effect, if defined.
+            // if (m_PlayerFX != null)
+            //     m_PlayerFX.PlayEffect();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        // Get the input vector from the PlayerInput component.
+        Vector3 inputVector = m_PlayerInput.InputVector;
+
+        // Move the player based on the input vector.
+        m_PlayerMovement.Move(inputVector);
     }
 }

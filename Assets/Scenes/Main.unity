@@ -257,7 +257,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 597799279
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 10
   m_Time: 1.08
   m_PreviewTimeScale: 1
@@ -463,8 +463,11 @@ GameObject:
   - component: {fileID: 354371505}
   - component: {fileID: 354371507}
   - component: {fileID: 354371508}
-  - component: {fileID: 354371509}
   - component: {fileID: 354371510}
+  - component: {fileID: 354371513}
+  - component: {fileID: 354371509}
+  - component: {fileID: 354371512}
+  - component: {fileID: 354371511}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -558,8 +561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd71fe4db3b3d8242b0e1e358bbb7548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   animator: {fileID: 354371507}
+  m_Speed: 8
 --- !u!114 &354371510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,12 +575,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2bb6a374ecdfb43b4122511823ca2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attributes:
-    maxHealth: 0
-    currentHealth: 0
-    mana: 0
-  maxHealth: 121
-  healthSlider: {fileID: 635593214}
+  m_ObstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &354371511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354371504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f306dd75279862845b9ce2cddaf0009e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &354371512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354371504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4a5d75860ee70843b75846d47eb03db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &354371513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354371504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5215a98fa2d4e364e8f316879880c01a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &405364769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,7 +1377,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 597799279
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -1714587360, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1541,7 +1577,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1167662603
-  m_SortingLayer: -1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

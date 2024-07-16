@@ -21,12 +21,12 @@ public class GameLogicTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J))
         {
-            player.ApplyDamage(10);
+            // player.ApplyDamage(10);
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            player.ApplyHeal(5);
+            // player.ApplyHeal(5);
         }
     }
 }

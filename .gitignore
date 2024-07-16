@@ -1,0 +1,52 @@
+# Ignore Unity specific folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Mm]emoryCapture/
+AssetStoreTools*
+
+# Ignore other files and folders
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Ignore crash reports
+sysinfo.txt
+
+# Ignore auto-generated files
+*.apk
+*.aab
+*.xcodeproj
+*.xcworkspace
+*.xcuserdata/
+*.lock
+.DS_Store
+.idea/
+.vscode/
+
+# Ignore script debugging files
+*.log
+*.log.*
+*.pdb
+*.mdb
+
+# Ignore build output folders
+[Bb]uild/
+
+# Include everything in Assets folder
+!Assets/
+!Assets/**
+
+# Include meta files
+!*.meta

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviourSingleton<PlayerController>
+public class PlayerActions : MonoBehaviourSingleton<PlayerActions>
 {
     #region Events
     public delegate void StartTouch(Vector2 position, float time);
