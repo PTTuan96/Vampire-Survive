@@ -1,23 +1,22 @@
+using System.Collections;
 using UnityEngine;
 
 public class GreenBeeProduct : MonoBehaviour, IEnemyProduct
 {
     [SerializeField]
     private string m_ProductName = "GreenBee";
+    public string ProductName { get => m_ProductName; set => m_ProductName = value; }
     
     [SerializeField]
     private Rigidbody2D m_Rigidbody;
+    private ParticleSystem m_ParticleSystem;
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private int m_DamageValue = 5;
     [SerializeField] private float m_Lifetime = 3f;
     [SerializeField] private float hitWaitTime = 1f;
-    private float hitCounter;
-
-    public string ProductName { get => m_ProductName; set => m_ProductName = value; }
-
-    private ParticleSystem m_ParticleSystem;
     private Transform target;
+    private float hitCounter;
 
     public void Initialize(Transform playerTransform = null)
     {
@@ -43,11 +42,6 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct
     {
         // Assume playerTransform is set
         MoveTowardsPlayer();
-
-        if(hitCounter > 0f)
-        {   
-            hitCounter -= Time.deltaTime;
-        }
     }
 
     public void MoveTowardsPlayer()
@@ -59,24 +53,28 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision2D)
-    {
-        // Debug.Log("Collision started with " + collision2D.gameObject.name);
-    }
-
-    private void OnCollisionStay2D(Collision2D collision2D)
+    private void OnCollisionStay2D(Collision2D collision2D) // It detects continuous contact between colliders.
     {
         if(hitCounter <= 0f)
         {
             CheckCollisionInterfaces(collision2D);
             // DeactivateProjectile();
             hitCounter = hitWaitTime;
+            // Ensure the GameObject is active before starting the coroutine
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(DecrementHitCounter());
+            }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private IEnumerator DecrementHitCounter() // Replace for Update()
     {
-        // Debug.Log("Collision ended with " + collision.gameObject.name);
+        while (hitCounter > 0f)
+        {
+            hitCounter -= Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
     }
 
     private void CheckCollisionInterfaces(Collision2D collision2D)
@@ -92,7 +90,7 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct
         
         foreach (var monoBehaviour in monoBehaviours)
         {
-            Debug.Log("monoBehaviour: " + monoBehaviour);
+            // Debug.Log("monoBehaviour: " + monoBehaviour);
             HandleDamageableInterface(monoBehaviour);
             // HandleEffectTriggerInterface(monoBehaviour, offsetPosition);
         }
@@ -103,7 +101,6 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct
         if (monoBehaviour is IDamageable damageable)
         {
             damageable.TakeDamage(m_DamageValue);
-            hitCounter = hitWaitTime;
         }
     }
 
@@ -112,3 +109,4 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct
         Debug.Log("Green Bee defends  .");
     }
 }
+

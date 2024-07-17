@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField]
     private EnemyFactory[] m_factories;
+    [SerializeField]
+    private GameObject m_ListGreenBee;
 
     private List<GameObject> m_CreatedProduct = new();
 
@@ -51,6 +53,11 @@ public class EnemySpawner : MonoBehaviour
             if(product is Component component)
             {
                 m_CreatedProduct.Add(component.gameObject);
+                
+                component.gameObject.transform.SetParent(m_ListGreenBee.transform);
+            }
+            {
+                Debug.LogWarning("m_FireBalls GameObject is not assigned.");
             }
         }
     }

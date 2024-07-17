@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameLogicTest : MonoBehaviour
 {
-    public Enemy enemy;
+    // public Enemy enemy;
     public Player player;
 
     private void Update()
