@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Factory : MonoBehaviour
+public abstract class EnemyFactory : Health
 {
     // Abstract method to get a product instance.
-    public abstract IProduct GetProduct(Vector3 position);
+    public abstract IEnemyProduct GetProduct(Vector3 position);
 
     // Shared method with all factories.
-    public string GetLog(IProduct product)
+    public string GetLog(IEnemyProduct product)
     {
         string logMessage = "Factory: created product " + product.ProductName;
         return logMessage;

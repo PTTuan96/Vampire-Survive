@@ -1,31 +1,48 @@
 using UnityEngine;
-using UnityEngine.Pool;
-using System.Collections;
 
-public class EnemyController : MonoBehaviour
+public class GreenBeeProduct : MonoBehaviour, IEnemyProduct
 {
-    public Rigidbody2D m_Rigidbody;
-    // private IObjectPool<Projectile> m_ObjectPool;
-    public float moveSpeed;
-    private Transform target;
+    [SerializeField]
+    private string m_ProductName = "GreenBee";
+    
+    [SerializeField]
+    private Rigidbody2D m_Rigidbody;
 
+    [SerializeField] private float moveSpeed;
     [SerializeField] private int m_DamageValue = 5;
     [SerializeField] private float m_Lifetime = 3f;
-    public float hitWaitTime = 1f;
+    [SerializeField] private float hitWaitTime = 1f;
     private float hitCounter;
 
-    void Start()
+    public string ProductName { get => m_ProductName; set => m_ProductName = value; }
+
+    private ParticleSystem m_ParticleSystem;
+    private Transform target;
+
+    public void Initialize(Transform playerTransform = null)
     {
-        target = FindObjectOfType<PlayerMovement>().transform;
+        // Add any unique set up logic here
+        gameObject.name = m_ProductName;
+        m_ParticleSystem = GetComponentInChildren<ParticleSystem>();
+
+        if (m_ParticleSystem != null)
+        {
+            m_ParticleSystem.Stop();
+            m_ParticleSystem.Play();
+        }
+
         if (m_Rigidbody != null)
         {
             m_Rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         }
+
+        target = playerTransform;
     }
 
     void Update()
     {
-        m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
+        // Assume playerTransform is set
+        MoveTowardsPlayer();
 
         if(hitCounter > 0f)
         {   
@@ -33,8 +50,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void MoveTowardsPlayer()
+    {
+        // Ensure target is set before using it
+        if (target != null && m_Rigidbody != null)
+        {
+            m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
+        }
+    }
 
-    // OnCollision 3 event
     private void OnCollisionEnter2D(Collision2D collision2D)
     {
         // Debug.Log("Collision started with " + collision2D.gameObject.name);
@@ -74,7 +98,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void HandleDamageableInterface(MonoBehaviour monoBehaviour)
+    public void HandleDamageableInterface(MonoBehaviour monoBehaviour)
     {
         if (monoBehaviour is IDamageable damageable)
         {
@@ -83,25 +107,8 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void HandleEffectTriggerInterface(MonoBehaviour monoBehaviour, Vector3 position)
+    public void Defend()
     {
-        if (monoBehaviour is IEffectTrigger effectTrigger)
-        {
-            effectTrigger.TriggerEffect(position);
-        }
-    }
-
-    private void DeactivateProjectile()
-    {
-        m_Rigidbody.velocity = Vector3.zero;
-        m_Rigidbody.angularVelocity = 0f;
-
-        // m_ObjectPool.Release(this);
-    }
-
-    private IEnumerator LifetimeCoroutine()
-    {
-        yield return new WaitForSeconds(m_Lifetime);
-        DeactivateProjectile();
+        Debug.Log("Green Bee defends  .");
     }
 }

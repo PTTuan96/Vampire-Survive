@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Target : Health, IDamageable
+public class ObjectTakeDamage : Health, IDamageable
 {
     [Tooltip("Customize rate of damage for this target")]
     [SerializeField] float m_DamageMultiplier = 1f;

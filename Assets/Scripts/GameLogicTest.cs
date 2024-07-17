@@ -9,15 +9,15 @@ public class GameLogicTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            enemy.ApplyDamage(10);
-        }
+        // if (Input.GetKeyDown(KeyCode.D))
+        // {
+        //     enemy.ApplyDamage(10);
+        // }
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            enemy.ApplyHeal(5);
-        }
+        // if (Input.GetKeyDown(KeyCode.H))
+        // {
+        //     enemy.ApplyHeal(5);
+        // }
 
         if (Input.GetKeyDown(KeyCode.J))
         {

@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 8898382495469630720}
   - component: {fileID: 167628340485399622}
   - component: {fileID: 8699642074269188413}
-  - component: {fileID: 3161163728567860480}
   - component: {fileID: 4362098207496533488}
   - component: {fileID: 5294766018387195926}
   m_Layer: 0
@@ -183,23 +182,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3161163728567860480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8332488362341025653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27f333fa3ec27ba4eabefbfe941320b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Rigidbody: {fileID: 8699642074269188413}
-  moveSpeed: 2
-  m_DamageValue: 5
-  m_Lifetime: 3
-  hitWaitTime: 1
 --- !u!114 &4362098207496533488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,3 +211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ProductName: GreenBee
+  m_Rigidbody: {fileID: 8699642074269188413}
+  moveSpeed: 5
+  m_DamageValue: 5
+  m_Lifetime: 3
+  hitWaitTime: 1

@@ -4,31 +4,19 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyToSpawn;
-
-    public Camera mainCamera;
-    public float timeToSpawn;
-    private float spawnCounter;
-    public float spawnOffset = 1f;
-    public float spawnDistance = 5f;
-
-    private List<GameObject> spawnedObjects = new List<GameObject>();
-    private Dictionary<GameObject, float> objectTimeTracker = new Dictionary<GameObject, float>();
-    public float maxDistance = 10f; // Maximum distance before removing the object
-    public float checkInterval = 1f; // Interval for checking distance
-    public float removalDelay = 10f; // Delay before removing the object if far away
-
-
-
-
-
-
+    // [SerializeField] private GameObject enemyToSpawn;
 
     [SerializeField]
-    private Factory[] m_factories;
+    private EnemyFactory[] m_factories;
 
     private List<GameObject> m_CreatedProduct = new();
 
+    [SerializeField]
+    private Camera mainCamera;
+    public float timeToSpawn;
+    private float spawnCounter;
+    // public float spawnOffset = 1f;
+    public float spawnDistance = 5f;
 
     void Start()
     {
@@ -56,23 +44,15 @@ public class EnemySpawner : MonoBehaviour
     void SpawnObjectWithFactory()
     {
         Vector3 randomPosition = GetRandomPositionInCameraBounds();
-        Factory selectedFactory = m_factories[Random.Range(0, m_factories.Length)];
+        EnemyFactory selectedFactory = m_factories[Random.Range(0, m_factories.Length)];
         if(selectedFactory != null)
         {
-            IProduct product = selectedFactory.GetProduct(randomPosition);
+            IEnemyProduct product = selectedFactory.GetProduct(randomPosition);
             if(product is Component component)
             {
                 m_CreatedProduct.Add(component.gameObject);
             }
         }
-    }
-
-    void SpawnObjectOutsideCamera()
-    {
-        Vector3 randomPosition = GetRandomPositionInCameraBounds();
-        GameObject newEnemy = Instantiate(enemyToSpawn, randomPosition, Quaternion.identity);
-        Enemy enemyComponent = newEnemy.GetComponent<Enemy>();
-        spawnedObjects.Add(newEnemy);
     }
 
     Vector3 GetRandomPositionInCameraBounds()
@@ -104,46 +84,52 @@ public class EnemySpawner : MonoBehaviour
         return new Vector3(randomX, randomY, 0);
     }
 
-    IEnumerator CheckAndRemoveObjects()
-    {
-        while (true)
-        {
-            List<GameObject> objectsToRemove = new List<GameObject>();
+    // private List<GameObject> spawnedObjects = new List<GameObject>();
+    // private Dictionary<GameObject, float> objectTimeTracker = new Dictionary<GameObject, float>();
+    // public float maxDistance = 10f; // Maximum distance before removing the object
+    // public float checkInterval = 1f; // Interval for checking distance
+    // public float removalDelay = 10f; // Delay before removing the object if far away
 
-            foreach (GameObject obj in spawnedObjects)
-            {
-                if (obj == null) continue;
+    // IEnumerator CheckAndRemoveObjects()
+    // {
+        // while (true)
+        // {
+        //     List<GameObject> objectsToRemove = new List<GameObject>();
 
-                float distance = Vector3.Distance(mainCamera.transform.position, obj.transform.position);
+        //     foreach (GameObject obj in spawnedObjects)
+        //     {
+        //         if (obj == null) continue;
 
-                if (distance > maxDistance)
-                {
-                    if (!objectTimeTracker.ContainsKey(obj))
-                    {
-                        objectTimeTracker[obj] = Time.time;
-                    }
+        //         float distance = Vector3.Distance(mainCamera.transform.position, obj.transform.position);
 
-                    if (Time.time - objectTimeTracker[obj] > removalDelay)
-                    {
-                        objectsToRemove.Add(obj);
-                    }
-                }
-                else
-                {
-                    if (objectTimeTracker.ContainsKey(obj))
-                    {
-                        objectTimeTracker.Remove(obj);
-                    }
-                }
-            }
+        //         if (distance > maxDistance)
+        //         {
+        //             if (!objectTimeTracker.ContainsKey(obj))
+        //             {
+        //                 objectTimeTracker[obj] = Time.time;
+        //             }
 
-            foreach (GameObject obj in objectsToRemove)
-            {
-                spawnedObjects.Remove(obj);
-                Destroy(obj);
-            }
+        //             if (Time.time - objectTimeTracker[obj] > removalDelay)
+        //             {
+        //                 objectsToRemove.Add(obj);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             if (objectTimeTracker.ContainsKey(obj))
+        //             {
+        //                 objectTimeTracker.Remove(obj);
+        //             }
+        //         }
+        //     }
 
-            yield return new WaitForSeconds(checkInterval);
-        }
-    }
+        //     foreach (GameObject obj in objectsToRemove)
+        //     {
+        //         spawnedObjects.Remove(obj);
+        //         Destroy(obj);
+        //     }
+
+        //     yield return new WaitForSeconds(checkInterval);
+        // }
+    // }
 }

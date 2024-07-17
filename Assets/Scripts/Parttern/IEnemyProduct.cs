@@ -5,11 +5,17 @@ using UnityEngine;
 /// <summary>
 /// A common interface between products
 /// </summary>
-public interface IProduct
+public interface IEnemyProduct
 {
     // add common properties and methods here
     public string ProductName { get; set; }
 
     // customize this for each concrete product
-    public void Initialize();
+    public void Initialize(Transform playerTranform);
+
+    void MoveTowardsPlayer();
+
+    void HandleDamageableInterface(MonoBehaviour monoBehaviour);
+
+    void Defend();
 }
