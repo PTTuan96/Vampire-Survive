@@ -16,6 +16,11 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput != Vector3.zero)
         {
             transform.position += m_Speed * Time.deltaTime * moveInput.normalized;
+
+            animator.SetBool("IsMoving", true);
+        } else 
+        {
+            animator.SetBool("IsMoving", false);
         }
     }
 }

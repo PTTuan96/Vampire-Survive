@@ -210,7 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 122935913}
   m_Layer: 0
-  m_Name: MeleWeapon
+  m_Name: MeleWeapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,6 +410,7 @@ Transform:
   - {fileID: 553751861}
   - {fileID: 2067178473}
   - {fileID: 122935913}
+  - {fileID: 949313935}
   m_Father: {fileID: 354371505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &299410037
@@ -425,7 +426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_WeaponFactories:
-  - {fileID: 553751862}
+  - {fileID: 1519108282}
+  - {fileID: 1600551858}
 --- !u!1 &309162433
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,9 +947,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 553751861}
-  - component: {fileID: 553751862}
   m_Layer: 0
-  m_Name: SpinWeapon
+  m_Name: SpinWeapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -967,22 +968,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1519108280}
+  - {fileID: 1600551857}
   m_Father: {fileID: 299410036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &553751862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553751860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1fa96a6dcd058489d0e558516b503f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SpinWeaponPrefabs: {fileID: 172134515916313434, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
-  m_FireBalls: {fileID: 1519108279}
 --- !u!1 &635593212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,6 +1122,37 @@ MonoBehaviour:
   maximumTime: 1
   directionThreshold: 0.737
   trail: {fileID: 251962370}
+--- !u!1 &949313934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949313935}
+  m_Layer: 0
+  m_Name: ShotWeapons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949313935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949313934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 299410036}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139732044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,7 +1207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1519108280}
-  - component: {fileID: 1519108281}
+  - component: {fileID: 1519108282}
   m_Layer: 0
   m_Name: FireBalls
   m_TagString: Untagged
@@ -1211,7 +1230,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 553751861}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1519108281
+--- !u!114 &1519108282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1220,10 +1239,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1519108279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a1e1934c330f8f40b78907d9c9248f5, type: 3}
+  m_Script: {fileID: 11500000, guid: f6e6694f9a4e71c44912e569474134eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 360
+  m_ProductParent: {fileID: 1519108279}
+  m_FireBallPrefab: {fileID: 172134515916313434, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
+  m_NumFireBalls: 5
+  fireBallRadiusIncrement: 1
 --- !u!1 &1548796277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,6 +1453,54 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1600551856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1600551857}
+  - component: {fileID: 1600551858}
+  m_Layer: 0
+  m_Name: IceBalls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1600551857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600551856}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 553751861}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1600551858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600551856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2863772f4635644b79db4ec9cacc29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProductParent: {fileID: 1600551856}
+  m_IceBallPrefab: {fileID: -7966672650956564867, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
+  m_NumIceBalls: 3
+  iceBallRadiusIncrement: 2
 --- !u!1 &1646366639
 GameObject:
   m_ObjectHideFlags: 0
@@ -131525,7 +131595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2067178473}
   m_Layer: 0
-  m_Name: ThrowWeapon
+  m_Name: ThrowWeapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

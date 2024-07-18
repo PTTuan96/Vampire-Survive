@@ -1,34 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SpinWeaponFactory : WeaponFactory
+public abstract class SpinWeaponFactory : WeaponFactory
 {
     [SerializeField]
-    private FireBallProduct m_SpinWeaponPrefabs;
-    [SerializeField]
-    private GameObject m_FireBalls;
+    protected GameObject m_ProductParent;
 
-    public override IWeaponProduct GetProduct(Vector3 position)
+    public abstract void SpawnMultipleProducts(Vector3 position);
+
+    protected void InitializeProduct(GameObject productInstance)
     {
-        float x = Mathf.Cos(0);
-        float y = Mathf.Sin(0);
-        // Create a Prefab instance and get the product component
-        GameObject fireBallInstance = Instantiate(m_SpinWeaponPrefabs.gameObject, new Vector3(x, y, 0), Quaternion.identity);
-        FireBallProduct fireBall = fireBallInstance.GetComponent<FireBallProduct>();
+        IWeaponProduct product = productInstance.GetComponent<IWeaponProduct>();
+        product.Initialize();
 
-        fireBall.Initialize(); // Call initialize without playerTransform if player is null
-        
-        // Add fireBall instance to m_FireBalls
-        if (m_FireBalls != null)
+        if (m_ProductParent != null)
         {
-            fireBallInstance.transform.SetParent(m_FireBalls.transform);
+            productInstance.transform.SetParent(m_ProductParent.transform);
         }
         else
         {
-            Debug.LogWarning("m_FireBalls GameObject is not assigned.");
+            Debug.LogWarning("m_ProductParent GameObject is not assigned.");
         }
+    }
 
-        return fireBall;
+    protected void UpdateParentRotation(float rotationSpeed)
+    {
+        if (m_ProductParent != null)
+        {
+            m_ProductParent.transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    // The more Object the speed had to reduce
+    protected float CalculateAverageSpeed(IWeaponProduct[] products)
+    {
+        float totalSpeed = 0f;
+        foreach (var product in products)
+        {
+            totalSpeed += product.RotationSpeed; // Adjust as needed based on your specific speed setup
+        }
+        return totalSpeed / products.Length;
+    }
+
+    protected void IncreaseRadius(IWeaponProduct product, float radiusIncrement)
+    {
+        Vector3 position = (product as MonoBehaviour).transform.position;
+        position.x += Mathf.Cos(Time.time) * radiusIncrement;
+        position.y += Mathf.Sin(Time.time) * radiusIncrement;
+        (product as MonoBehaviour).transform.position = position;
     }
 }

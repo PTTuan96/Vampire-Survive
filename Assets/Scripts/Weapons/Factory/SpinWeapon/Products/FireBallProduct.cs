@@ -8,13 +8,13 @@ public class FireBallProduct : MonoBehaviour, IWeaponProduct
     private string m_ProductName = "FireBall";
     public string ProductName { get => m_ProductName; set => m_ProductName = value; }
 
-    // [SerializeField]
-    // private GameObject fireBallPrefab; // Reference to the FireBall prefab
+    [SerializeField]
+    private float m_RotationSpeed = 30f; // Set the rotation speed for FireBall
+    public float RotationSpeed { get => m_RotationSpeed; set => m_RotationSpeed = value; }
 
-    // [SerializeField]
-    // private Rigidbody2D m_Rigidbody;
-    private ParticleSystem m_ParticleSystem;
     [SerializeField] private int m_DamageValue = 5;
+
+    private ParticleSystem m_ParticleSystem;
 
     public void Initialize()
     {

@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
-        SpawnObjectWithFactory();
+        // SpawnObjectWithFactory();
     }
 
     void SpawnObjectWithFactory()

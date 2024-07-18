@@ -57,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
                 component.gameObject.transform.SetParent(m_ListGreenBee.transform);
             }
             {
-                Debug.LogWarning("m_FireBalls GameObject is not assigned.");
+                Debug.LogWarning("m_ListGreenBee GameObject is not assigned.");
             }
         }
     }
