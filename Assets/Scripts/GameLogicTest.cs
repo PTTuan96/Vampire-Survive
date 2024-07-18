@@ -4,29 +4,27 @@ using UnityEngine;
 
 public class GameLogicTest : MonoBehaviour
 {
-    // public Enemy enemy;
-    public Player player;
+    [SerializeField]
+    private GameObject target;
 
-    private void Update()
+    void Start()
     {
-        // if (Input.GetKeyDown(KeyCode.D))
-        // {
-        //     enemy.ApplyDamage(10);
-        // }
+        StartCoroutine(ToggleActiveState(3.0f));
+    }
 
-        // if (Input.GetKeyDown(KeyCode.H))
-        // {
-        //     enemy.ApplyHeal(5);
-        // }
-
-        if (Input.GetKeyDown(KeyCode.J))
+    private IEnumerator ToggleActiveState(float duration)
+    {
+        if (target != null)
         {
-            // player.ApplyDamage(10);
+            Debug.Log("Deactivating target");
+            target.SetActive(false);
+            yield return new WaitForSeconds(duration);
+            target.SetActive(true);
+            Debug.Log("Reactivating target");
         }
-
-        if (Input.GetKeyDown(KeyCode.K))
+        else
         {
-            // player.ApplyHeal(5);
+            Debug.LogWarning("Target GameObject is not assigned.");
         }
     }
 }

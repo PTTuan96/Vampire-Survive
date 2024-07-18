@@ -11,7 +11,7 @@ public interface IEnemyProduct
     public string ProductName { get; set; }
 
     // customize this for each concrete product
-    public void Initialize(Transform playerTranform);
+    // public void Initialize(Transform playerTranform);
 
     void MoveTowardsPlayer();
 

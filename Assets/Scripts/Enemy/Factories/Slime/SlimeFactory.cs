@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class GreenBeeFactory : EnemyFactory
+public class SlimeFactory : EnemyFactory
 {
     [SerializeField]
-    private GreenBeeProduct m_GreenBeePrefabs;
+    private SlimeProduct m_SlimePrefabs;
 
-    private ObjectPool<GreenBeeProduct> objectPool;
+    private ObjectPool<SlimeProduct> objectPool;
     private Transform playerTransform;
 
     private int maxSize = 100;
@@ -19,7 +19,7 @@ public class GreenBeeFactory : EnemyFactory
             playerTransform = player.transform;
         }
 
-        objectPool = new ObjectPool<GreenBeeProduct>(
+        objectPool = new ObjectPool<SlimeProduct>(
             CreatePooledObject,
             OnGetFromPool,
             OnReleaseToPool,
@@ -28,34 +28,34 @@ public class GreenBeeFactory : EnemyFactory
         );
     }
 
-    private GreenBeeProduct CreatePooledObject()
+    private SlimeProduct CreatePooledObject()
     {
-        var newProduct = Instantiate(m_GreenBeePrefabs);
+        var newProduct = Instantiate(m_SlimePrefabs);
         newProduct.ObjectPool = objectPool;
         return newProduct;
     }
 
-    private void OnGetFromPool(GreenBeeProduct product)
+    private void OnGetFromPool(SlimeProduct product)
     {
         product.gameObject.SetActive(true);
     }
 
-    private void OnReleaseToPool(GreenBeeProduct product)
+    private void OnReleaseToPool(SlimeProduct product)
     {
         product.gameObject.SetActive(false);
     }
 
-    private void OnDestroyPooledObject(GreenBeeProduct product)
+    private void OnDestroyPooledObject(SlimeProduct product)
     {
         Destroy(product.gameObject);
     }
 
     public override IEnemyProduct GetProduct(Vector3 position)
     {
-        GreenBeeProduct product;
+        SlimeProduct product;
         if (objectPool.CountActive >= maxSize && objectPool.CountInactive == 0)
         {
-            product = Instantiate(m_GreenBeePrefabs, position, Quaternion.identity);
+            product = Instantiate(m_SlimePrefabs, position, Quaternion.identity);
             product.Initialize(playerTransform, false);
         }
         else

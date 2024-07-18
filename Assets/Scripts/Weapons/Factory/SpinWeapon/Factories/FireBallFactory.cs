@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FireBallFactory : SpinWeaponFactory
@@ -19,6 +20,9 @@ public class FireBallFactory : SpinWeaponFactory
         {
             SpawnMultipleProducts(transform.position);
         }
+
+        // Example usage: deactivate for 3 seconds, then reactivate for 2 seconds
+        StartToggleParentActiveState(3.0f, 2.0f);
     }
 
     public override void SpawnMultipleProducts(Vector3 position)

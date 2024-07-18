@@ -18,6 +18,9 @@ public class IceBallFactory : SpinWeaponFactory
         {
             SpawnMultipleProducts(transform.position);
         }
+
+        // Example usage: deactivate for 1 seconds, then reactivate for 3 seconds
+        StartToggleParentActiveState(1f, 3f);
     }
 
     public override void SpawnMultipleProducts(Vector3 position)

@@ -16,4 +16,28 @@ public static class Utils
         position.z = camera.nearClipPlane;
         return camera.ScreenToWorldPoint(position);
     }
+
+    public static Vector3 GetRandomPositionInCameraBounds(Camera mainCamera, float spawnDistance)
+    {
+        float height = 2f * mainCamera.orthographicSize;
+        float width = height * mainCamera.aspect;
+
+        bool spawnHorizontally = Random.value > 0.5f;
+
+        float randomY;
+        float randomX;
+
+        if (spawnHorizontally)
+        {
+            randomX = Random.value > 0.5f ? mainCamera.transform.position.x + width / 2 + spawnDistance : mainCamera.transform.position.x - width / 2 - spawnDistance;
+            randomY = Random.Range(mainCamera.transform.position.y - height / 2, mainCamera.transform.position.y + height / 2);
+        }
+        else
+        {
+            randomX = Random.Range(mainCamera.transform.position.x - width / 2, mainCamera.transform.position.x + width / 2);
+            randomY = Random.value > 0.5f ? mainCamera.transform.position.y + height / 2 + spawnDistance : mainCamera.transform.position.y - height / 2 - spawnDistance;
+        }
+
+        return new Vector3(randomX, randomY, 0);
+    }
 }

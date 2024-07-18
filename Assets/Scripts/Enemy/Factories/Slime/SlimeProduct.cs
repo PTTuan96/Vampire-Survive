@@ -1,11 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
+public class SlimeProduct : MonoBehaviour, IEnemyProduct, IDamageable
 {
     [SerializeField]
-    private string m_ProductName = "GreenBee";
+    private string m_ProductName = "Slime";
     public string ProductName { get => m_ProductName; set => m_ProductName = value; }
     
     [SerializeField]
@@ -15,14 +16,14 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
     [SerializeField] private float moveSpeed;
     [SerializeField] private int m_DamageValue = 5;
     [SerializeField] private float hitWaitTime = 1f;
-
+    
     private float m_MaxHealth = 30;
     private float m_CurrentHealth;
     private bool m_IsDead;
     private Transform target;
     private float hitCounter;
 
-    public ObjectPool<GreenBeeProduct> ObjectPool { get; set; }
+    public ObjectPool<SlimeProduct> ObjectPool { get; set; }
     private bool isPooledObject;
 
     public void Initialize(Transform playerTransform = null, bool isPooled = false)
@@ -42,8 +43,6 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
         }
 
         target = playerTransform;
-        
-        // Add to Pool
         isPooledObject = isPooled;
         m_CurrentHealth = m_MaxHealth;
         m_IsDead = false;
@@ -64,7 +63,7 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
 
     private void OnCollisionStay2D(Collision2D collision2D)
     {
-        if (hitCounter <= 0f)
+        if(hitCounter <= 0f)
         {
             CheckCollisionInterfaces(collision2D);
             hitCounter = hitWaitTime;
@@ -108,7 +107,7 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
 
     public void Defend()
     {
-        Debug.Log("Green Bee defends.");
+        Debug.Log("Slime defends.");
     }
 
     public void TakeDamage(float amount)
@@ -127,6 +126,7 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
 
     private void Die()
     {
+        Debug.Log("Die dont know why");
         if (m_IsDead)
             return;
 
@@ -152,4 +152,3 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
         }
     }
 }
-
