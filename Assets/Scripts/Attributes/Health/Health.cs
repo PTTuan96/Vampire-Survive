@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
         HealthChanged.Invoke(CurrentHealth / MaxHealth); // Pass the current health percentage
     }
 
-    public void Heal(float amount)
+    public virtual void Heal(float amount)
     {
         // Don't heal if already dead
         if (m_IsDead)

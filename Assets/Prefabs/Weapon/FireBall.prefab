@@ -137,6 +137,7 @@ MonoBehaviour:
   m_ProductName: FireBall
   m_RotationSpeed: 100
   m_DamageValue: 5
+  shouldKnockBack: 1
 --- !u!1 &7917773993465934425
 GameObject:
   m_ObjectHideFlags: 0

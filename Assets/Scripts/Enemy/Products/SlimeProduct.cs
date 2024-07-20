@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,6 +51,7 @@ public class SlimeProduct : EnemyTakeDamage<SlimeProduct>, IEnemyProduct
         if (target != null && m_Rigidbody != null)
         {
             m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
+            moveSpeed = KnockBackSpeed(moveSpeed);
         }
     }
 

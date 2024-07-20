@@ -13,6 +13,7 @@ public class FireBallProduct : MonoBehaviour, IWeaponProduct
     public float RotationSpeed { get => m_RotationSpeed; set => m_RotationSpeed = value; }
 
     [SerializeField] private int m_DamageValue = 5;
+    [SerializeField] private bool shouldKnockBack;
 
     private ParticleSystem m_ParticleSystem;
 
@@ -35,11 +36,10 @@ public class FireBallProduct : MonoBehaviour, IWeaponProduct
         if(collider2D.CompareTag("Enemy"))
         {
             // CheckCollisionInterfaces(collider2D);
-            // Attempt to get the IDamageable component from the collider
-            if (collider2D.TryGetComponent<IDamageable>(out var damageable))
+            var damageable = collider2D.GetComponent<IDamageable>();
+            if (damageable != null)
             {
-                // Apply damage
-                damageable.TakeDamage(m_DamageValue);
+                damageable.TakeDamage(m_DamageValue, shouldKnockBack);
             }
         }
     }

@@ -49,6 +49,7 @@ public class GreenBeeProduct : EnemyTakeDamage<GreenBeeProduct>, IEnemyProduct
         if (target != null && m_Rigidbody != null)
         {
             m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
+            moveSpeed = KnockBackSpeed(moveSpeed);
         }
     }
 

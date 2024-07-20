@@ -136,3 +136,4 @@ MonoBehaviour:
   m_ProductName: IceBall
   m_RotationSpeed: 50
   m_DamageValue: 10
+  shouldKnockBack: 1
