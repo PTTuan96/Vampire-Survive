@@ -220,7 +220,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_DamageMultiplier: 1
-  m_KnockbackForce: 5
+  knockBackTime: 0.11
   m_ProductName: GreenBee
   m_Rigidbody: {fileID: 8699642074269188413}
   moveSpeed: 5

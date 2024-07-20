@@ -15,7 +15,7 @@ public class SlimeProduct : EnemyTakeDamage<SlimeProduct>, IEnemyProduct
     private ParticleSystem m_ParticleSystem;
 
     [SerializeField] private float moveSpeed;
-    [SerializeField] private int m_DamageValue = 5;
+    [SerializeField] private float m_DamageValue = 5;
     [SerializeField] private float hitWaitTime = 1f;
 
     private Transform target;
@@ -51,6 +51,8 @@ public class SlimeProduct : EnemyTakeDamage<SlimeProduct>, IEnemyProduct
         if (target != null && m_Rigidbody != null)
         {
             m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
+
+            //Knock back function
             moveSpeed = KnockBackSpeed(moveSpeed);
         }
     }
@@ -59,7 +61,7 @@ public class SlimeProduct : EnemyTakeDamage<SlimeProduct>, IEnemyProduct
     {
         if (hitCounter <= 0f)
         {
-            CheckCollisionInterfaces(collision2D);
+            CheckCollisionInterfaces(collision2D, m_DamageValue);
             hitCounter = hitWaitTime;
             if (gameObject.activeInHierarchy)
             {
@@ -74,29 +76,6 @@ public class SlimeProduct : EnemyTakeDamage<SlimeProduct>, IEnemyProduct
         {
             hitCounter -= Time.deltaTime;
             yield return null;
-        }
-    }
-
-    private void CheckCollisionInterfaces(Collision2D collision2D)
-    {
-        var monoBehaviours = collision2D.gameObject.GetComponents<MonoBehaviour>();
-        foreach (var monoBehaviour in monoBehaviours)
-        {
-            HandleDamageableInterface(monoBehaviour);
-        }
-    }
-
-    public void HandleDamageableInterface(MonoBehaviour monoBehaviour)
-    {
-        // Check if the MonoBehaviour is both IDamageable and Player
-        if (monoBehaviour is IDamageable damageable && monoBehaviour.GetComponent<Player>() != null)
-        {
-            // Debug.Log($"{monoBehaviour.GetType().Name} implements IDamageable and is a Player");
-            damageable.TakeDamage(m_DamageValue);
-        }
-        else
-        {
-            // Debug.Log($"{monoBehaviour.GetType().Name} does not implement IDamageable or is not a Player");
         }
     }
 

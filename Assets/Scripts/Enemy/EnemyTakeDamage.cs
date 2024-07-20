@@ -31,6 +31,29 @@ public class EnemyTakeDamage<T> : ObjectTakeDamage, IEnemyAnimation where T : En
         m_IsDead = false;
     }
 
+    protected void CheckCollisionInterfaces(Collision2D collision2D, float m_DamageValue)
+    {
+        var monoBehaviours = collision2D.gameObject.GetComponents<MonoBehaviour>();
+        foreach (var monoBehaviour in monoBehaviours)
+        {
+            HandleDamageableInterface(monoBehaviour, m_DamageValue);
+        }
+    }
+
+    protected void HandleDamageableInterface(MonoBehaviour monoBehaviour, float m_DamageValue)
+    {
+        // Check if the MonoBehaviour is both IDamageable and Player
+        if (monoBehaviour is IDamageable damageable && monoBehaviour.GetComponent<Player>() != null)
+        {
+            // Debug.Log($"{monoBehaviour.GetType().Name} implements IDamageable and is a Player");
+            damageable.TakeDamage(m_DamageValue);
+        }
+        else
+        {
+            // Debug.Log($"{monoBehaviour.GetType().Name} does not implement IDamageable or is not a Player");
+        }
+    }
+
     public float KnockBackSpeed(float moveSpeed)
     {
         if(knockBackCounter > 0)

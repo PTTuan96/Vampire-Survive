@@ -57,7 +57,7 @@ public class GreenBeeProduct : EnemyTakeDamage<GreenBeeProduct>, IEnemyProduct
     {
         if (hitCounter <= 0f)
         {
-            CheckCollisionInterfaces(collision2D);
+            CheckCollisionInterfaces(collision2D, m_DamageValue);
             hitCounter = hitWaitTime;
             if (gameObject.activeInHierarchy)
             {
@@ -72,29 +72,6 @@ public class GreenBeeProduct : EnemyTakeDamage<GreenBeeProduct>, IEnemyProduct
         {
             hitCounter -= Time.deltaTime;
             yield return null;
-        }
-    }
-
-    private void CheckCollisionInterfaces(Collision2D collision2D)
-    {
-        var monoBehaviours = collision2D.gameObject.GetComponents<MonoBehaviour>();
-        foreach (var monoBehaviour in monoBehaviours)
-        {
-            HandleDamageableInterface(monoBehaviour);
-        }
-    }
-
-    public void HandleDamageableInterface(MonoBehaviour monoBehaviour)
-    {
-        // Check if the MonoBehaviour is both IDamageable and Player
-        if (monoBehaviour is IDamageable damageable && monoBehaviour.GetComponent<Player>() != null)
-        {
-            // Debug.Log($"{monoBehaviour.GetType().Name} implements IDamageable and is a Player");
-            damageable.TakeDamage(m_DamageValue);
-        }
-        else
-        {
-            // Debug.Log($"{monoBehaviour.GetType().Name} does not implement IDamageable or is not a Player");
         }
     }
 

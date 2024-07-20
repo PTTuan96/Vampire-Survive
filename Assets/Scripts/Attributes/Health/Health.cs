@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
+    private UIController uiController;
+
     [SerializeField] private float m_MaxHealth = 100f;
     [SerializeField] private float m_CurrentHealth;
     [SerializeField] bool m_ResetOnStart;
@@ -22,8 +24,11 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
+        uiController = UIController.Instance;
+
         if (m_ResetOnStart)
             m_CurrentHealth = MaxHealth;
+
     }
 
     private void Start()
@@ -49,6 +54,8 @@ public class Health : MonoBehaviour
         
         // Notify listeners of the health change with the current health percentage.
         HealthChanged.Invoke(CurrentHealth / MaxHealth); // Pass the current health percentage
+
+        uiController.SpawnDamage(amount, transform.position);
     }
 
     public virtual void Heal(float amount)
