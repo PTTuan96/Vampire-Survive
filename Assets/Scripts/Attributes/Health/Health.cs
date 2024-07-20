@@ -29,6 +29,7 @@ public class Health : MonoBehaviour
     private void Start()
     {
         HealthChanged.Invoke(CurrentHealth / MaxHealth);
+        m_CurrentHealth = MaxHealth;
     }
 
     public virtual void TakeDamage(float amount)
@@ -66,7 +67,7 @@ public class Health : MonoBehaviour
 
 
     // Notify listeners that this object is dead and disable the GameObject to prevent further interaction.
-    public virtual void Die()
+    protected virtual void Die()
     {
         // Only die once
         if (m_IsDead)

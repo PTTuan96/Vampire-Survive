@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ProductName: IceBall
-  m_RotationSpeed: 100
-  m_DamageValue: 5
+  m_RotationSpeed: 50
+  m_DamageValue: 10

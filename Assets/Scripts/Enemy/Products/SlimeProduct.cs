@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class SlimeProduct //: EnemyTakeDamage, IEnemyProduct //, IDamageable
+public class SlimeProduct : EnemyTakeDamage<SlimeProduct>, IEnemyProduct
 {
     [SerializeField]
     private string m_ProductName = "Slime";
@@ -14,31 +14,30 @@ public class SlimeProduct //: EnemyTakeDamage, IEnemyProduct //, IDamageable
     private ParticleSystem m_ParticleSystem;
 
     [SerializeField] private float moveSpeed;
-    
-    private Transform target;
+    [SerializeField] private int m_DamageValue = 5;
+    [SerializeField] private float hitWaitTime = 1f;
 
-    public ObjectPool<SlimeProduct> ObjectPool { get; set; }
-    
+    private Transform target;
+    private float hitCounter;
+
     public void Initialize(Transform playerTransform = null, bool isPooled = false)
     {
-        // gameObject.name = m_ProductName;
-        // m_ParticleSystem = GetComponentInChildren<ParticleSystem>();
+        base.Initialize(isPooled); // Call base Initialize
+        gameObject.name = m_ProductName;
+        m_ParticleSystem = GetComponentInChildren<ParticleSystem>();
 
-        // if (m_ParticleSystem != null)
-        // {
-        //     m_ParticleSystem.Stop();
-        //     m_ParticleSystem.Play();
-        // }
+        if (m_ParticleSystem != null)
+        {
+            m_ParticleSystem.Stop();
+            m_ParticleSystem.Play();
+        }
 
-        // if (m_Rigidbody != null)
-        // {
-        //     m_Rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        // }
+        if (m_Rigidbody != null)
+        {
+            m_Rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        }
 
-        // target = playerTransform;
-        // isPooledObject = isPooled;
-        // m_CurrentHealth = m_MaxHealth;
-        // m_IsDead = false;
+        target = playerTransform;
     }
 
     void Update()
@@ -50,27 +49,57 @@ public class SlimeProduct //: EnemyTakeDamage, IEnemyProduct //, IDamageable
     {
         if (target != null && m_Rigidbody != null)
         {
-            // m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
+            m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision2D)
     {
-        // CheckCollisionInterfaces(collision2D);
+        if (hitCounter <= 0f)
+        {
+            CheckCollisionInterfaces(collision2D);
+            hitCounter = hitWaitTime;
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(DecrementHitCounter());
+            }
+        }
+    }
+
+    private IEnumerator DecrementHitCounter()
+    {
+        while (hitCounter > 0f)
+        {
+            hitCounter -= Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    private void CheckCollisionInterfaces(Collision2D collision2D)
+    {
+        var monoBehaviours = collision2D.gameObject.GetComponents<MonoBehaviour>();
+        foreach (var monoBehaviour in monoBehaviours)
+        {
+            HandleDamageableInterface(monoBehaviour);
+        }
+    }
+
+    public void HandleDamageableInterface(MonoBehaviour monoBehaviour)
+    {
+        // Check if the MonoBehaviour is both IDamageable and Player
+        if (monoBehaviour is IDamageable damageable && monoBehaviour.GetComponent<Player>() != null)
+        {
+            // Debug.Log($"{monoBehaviour.GetType().Name} implements IDamageable and is a Player");
+            damageable.TakeDamage(m_DamageValue);
+        }
+        else
+        {
+            // Debug.Log($"{monoBehaviour.GetType().Name} does not implement IDamageable or is not a Player");
+        }
     }
 
     public void Defend()
     {
         Debug.Log("Slime defends.");
     }
-
-
-    // private void OnDisable()
-    // {
-    //     // Only release to pool if it was pooled and not already dead
-    //     if (isPooledObject && !m_IsDead && ObjectPool != null)
-    //     {
-    //         ObjectPool.Release(this);
-    //     }
-    // }
 }

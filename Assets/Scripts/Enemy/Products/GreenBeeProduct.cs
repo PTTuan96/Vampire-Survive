@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class GreenBeeProduct : EnemyTakeDamage, IEnemyProduct
+public class GreenBeeProduct : EnemyTakeDamage<GreenBeeProduct>, IEnemyProduct
 {
     [SerializeField]
     private string m_ProductName = "GreenBee";
@@ -18,8 +18,6 @@ public class GreenBeeProduct : EnemyTakeDamage, IEnemyProduct
 
     private Transform target;
     private float hitCounter;
-
-    // public new ObjectPool<GreenBeeProduct> ObjectPool { get; set; }
 
     public void Initialize(Transform playerTransform = null, bool isPooled = false)
     {

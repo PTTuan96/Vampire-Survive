@@ -1,12 +1,13 @@
 using UnityEngine.Pool;
 using UnityEngine;
 
-public class EnemyTakeDamage : ObjectTakeDamage, IEnemyAnimation
+public class EnemyTakeDamage<T> : ObjectTakeDamage, IEnemyAnimation where T : EnemyTakeDamage<T>
 {
-    public ObjectPool<GreenBeeProduct> ObjectPool { get; set; }
+    public ObjectPool<T> ObjectPool { get; set; }
+    
     private bool isPooledObject;
 
-    public override void Die()
+    protected override void Die()
     {
         if (m_IsDead)
             return;
@@ -16,7 +17,7 @@ public class EnemyTakeDamage : ObjectTakeDamage, IEnemyAnimation
         // Custom death logic for enemies
         if (isPooledObject && ObjectPool != null)
         {
-            ObjectPool.Release((GreenBeeProduct)this); // Release back to the pool if pooled
+            ObjectPool.Release((T)this); // Release back to the pool if pooled
         }
         else
         {

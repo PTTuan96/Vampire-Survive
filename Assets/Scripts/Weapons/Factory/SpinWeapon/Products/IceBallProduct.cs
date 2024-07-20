@@ -30,9 +30,15 @@ public class IceBallProduct : MonoBehaviour, IWeaponProduct
 
     private void OnTriggerEnter2D(Collider2D collider2D)
     {
-        if(collider2D.CompareTag("Enemy"))
+        if (collider2D.CompareTag("Enemy"))
         {
-            collider2D.GetComponent<EnemyTakeDamage>().TakeDamage(m_DamageValue);
+            // CheckCollisionInterfaces(collider2D);
+            // Attempt to get the IDamageable component from the collider
+            if (collider2D.TryGetComponent<IDamageable>(out var damageable))
+            {
+                // Apply damage
+                damageable.TakeDamage(m_DamageValue);
+            }
         }
     }
 }

@@ -735,8 +735,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552e7924e92745e43acb6af8f6b8bad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 100
-  m_CurrentHealth: 100
+  m_MaxHealth: 1000
+  m_CurrentHealth: 0
   m_ResetOnStart: 0
   Died:
     m_PersistentCalls:
@@ -1638,6 +1638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757712646}
+  - component: {fileID: 1757712647}
   m_Layer: 0
   m_Name: SlimeFactory
   m_TagString: Untagged
@@ -1660,6 +1661,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1923328560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1757712647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757712645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3a6b837a9eef14b9e797108f692a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SlimePrefabs: {fileID: 3997546526416627171, guid: 8d165f94f295fae4792d4805ab73e260, type: 3}
 --- !u!1 &1923328558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,7 +1709,9 @@ MonoBehaviour:
       m_Calls: []
   m_factories:
   - {fileID: 1948838889}
+  - {fileID: 1757712647}
   m_ListGreenBee: {fileID: 1948838887}
+  m_ListSlime: {fileID: 1757712645}
   mainCamera: {fileID: 417104258}
   spawnDistance: 5
 --- !u!4 &1923328560

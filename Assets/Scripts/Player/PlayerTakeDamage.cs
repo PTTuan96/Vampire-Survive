@@ -3,10 +3,10 @@ using UnityEngine;
 // This class will apply for multiple players
 public class PlayerTakeDamage : ObjectTakeDamage, IPlayerDieAnimation
 {
-    [Tooltip("Effect to instantiate on explosion")]
+    // [Tooltip("Effect to instantiate on explosion")]
     // [SerializeField] GameObject m_ExplosionPrefab;
 
-    public override void Die()
+    protected override void Die()
     {
         base.Die();
         DieAnimation();

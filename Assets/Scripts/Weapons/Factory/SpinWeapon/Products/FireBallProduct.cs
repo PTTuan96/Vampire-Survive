@@ -35,7 +35,12 @@ public class FireBallProduct : MonoBehaviour, IWeaponProduct
         if(collider2D.CompareTag("Enemy"))
         {
             // CheckCollisionInterfaces(collider2D);
-            collider2D.GetComponent<EnemyTakeDamage>().TakeDamage(m_DamageValue);
+            // Attempt to get the IDamageable component from the collider
+            if (collider2D.TryGetComponent<IDamageable>(out var damageable))
+            {
+                // Apply damage
+                damageable.TakeDamage(m_DamageValue);
+            }
         }
     }
 }
