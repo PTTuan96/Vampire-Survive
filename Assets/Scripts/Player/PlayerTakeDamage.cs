@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // This class will apply for multiple players
@@ -8,7 +6,7 @@ public class PlayerTakeDamage : ObjectTakeDamage, IPlayerDieAnimation
     [Tooltip("Effect to instantiate on explosion")]
     // [SerializeField] GameObject m_ExplosionPrefab;
 
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
         DieAnimation();

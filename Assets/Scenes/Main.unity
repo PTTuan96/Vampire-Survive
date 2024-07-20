@@ -261,7 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ad0a89e587d5a459303dd96f7dc1da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1519108279}
 --- !u!4 &125918380
 Transform:
   m_ObjectHideFlags: 0
@@ -438,7 +437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &299410036
 Transform:
   m_ObjectHideFlags: 0
@@ -1760,15 +1759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c41a9aff6a7fa4f9ea4199df058bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 100
-  m_CurrentHealth: 0
-  m_ResetOnStart: 0
-  Died:
-    m_PersistentCalls:
-      m_Calls: []
-  HealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
   m_GreenBeePrefabs: {fileID: 5294766018387195926, guid: 8912165d32c04ec448fba094c8a4b79e, type: 3}
 --- !u!1 &1951941030
 GameObject:

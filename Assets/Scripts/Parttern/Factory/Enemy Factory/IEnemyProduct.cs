@@ -15,7 +15,5 @@ public interface IEnemyProduct
 
     void MoveTowardsPlayer();
 
-    void HandleDamageableInterface(MonoBehaviour monoBehaviour);
-
     void Defend();
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
+public class GreenBeeProduct : EnemyTakeDamage, IEnemyProduct
 {
     [SerializeField]
     private string m_ProductName = "GreenBee";
@@ -16,17 +16,14 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
     [SerializeField] private int m_DamageValue = 5;
     [SerializeField] private float hitWaitTime = 1f;
 
-    private float m_MaxHealth = 30;
-    private float m_CurrentHealth;
-    private bool m_IsDead;
     private Transform target;
     private float hitCounter;
 
-    public ObjectPool<GreenBeeProduct> ObjectPool { get; set; }
-    private bool isPooledObject;
+    // public new ObjectPool<GreenBeeProduct> ObjectPool { get; set; }
 
     public void Initialize(Transform playerTransform = null, bool isPooled = false)
     {
+        base.Initialize(isPooled); // Call base Initialize
         gameObject.name = m_ProductName;
         m_ParticleSystem = GetComponentInChildren<ParticleSystem>();
 
@@ -42,11 +39,6 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
         }
 
         target = playerTransform;
-        
-        // Add to Pool
-        isPooledObject = isPooled;
-        m_CurrentHealth = m_MaxHealth;
-        m_IsDead = false;
     }
 
     void Update()
@@ -86,12 +78,7 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
 
     private void CheckCollisionInterfaces(Collision2D collision2D)
     {
-        ContactPoint2D contactPoint = collision2D.GetContact(0);
-        float pushDistance = 0.1f;
-        Vector3 offsetPosition = contactPoint.point + contactPoint.normal * pushDistance;
-
         var monoBehaviours = collision2D.gameObject.GetComponents<MonoBehaviour>();
-        
         foreach (var monoBehaviour in monoBehaviours)
         {
             HandleDamageableInterface(monoBehaviour);
@@ -100,56 +87,21 @@ public class GreenBeeProduct : MonoBehaviour, IEnemyProduct, IDamageable
 
     public void HandleDamageableInterface(MonoBehaviour monoBehaviour)
     {
-        if (monoBehaviour is IDamageable damageable)
+        // Check if the MonoBehaviour is both IDamageable and Player
+        if (monoBehaviour is IDamageable damageable && monoBehaviour.GetComponent<Player>() != null)
         {
+            // Debug.Log($"{monoBehaviour.GetType().Name} implements IDamageable and is a Player");
             damageable.TakeDamage(m_DamageValue);
+        }
+        else
+        {
+            // Debug.Log($"{monoBehaviour.GetType().Name} does not implement IDamageable or is not a Player");
         }
     }
 
     public void Defend()
     {
         Debug.Log("Green Bee defends.");
-    }
-
-    public void TakeDamage(float amount)
-    {
-        if (m_IsDead)
-            return;
-
-        m_CurrentHealth -= amount;
-
-        if (m_CurrentHealth <= 0)
-        {
-            m_CurrentHealth = 0;
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        if (m_IsDead)
-            return;
-
-        m_IsDead = true;
-        gameObject.SetActive(false); // Or any other logic you want for death
-        
-        if (isPooledObject && ObjectPool != null)
-        {
-            ObjectPool.Release(this); // Release back to the pool if pooled
-        }
-        else
-        {
-            Destroy(gameObject); // Destroy if not pooled
-        }
-    }
-
-    private void OnDisable()
-    {
-        // Only release to pool if it was pooled and not already dead
-        if (isPooledObject && !m_IsDead && ObjectPool != null)
-        {
-            ObjectPool.Release(this);
-        }
     }
 }
 

@@ -11,9 +11,6 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private EnemyFactory[] m_factories;
     [SerializeField] private GameObject m_ListGreenBee;
-
-    private List<GameObject> m_CreatedProduct = new();
-
     [SerializeField] private Camera mainCamera;
 
     private float spawnCounter;
@@ -39,6 +36,8 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private List<GameObject> m_CreatedProduct = new();
+
     void SpawnObjectWithFactory()
     {
         Vector3 randomPosition = Utils.GetRandomPositionInCameraBounds(mainCamera, spawnDistance);
@@ -46,17 +45,20 @@ public class EnemySpawner : MonoBehaviour
         if (selectedFactory != null)
         {
             IEnemyProduct product = selectedFactory.GetProduct(randomPosition);
-            if (product is Component component)
+            if(product != null)
             {
-                m_CreatedProduct.Add(component.gameObject);
+                if (product is Component component)
+                {
+                    m_CreatedProduct.Add(component.gameObject);
 
-                if (m_ListGreenBee != null)
-                {
-                    component.gameObject.transform.SetParent(m_ListGreenBee.transform);
-                }
-                else
-                {
-                    Debug.LogWarning("m_ListGreenBee GameObject is not assigned.");
+                    if (m_ListGreenBee != null)
+                    {
+                        component.gameObject.transform.SetParent(m_ListGreenBee.transform);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("m_ListGreenBee GameObject is not assigned.");
+                    }
                 }
             }
         }

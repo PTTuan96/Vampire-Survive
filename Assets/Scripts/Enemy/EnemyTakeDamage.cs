@@ -1,15 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.Pool;
 using UnityEngine;
 
 public class EnemyTakeDamage : ObjectTakeDamage, IEnemyAnimation
 {
-    [Tooltip("Effect to instantiate on explosion")]
-    // [SerializeField] GameObject m_ExplosionPrefab;
+    public ObjectPool<GreenBeeProduct> ObjectPool { get; set; }
+    private bool isPooledObject;
 
-    protected override void Die()
+    public override void Die()
     {
+        if (m_IsDead)
+            return;
+
         base.Die();
-        // DieAnimation();
+
+        // Custom death logic for enemies
+        if (isPooledObject && ObjectPool != null)
+        {
+            ObjectPool.Release((GreenBeeProduct)this); // Release back to the pool if pooled
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy if not pooled
+        }
+    }
+
+    public void Initialize(bool isPooled = false)
+    {
+        isPooledObject = isPooled;
+        CurrentHealth = MaxHealth;
+        m_IsDead = false;
     }
 }

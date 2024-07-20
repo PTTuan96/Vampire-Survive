@@ -3,8 +3,8 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] float m_MaxHealth = 100f;
-    [SerializeField] float m_CurrentHealth;
+    [SerializeField] private float m_MaxHealth = 100f;
+    [SerializeField] private float m_CurrentHealth;
     [SerializeField] bool m_ResetOnStart;
 
     [Tooltip("Notifies listeners that this object has died")]
@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
     protected bool m_IsDead;
 
     public float MaxHealth { get => m_MaxHealth; set => m_MaxHealth = value; }
-    public float CurrentHealth => m_CurrentHealth;
+    public float CurrentHealth { get => m_CurrentHealth; set => m_CurrentHealth = value; }
     public bool IsInvulnerable { get => m_IsInvulnerable; set => m_IsInvulnerable = value; }
 
     private void Awake()
@@ -66,14 +66,16 @@ public class Health : MonoBehaviour
 
 
     // Notify listeners that this object is dead and disable the GameObject to prevent further interaction.
-    protected virtual void Die()
+    public virtual void Die()
     {
         // Only die once
         if (m_IsDead)
             return;
         
         m_IsDead = true;
+
+        // Here the event send when an Oobject die
         Died.Invoke();
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 }

@@ -38,40 +38,4 @@ public class FireBallProduct : MonoBehaviour, IWeaponProduct
             collider2D.GetComponent<EnemyTakeDamage>().TakeDamage(m_DamageValue);
         }
     }
-
-    private void CheckCollisionInterfaces(Collider2D collider2D)
-    {
-        ContactPoint2D[] contactPoints = new ContactPoint2D[1];
-
-        // Get the first contact
-        int contactCount = collider2D.GetContacts(contactPoints);
-
-        // Ensure there is at least one contact point
-        if (contactCount > 0)
-        {
-            // Get the first contact point
-            ContactPoint2D contactPoint = contactPoints[0];
-
-            // Slight offset to move it outside of the surface
-            float pushDistance = 0.1f;
-            Vector3 offsetPosition = contactPoint.point + contactPoint.normal * pushDistance;
-
-            var monoBehaviours = collider2D.gameObject.GetComponents<MonoBehaviour>();
-
-            foreach (var monoBehaviour in monoBehaviours)
-            {
-                // Debug.Log("monoBehaviour: " + monoBehaviour);
-                HandleDamageableInterface(monoBehaviour);
-                // HandleEffectTriggerInterface(monoBehaviour, offsetPosition);
-            }
-        }
-    }
-
-    public void HandleDamageableInterface(MonoBehaviour monoBehaviour)
-    {
-        if (monoBehaviour is IDamageable damageable)
-        {
-            damageable.TakeDamage(m_DamageValue);
-        }
-    }
 }

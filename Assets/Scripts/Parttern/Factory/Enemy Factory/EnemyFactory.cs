@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyFactory : Health
+public abstract class EnemyFactory : MonoBehaviour// Health
 {
     // Abstract method to get a product instance.
     public abstract IEnemyProduct GetProduct(Vector3 position);
