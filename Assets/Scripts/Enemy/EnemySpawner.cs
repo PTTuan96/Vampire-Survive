@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Tooltip("Time between spawns / smaller = higher rate of fire")]
-    [SerializeField] private float timeToSpawn;
     [SerializeField] private UnityEvent m_ClickToCreateEnemy;
 
     [SerializeField] private EnemyFactory[] m_factories;
@@ -14,8 +12,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject m_ListSlime;
     [SerializeField] private Camera mainCamera;
 
-    private float spawnCounter;
-    public float spawnDistance = 5f;
+    [SerializeField] private float waveLength = 10f;
+    [SerializeField] private float timeBetweenSpawnsWave = 2f;
+    [SerializeField] private float timeToSpawn = 1f;
+    [SerializeField] private float spawnDistance = 5f;
+
+    private float waveTimer;
+    private float enemySpawnTimer;
+    private bool isWaveActive;
 
     private Dictionary<System.Type, GameObject> enemyParentMap = new Dictionary<System.Type, GameObject>();
 
@@ -28,7 +32,8 @@ public class EnemySpawner : MonoBehaviour
             mainCamera = Camera.main;
         }
 
-        spawnCounter = timeToSpawn;
+        waveTimer = timeBetweenSpawnsWave;
+        enemySpawnTimer = timeToSpawn;
 
         // Initialize the dictionary
         enemyParentMap[typeof(GreenBeeProduct)] = m_ListGreenBee;
@@ -37,15 +42,42 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        spawnCounter -= Time.deltaTime;
-        if (spawnCounter <= 0)
+        UpdateTimers();
+    }
+
+    private void UpdateTimers()
+    {
+        if (isWaveActive)
+    {
+        waveTimer -= Time.deltaTime;
+        enemySpawnTimer -= Time.deltaTime;
+
+        if (waveTimer <= 0)
         {
-            spawnCounter = timeToSpawn;
+            isWaveActive = false;
+            waveTimer = waveLength;
+            // Perform end of wave actions here if any
+        }
+
+        if (enemySpawnTimer <= 0)
+        {
+            enemySpawnTimer = timeToSpawn;
             SpawnObjectWithFactory();
         }
     }
+    else
+    {
+        timeBetweenSpawnsWave -= Time.deltaTime;
+        if (timeBetweenSpawnsWave <= 0)
+        {
+            isWaveActive = true;
+            timeBetweenSpawnsWave = waveLength; // Reset the wave length timer
+            // Perform start of wave actions here if any
+        }
+    }
+    }
 
-    void SpawnObjectWithFactory()
+    private void SpawnObjectWithFactory()
     {
         Vector3 randomPosition = Utils.GetRandomPositionInCameraBounds(mainCamera, spawnDistance);
         EnemyFactory selectedFactory = m_factories[Random.Range(0, m_factories.Length)];

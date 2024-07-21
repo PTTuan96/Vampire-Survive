@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class EnemyTakeDamage<T> : ObjectTakeDamage, IEnemyAnimation where T : EnemyTakeDamage<T>
 {
+    [SerializeField] protected int expToGive; 
+    
     public ObjectPool<T> ObjectPool { get; set; }
     private bool isPooledObject;
+    
 
     protected override void Die()
     {
@@ -12,6 +15,8 @@ public class EnemyTakeDamage<T> : ObjectTakeDamage, IEnemyAnimation where T : En
             return;
 
         base.Die();
+        
+        expController.SpawnExp(transform.position, expToGive);
 
         // Custom death logic for enemies
         if (isPooledObject && ObjectPool != null)

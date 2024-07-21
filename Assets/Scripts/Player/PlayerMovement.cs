@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
-    [SerializeField]
-    private float m_Speed;
+    [SerializeField] public float m_Speed;
+
+    [SerializeField] public float pickUpRange = 1.5f;
 
     public void Move(Vector3 moveInput)
     {

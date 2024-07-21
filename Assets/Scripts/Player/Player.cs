@@ -11,7 +11,11 @@ public class Player : MonoBehaviour
 
     PlayerInput m_PlayerInput;
     PlayerMovement m_PlayerMovement;
+
+    // Player Sound, video
     PlayerAudio m_PlayerAudio;
+    
+    // Player Effects
     PlayerFX m_PlayerFX;
 
     private void Awake()

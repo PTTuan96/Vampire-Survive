@@ -1,35 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviourSingleton<UIController>
 {
-    public DamageText numberToSpawn;
-    public Transform numberCanvas;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Slider expLvlSilder;
+    public TMP_Text expLvlText;
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateExp(int currentExp, int lvlExp, int currentLvl)
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            SpawnDamage(57f, new Vector3(4, 3, 0 ));
-        }
-    }
+        expLvlSilder.maxValue = lvlExp;
+        expLvlSilder.value = currentExp;
 
-    public void SpawnDamage(float damageAmount, Vector3 location)
-    {
-        int rounded =  Mathf.RoundToInt(damageAmount);
-                                            //Quaternion.identity -> represents a rotation with no rotation
-        DamageText newDamanage = Instantiate(numberToSpawn, location, Quaternion.identity, numberCanvas);
-        
-        newDamanage.Setup(rounded);
-        newDamanage.gameObject.SetActive(true);
+        expLvlText.text = "Level: " + currentLvl;
     }
 }
