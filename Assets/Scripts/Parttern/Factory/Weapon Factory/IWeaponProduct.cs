@@ -4,9 +4,7 @@ using UnityEngine;
 
 public interface IWeaponProduct
 {
-    // add common properties and methods here
     public string ProductName { get; set; }
-    float RotationSpeed { get; set; }
-    public void Initialize();
-    // void HandleDamageableInterface(MonoBehaviour monoBehaviour);
+    public GameObject HolderPrefab { get; set; }
+    void Attack();
 }

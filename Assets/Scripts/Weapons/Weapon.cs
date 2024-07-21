@@ -1,29 +1,66 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField]
-    private WeaponFactory[] m_WeaponFactories;
+    [Tooltip("List of weapon factories")]
+    [SerializeField] private WeaponFactory[] m_WeaponFactories;
 
-    private List<GameObject> m_CreatedProduct = new();
+    [SerializeField] private bool isFireBallsActive;
+    [SerializeField] private bool isIceBallsActive;
+    [SerializeField] private bool isKnifesActive;
+    [SerializeField] private bool isSwordsActive;
 
     void Start()
     {
-        // SpawnObjectWithFactory();
+        Vector3 spawnPosition = new Vector3(0, 0, 0);
+
+        if (isFireBallsActive)
+        {
+            TrySpawnWeapon<FireBalls>(spawnPosition);
+        }
+
+        if (isIceBallsActive)
+        {
+            TrySpawnWeapon<IceBalls>(spawnPosition);
+        }
+
+        if (isKnifesActive)
+        {
+            TrySpawnWeapon<Knifes>(spawnPosition);
+        }
+
+        if (isSwordsActive)
+        {
+            TrySpawnWeapon<Swords>(spawnPosition);
+        }
     }
 
-    void SpawnObjectWithFactory()
+    private void TrySpawnWeapon<T>(Vector3 position) where T : Component, IWeaponProduct
     {
-        WeaponFactory selectedFactory = m_WeaponFactories[Random.Range(0, m_WeaponFactories.Length)];
-        if(selectedFactory != null)
+        IWeaponProduct weapon = GetWeaponFromFactories<T>(position);
+
+        if (weapon != null)
         {
-            IWeaponProduct product = selectedFactory.GetProduct(transform.position);
-            if(product is Component component)
+            Debug.Log($"Weapon spawned: {weapon.ProductName}");
+        }
+        else
+        {
+            Debug.LogWarning($"No weapon of type {typeof(T).Name} spawned.");
+        }
+    }
+
+    private T GetWeaponFromFactories<T>(Vector3 position) where T : Component, IWeaponProduct
+    {
+        foreach (WeaponFactory factory in m_WeaponFactories)
+        {
+            T weapon = factory.GetSpecificWeapon<T>(position);
+            if (weapon != null)
             {
-                m_CreatedProduct.Add(component.gameObject);
+                return weapon;
             }
         }
+
+        return null;
     }
 }

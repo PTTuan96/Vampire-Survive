@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 298271056027168666}
   - component: {fileID: 2010323319679485306}
   - component: {fileID: 6938733717803769185}
-  - component: {fileID: 172134515916313434}
+  - component: {fileID: 4473725200986738468}
   m_Layer: 0
   m_Name: FireBall
   m_TagString: Untagged
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -16581979
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -196789849, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,7 +122,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.21
---- !u!114 &172134515916313434
+--- !u!114 &4473725200986738468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,13 +131,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1904622686988428872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d91a02c30bf0a746a5abfe13ea2fb42, type: 3}
+  m_Script: {fileID: 11500000, guid: 130c89049f958f64894798ac7f1e9880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ProductName: FireBall
-  m_RotationSpeed: 100
-  m_DamageValue: 5
-  shouldKnockBack: 1
+  holderPrefab: {fileID: 0}
+  productName: FireBalls
 --- !u!1 &7917773993465934425
 GameObject:
   m_ObjectHideFlags: 0

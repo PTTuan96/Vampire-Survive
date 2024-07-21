@@ -40,11 +40,13 @@ public interface IProductActions
     // string GetName();
 }
 
+// -------------------------------------------------------------
+
 public interface ISomething
 {
     void DoSomething();
 }
-
+// -------------------------------------------------------------
 public abstract class BigFactory : MonoBehaviour
 {
     // Abstract method to get a product instance.
@@ -60,11 +62,6 @@ public abstract class BigFactory : MonoBehaviour
         // return new Something();
         return null;
     }
-
-
-
-
-
 
 
     // Health property
@@ -171,7 +168,7 @@ public abstract class BigFactory : MonoBehaviour
         Debug.Log("Entity position reset.");
     }
 }
-
+// -------------------------------------------------------------
 public class ZombiSmallFactorySpawner : BigFactory
 {
     public override IProductActions EachProductActions()
@@ -184,7 +181,7 @@ public class ZombiSmallFactorySpawner : BigFactory
         throw new System.NotImplementedException();
     }
 }
-
+// -------------------------------------------------------------
 public class AlienSmallFactorySpawner : BigFactory
 {
     public override IProductActions EachProductActions()
@@ -197,7 +194,7 @@ public class AlienSmallFactorySpawner : BigFactory
         throw new System.NotImplementedException();
     }
 }
-
+// -------------------------------------------------------------
 public class Zombie : MonoBehaviour, IProductActions
 {
     private int health = 100;
@@ -260,7 +257,7 @@ public class Zombie : MonoBehaviour, IProductActions
         return "Zombie";
     }
 }
-
+// -------------------------------------------------------------
 public class Alien : MonoBehaviour, IProductActions
 {
     private int health = 150;

@@ -5,30 +5,12 @@ using UnityEngine;
 public abstract class WeaponFactory : MonoBehaviour
 {
     // Abstract method to get a product instance.
-    public abstract IWeaponProduct GetProduct(Vector3 position);
+    public abstract T GetSpecificWeapon<T>(Vector3 position) where T : Component, IWeaponProduct;
 
-    // Shared method with all factories.
-    public string GetLog(IWeaponProduct product)
+    public string GetLog(IEnemyProduct product)
     {
         string logMessage = "Factory: created product " + product.ProductName;
         return logMessage;
     }
-
-    public void AddWeaponToList(GameObject child, GameObject obj)
-    {
-        if (child != null)
-        {
-            // ChildComponent childComponent = child.GetComponent<ChildComponent>();
-
-            // if (childComponent != null)
-            // {
-            //     childComponent.objectList.Add(obj);
-            //     Debug.Log("Added object to child's list: " + obj.name);
-            // }
-            // else
-            // {
-            //     Debug.LogError("ChildComponent script not found on child GameObject: " + child.name);
-            // }
-        }
-    }
 }
+

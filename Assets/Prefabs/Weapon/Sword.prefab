@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3157426134904353890}
   - component: {fileID: 5475367417017102760}
-  - component: {fileID: 7152586552058476523}
-  - component: {fileID: 7569127259343306676}
+  - component: {fileID: -8981929031884057459}
+  - component: {fileID: -1953408146240911740}
   m_Layer: 0
-  m_Name: IceBall
+  m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6470185105590653225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0331, y: 0.0816, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -16581979
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1495497679, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
+  m_Sprite: {fileID: 906671935, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,8 +86,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7152586552058476523
-CircleCollider2D:
+--- !u!61 &-8981929031884057459
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,10 +118,20 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.01763314, y: -0.0088166}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.21
---- !u!114 &7569127259343306676
+  m_Size: {x: 0.9823669, y: 1.0088165}
+  m_EdgeRadius: 0
+--- !u!114 &-1953408146240911740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,8 +140,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6470185105590653225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede39320ff886ff4eb5ffd460d303efd, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b828b68443365419af32c2c5f32758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   holderPrefab: {fileID: 0}
-  productName: IceBalls
+  productName: Swords
