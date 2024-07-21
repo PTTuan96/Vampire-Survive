@@ -6,6 +6,12 @@ public class Weapon : MonoBehaviour
     [Tooltip("List of weapon factories")]
     [SerializeField] private WeaponFactory[] m_WeaponFactories;
 
+    [Tooltip("List of holder throw weapon prefabs")]
+    [SerializeField] private List<GameObject> holderWeaponPrefabs;
+
+    [Tooltip("List of throw weapon prefabs")]
+    [SerializeField] private List<GameObject> weaponPrefabs;
+
     [SerializeField] private bool isFireBallsActive;
     [SerializeField] private bool isIceBallsActive;
     [SerializeField] private bool isKnifesActive;
@@ -54,7 +60,7 @@ public class Weapon : MonoBehaviour
     {
         foreach (WeaponFactory factory in m_WeaponFactories)
         {
-            T weapon = factory.GetSpecificWeapon<T>(position);
+            T weapon = factory.GetSpecificWeapon<T>(position, holderWeaponPrefabs, weaponPrefabs);
             if (weapon != null)
             {
                 return weapon;

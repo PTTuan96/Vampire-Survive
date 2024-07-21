@@ -459,6 +459,16 @@ MonoBehaviour:
   m_WeaponFactories:
   - {fileID: 553751862}
   - {fileID: 2067178474}
+  holderWeaponPrefabs:
+  - {fileID: 1519108279}
+  - {fileID: 1600551856}
+  - {fileID: 464880620}
+  - {fileID: 31143318}
+  weaponPrefabs:
+  - {fileID: 1904622686988428872, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
+  - {fileID: 6470185105590653225, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
+  - {fileID: 6470185105590653225, guid: 7bea019f68cb090408edca0d0f445108, type: 3}
+  - {fileID: 6470185105590653225, guid: a662b7980fe508948b67145c7ed22d59, type: 3}
   isFireBallsActive: 1
   isIceBallsActive: 1
   isKnifesActive: 1
@@ -1219,12 +1229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad5f47e529540e48908642ed9a92c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holderWeaponPrefabs:
-  - {fileID: 1519108279}
-  - {fileID: 1600551856}
-  spinWeaponPrefabs:
-  - {fileID: 1904622686988428872, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
-  - {fileID: 6470185105590653225, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
 --- !u!1 &624542385
 GameObject:
   m_ObjectHideFlags: 0
@@ -132600,12 +132604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51eb5c0095325e34c8ac87e8a21dcf6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holderWeaponPrefabs:
-  - {fileID: 464880620}
-  - {fileID: 31143318}
-  throwWeaponPrefabs:
-  - {fileID: 6470185105590653225, guid: 7bea019f68cb090408edca0d0f445108, type: 3}
-  - {fileID: 6470185105590653225, guid: a662b7980fe508948b67145c7ed22d59, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

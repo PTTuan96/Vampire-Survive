@@ -1,12 +1,12 @@
 using UnityEngine;
 
 
-public class Attributes : MonoBehaviour
+public class Attributes
 {
-    [SerializeField] public float speed;
-    [SerializeField] public float damage;
-    [SerializeField] public float range;
-    [SerializeField] public float timeBetweenAttacks;
-    [SerializeField] public float amount;
-    [SerializeField] public float duration;
+    public float speed;
+    public float damage;
+    public float range;
+    public float timeBetweenAttacks;
+    public float amount;
+    public float duration;
 }

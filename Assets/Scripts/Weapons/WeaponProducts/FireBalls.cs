@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class FireBalls : MonoBehaviour, IWeaponProduct
 {
-    [SerializeField] private GameObject holderPrefab;
+    // [Tooltip("Why this cannot attached by any Gameobject?")]
+    // [SerializeField] private GameObject holderPrefab;
 
     [Tooltip("This name have to match 100% with the holder gameobject name")]
     [SerializeField] private string productName;
 
     public string ProductName { get => productName; set => productName = value; }
-    public GameObject HolderPrefab { get => holderPrefab; set => holderPrefab = value; }
+    // public GameObject HolderPrefab { get => holderPrefab; set => holderPrefab = value; }
 
     public void Attack()
     {
