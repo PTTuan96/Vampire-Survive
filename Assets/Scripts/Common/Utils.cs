@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class Utils
@@ -41,7 +42,12 @@ public static class Utils
         return new Vector3(randomX, randomY, 0);
     }
 
-        // Get names of all child Transforms
+    public static List<GameObject> GetAllChildren(GameObject parent)
+    {
+        return parent.transform.Cast<Transform>().Select(t => t.gameObject).ToList();
+    }
+
+    // Get names of all child Transforms
     public static List<string> GetChildNames(Transform parent)
     {
         List<string> childNames = new List<string>();
@@ -77,5 +83,50 @@ public static class Utils
         // Optionally, you can set other properties of the new GameObject here
 
         return newGameObject;
+    }
+
+    public static Vector3 GetParentTranform(Transform child)
+    {
+        return child.parent.position;
+    }
+
+    public static int GetLengthListByName(string parentName)
+    {
+        // Find the parent GameObject by name
+        GameObject parentObject = GameObject.Find(parentName);
+
+        if (parentObject != null)
+        {
+            // Get the number of children of the parent GameObject
+            return parentObject.transform.childCount;
+        }
+        else
+        {
+            Debug.Log("Parent object not found");
+        }
+
+        return 0;
+    }
+
+    public static void HorizontalMove(float p_CurrentAngle, float p_OrbitDistance ,out float x, out float z)
+    {
+        // Calculate the new position using polar coordinates (horizontal obit)
+        x = Mathf.Cos(p_CurrentAngle) * p_OrbitDistance;
+        z = Mathf.Sin(p_CurrentAngle) * p_OrbitDistance;
+
+        // How to use ->
+            // Utils.HorizontalMove(p_CurrentAngle, p_OrbitDistance, out float x, out float y);
+            // transform.position = new Vector3(x, 0, y) + parentObject;
+    }
+
+    public static void OrbitMove(float p_CurrentAngle, float p_OrbitDistance ,out float x, out float y)
+    {
+        // Calculate the new position using polar coordinates (horizontal obit)
+        x = Mathf.Cos(p_CurrentAngle) * p_OrbitDistance;
+        y = Mathf.Sin(p_CurrentAngle) * p_OrbitDistance;
+
+        // How to use ->
+            // Utils.HorizontalMove(p_CurrentAngle, p_OrbitDistance, out float x, out float y);
+            // transform.position = new Vector3(x, 0, y) + parentObject;
     }
 }

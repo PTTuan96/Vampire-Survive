@@ -20,17 +20,17 @@ public class Weapon : MonoBehaviour
 
         if (isIceBallsActive)
         {
-            TrySpawnWeapon<IceBalls>(transform.position);
+            // TrySpawnWeapon<IceBalls>(transform.position);
         }
 
         if (isKnifesActive)
         {
-            TrySpawnWeapon<Knifes>(transform.position);
+            // TrySpawnWeapon<Knifes>(transform.position);
         }
 
         if (isSwordsActive)
         {
-            TrySpawnWeapon<Swords>(transform.position);
+            // TrySpawnWeapon<Swords>(transform.position);
         }
     }
 
@@ -44,21 +44,22 @@ public class Weapon : MonoBehaviour
                 if(i == 1)
                 {
                     TrySpawnWeapon<FireBalls>(transform.position);
+                    // UpdateStats();
                 }
 
                 if(i == 2)
                 {
-                    TrySpawnWeapon<IceBalls>(transform.position);
+                    // TrySpawnWeapon<IceBalls>(transform.position);
                 }
 
                 if(i == 3)
                 {
-                    TrySpawnWeapon<Knifes>(transform.position);
+                    // TrySpawnWeapon<Knifes>(transform.position);
                 }
 
                 if(i == 4)
                 {
-                    TrySpawnWeapon<Swords>(transform.position);
+                    // TrySpawnWeapon<Swords>(transform.position);
                 }
             }
         }

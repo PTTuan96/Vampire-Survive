@@ -428,9 +428,9 @@ MonoBehaviour:
   - {fileID: 553751862}
   - {fileID: 2067178474}
   isFireBallsActive: 1
-  isIceBallsActive: 1
-  isKnifesActive: 1
-  isSwordsActive: 1
+  isIceBallsActive: 0
+  isKnifesActive: 0
+  isSwordsActive: 0
 --- !u!1 &309162433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad5f47e529540e48908642ed9a92c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats:
+  - speed: 10
+    damage: 2
+    range: 2
+    timeBetweenAttacks: 0
+    amount: 0
+    duration: 0
+  weaponLevel: 0
+  StatsChange:
+    m_PersistentCalls:
+      m_Calls: []
   spinWeaponPrefabs:
   - {fileID: 1904622686988428872, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
   - {fileID: 6470185105590653225, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
@@ -132437,6 +132448,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51eb5c0095325e34c8ac87e8a21dcf6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: []
+  weaponLevel: 0
+  StatsChange:
+    m_PersistentCalls:
+      m_Calls: []
   throwWeaponPrefabs:
   - {fileID: 6470185105590653225, guid: 7bea019f68cb090408edca0d0f445108, type: 3}
   - {fileID: 6470185105590653225, guid: a662b7980fe508948b67145c7ed22d59, type: 3}

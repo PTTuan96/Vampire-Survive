@@ -28,9 +28,9 @@ Transform:
   m_GameObject: {fileID: 1904622686988428872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.0059, y: 0.0177, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8761923644167564547}
   m_Father: {fileID: 0}
@@ -134,7 +134,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130c89049f958f64894798ac7f1e9880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holderName: FireBalls
+  m_HolderName: FireBalls
+  m_ProductName: FireBall
+  s_DamageMultiple: 1
+  s_RangeMultiple: 1
+  s_SpeedMultiple: 1
+  shouldKnockBack: 1
 --- !u!1 &7917773993465934425
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,8 +168,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 298271056027168666}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}

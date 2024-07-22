@@ -5,6 +5,8 @@ using UnityEngine;
 public interface IWeaponProduct
 {
     string HolderWeaponName { get; set; }
-    // GameObject HolderPrefab { get; set; }
-    void Attack();
+    string ProductWeaponName { get; set; }
+    void Initialize(float damage, float range, float speed);
+
+    void UpdateStats(float angle, float damage, float range, float speed);
 }
