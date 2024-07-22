@@ -82,7 +82,7 @@ public class Weapon : MonoBehaviour
             IWeaponProduct weapon = factory.GetSpecificWeapon<T>(position);
             if (weapon != null)
             {
-                Debug.Log($"Spawned weapon of type {typeof(T)} at position {position}");
+                // Debug.Log($"Spawned weapon of type {typeof(T)} at position {position}");
                 break;
             }
             else

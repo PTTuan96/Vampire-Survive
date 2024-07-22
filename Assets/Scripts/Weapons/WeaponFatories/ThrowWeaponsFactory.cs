@@ -18,6 +18,7 @@ public class ThrowWeaponsFactory : WeaponFactory
                 if(productInstance != null)
                 {
                     CreateHolderOrAddWeapon(component.HolderWeaponName);
+                    return component;
                 } else
                 {
                     Debug.Log("Created weapon with hoder name: " + component.HolderWeaponName);
