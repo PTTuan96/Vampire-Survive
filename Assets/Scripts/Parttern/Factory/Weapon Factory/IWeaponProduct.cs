@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IWeaponProduct
 {
-    string ProductName { get; set; }
+    string HolderWeaponName { get; set; }
     // GameObject HolderPrefab { get; set; }
     void Attack();
 }

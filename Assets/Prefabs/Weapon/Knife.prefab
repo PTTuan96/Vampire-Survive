@@ -143,5 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7658873e588faa438b73c9503c3df68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holderPrefab: {fileID: 0}
-  productName: Knifes
+  holderName: Knifes

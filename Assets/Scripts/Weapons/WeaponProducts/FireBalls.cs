@@ -8,9 +8,9 @@ public class FireBalls : MonoBehaviour, IWeaponProduct
     // [SerializeField] private GameObject holderPrefab;
 
     [Tooltip("This name have to match 100% with the holder gameobject name")]
-    [SerializeField] private string productName;
+    [SerializeField] private string holderName;
 
-    public string ProductName { get => productName; set => productName = value; }
+    public string HolderWeaponName { get => holderName; set => holderName = value; }
     // public GameObject HolderPrefab { get => holderPrefab; set => holderPrefab = value; }
 
     public void Attack()

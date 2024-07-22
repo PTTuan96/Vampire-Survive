@@ -6,12 +6,6 @@ public class Weapon : MonoBehaviour
     [Tooltip("List of weapon factories")]
     [SerializeField] private WeaponFactory[] m_WeaponFactories;
 
-    [Tooltip("List of holder throw weapon prefabs")]
-    [SerializeField] private List<GameObject> holderWeaponPrefabs;
-
-    [Tooltip("List of throw weapon prefabs")]
-    [SerializeField] private List<GameObject> weaponPrefabs;
-
     [SerializeField] private bool isFireBallsActive;
     [SerializeField] private bool isIceBallsActive;
     [SerializeField] private bool isKnifesActive;
@@ -19,54 +13,82 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
-        Vector3 spawnPosition = new Vector3(0, 0, 0);
-
         if (isFireBallsActive)
         {
-            TrySpawnWeapon<FireBalls>(spawnPosition);
+            TrySpawnWeapon<FireBalls>(transform.position);
         }
 
         if (isIceBallsActive)
         {
-            TrySpawnWeapon<IceBalls>(spawnPosition);
+            TrySpawnWeapon<IceBalls>(transform.position);
         }
 
         if (isKnifesActive)
         {
-            TrySpawnWeapon<Knifes>(spawnPosition);
+            TrySpawnWeapon<Knifes>(transform.position);
         }
 
         if (isSwordsActive)
         {
-            TrySpawnWeapon<Swords>(spawnPosition);
+            TrySpawnWeapon<Swords>(transform.position);
         }
     }
 
-    private void TrySpawnWeapon<T>(Vector3 position) where T : Component, IWeaponProduct
+    void Update()
     {
-        IWeaponProduct weapon = GetWeaponFromFactories<T>(position);
-
-        if (weapon != null)
+        for (int i = 0; i <= 9; i++)
         {
-            Debug.Log($"Weapon spawned: {weapon.ProductName}");
-        }
-        else
-        {
-            Debug.LogWarning($"No weapon of type {typeof(T).Name} spawned.");
-        }
-    }
-
-    private T GetWeaponFromFactories<T>(Vector3 position) where T : Component, IWeaponProduct
-    {
-        foreach (WeaponFactory factory in m_WeaponFactories)
-        {
-            T weapon = factory.GetSpecificWeapon<T>(position, holderWeaponPrefabs, weaponPrefabs);
-            if (weapon != null)
+            KeyCode keyCode = KeyCode.Alpha0 + i;
+            if (Input.GetKeyDown(keyCode))
             {
-                return weapon;
+                if(i == 1)
+                {
+                    TrySpawnWeapon<FireBalls>(transform.position);
+                }
+
+                if(i == 2)
+                {
+                    TrySpawnWeapon<IceBalls>(transform.position);
+                }
+
+                if(i == 3)
+                {
+                    TrySpawnWeapon<Knifes>(transform.position);
+                }
+
+                if(i == 4)
+                {
+                    TrySpawnWeapon<Swords>(transform.position);
+                }
             }
         }
+    }
 
-        return null;
+    private void TrySpawnWeapon<T>(Vector3 position) where T : MonoBehaviour, IWeaponProduct
+    {
+        if (m_WeaponFactories == null)
+        {
+            Debug.LogError("m_WeaponFactories is null!");
+            return;
+        }
+        foreach (var factory in m_WeaponFactories)
+        {
+            if (factory == null)
+            {
+                Debug.LogError("Factory is null!");
+                continue;
+            }
+
+            IWeaponProduct weapon = factory.GetSpecificWeapon<T>(position);
+            if (weapon != null)
+            {
+                Debug.Log($"Spawned weapon of type {typeof(T)} at position {position}");
+                break;
+            }
+            else
+            {
+                Debug.LogWarning($"Failed to get weapon of type {typeof(T)} from factory. Need to set holder Name in prefabs weapon product");
+            }
+        }
     }
 }

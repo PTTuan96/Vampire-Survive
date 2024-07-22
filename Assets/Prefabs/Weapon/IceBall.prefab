@@ -133,5 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede39320ff886ff4eb5ffd460d303efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holderPrefab: {fileID: 0}
-  productName: IceBalls
+  holderName: IceBalls

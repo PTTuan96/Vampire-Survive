@@ -40,4 +40,42 @@ public static class Utils
 
         return new Vector3(randomX, randomY, 0);
     }
+
+        // Get names of all child Transforms
+    public static List<string> GetChildNames(Transform parent)
+    {
+        List<string> childNames = new List<string>();
+        int i = 0;
+        foreach (Transform child in parent)
+        {
+            childNames.Add(child.name);
+            i++;
+        }
+        
+        return childNames;
+    }
+
+     // Method to get a direct child GameObject by name
+    public static GameObject GetChildByName(Transform parent, string name)
+    {
+        Transform childTransform = parent.Find(name);
+        return childTransform != null ? childTransform.gameObject : null;
+    }
+
+    // Method to create a GameObject, set its name, and make it a child of the given Transform
+    public static GameObject CreateAndAttachGameObject(Transform parent, string name)
+    {
+        // Create a new GameObject
+        GameObject newGameObject = new GameObject(name);
+
+        // Set the parent Transform
+        if (parent != null)
+        {
+            newGameObject.transform.SetParent(parent, false); // false means don't maintain local position
+        }
+
+        // Optionally, you can set other properties of the new GameObject here
+
+        return newGameObject;
+    }
 }

@@ -134,9 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130c89049f958f64894798ac7f1e9880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attributes:
-  - {fileID: 0}
-  productName: FireBalls
+  holderName: FireBalls
 --- !u!1 &7917773993465934425
 GameObject:
   m_ObjectHideFlags: 0
