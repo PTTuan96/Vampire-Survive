@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static WeaponEnums;
 
 public class Weapon : MonoBehaviour
 {
@@ -13,24 +14,22 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
+        InitializeWeaponMappings();
         if (isFireBallsActive)
         {
-            TrySpawnWeapon<FireBalls>(transform.position);
+            TrySpawnWeapon(WeaponProduct.FireBall);
         }
-
         if (isIceBallsActive)
         {
-            // TrySpawnWeapon<IceBalls>(transform.position);
+            TrySpawnWeapon(WeaponProduct.IceBall);
         }
-
         if (isKnifesActive)
         {
-            // TrySpawnWeapon<Knifes>(transform.position);
+            TrySpawnWeapon(WeaponProduct.Knife);
         }
-
         if (isSwordsActive)
         {
-            // TrySpawnWeapon<Swords>(transform.position);
+            TrySpawnWeapon(WeaponProduct.Sword);
         }
     }
 
@@ -43,29 +42,29 @@ public class Weapon : MonoBehaviour
             {
                 if(i == 1)
                 {
-                    TrySpawnWeapon<FireBalls>(transform.position);
+                    TrySpawnWeapon(WeaponProduct.FireBall);
                     // UpdateStats();
                 }
 
                 if(i == 2)
                 {
-                    // TrySpawnWeapon<IceBalls>(transform.position);
+                    TrySpawnWeapon(WeaponProduct.IceBall);
                 }
 
                 if(i == 3)
                 {
-                    // TrySpawnWeapon<Knifes>(transform.position);
+                    TrySpawnWeapon(WeaponProduct.Knife);
                 }
 
                 if(i == 4)
                 {
-                    // TrySpawnWeapon<Swords>(transform.position);
+                    TrySpawnWeapon(WeaponProduct.Sword);
                 }
             }
         }
     }
 
-    private void TrySpawnWeapon<T>(Vector3 position) where T : MonoBehaviour, IWeaponProduct
+    private void TrySpawnWeapon(WeaponProduct weaponProductParameter)
     {
         if (m_WeaponFactories == null)
         {
@@ -80,15 +79,9 @@ public class Weapon : MonoBehaviour
                 continue;
             }
 
-            IWeaponProduct weapon = factory.GetSpecificWeapon<T>(position);
-            if (weapon != null)
+            if(GetWeaponType(weaponProductParameter) == factory.weaponType)
             {
-                // Debug.Log($"Spawned weapon of type {typeof(T)} at position {position}");
-                break;
-            }
-            else
-            {
-                Debug.LogWarning($"Failed to get weapon of type {typeof(T)} from factory. Need to set holder Name in prefabs weapon product");
+                factory.GetSpecificWeapon(transform.position, weaponProductParameter);
             }
         }
     }

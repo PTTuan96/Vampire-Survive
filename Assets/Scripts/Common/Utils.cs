@@ -78,6 +78,7 @@ public static class Utils
         if (parent != null)
         {
             newGameObject.transform.SetParent(parent, false); // false means don't maintain local position
+            // newGameObject.tag = name; -> can't use because have to declare first
         }
 
         // Optionally, you can set other properties of the new GameObject here
@@ -87,6 +88,15 @@ public static class Utils
 
     public static Vector3 GetParentTranform(Transform child)
     {
+        if(child == null)
+        {
+            Debug.Log("child object not found");
+        }
+        if(child.parent == null)
+        {
+            Debug.Log("child object not found");
+            return Vector3.zero;
+        }
         return child.parent.position;
     }
 

@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static WeaponEnums;
 
 public abstract class WeaponFactory : MonoBehaviour
 {
     [SerializeField] protected List<Attributes> stats;
     [SerializeField] protected int weaponLevel;
+    [SerializeField] public WeaponType weaponType; 
 
     [Tooltip("Notifies listeners of updated Stats percentage")]
     public UnityEvent<float> StatsChange; 
@@ -14,9 +16,9 @@ public abstract class WeaponFactory : MonoBehaviour
     protected GameObject productInstance;
 
     // Abstract method to get a product instance.
-    public abstract IWeaponProduct GetSpecificWeapon<T>(Vector3 position) where T : Component, IWeaponProduct;
+    public abstract IWeaponProduct GetSpecificWeapon(Vector3 position, WeaponProduct weaponProduct);
 
-    protected void CreateHolderOrAddWeapon(string holderName)
+    protected void AddWeapon(string holderName)
     {
         bool exists = Utils.GetChildNames(transform).Contains(holderName);
         GameObject holderObject;
@@ -30,6 +32,42 @@ public abstract class WeaponFactory : MonoBehaviour
         }
 
         productInstance.transform.SetParent(holderObject.transform, true);
+    }
+
+    protected IWeaponProduct[] GetWeaponProduct(WeaponProduct weaponProduct)
+    {
+        IWeaponProduct[] weaponProducts;
+
+        // Find the correct weapon product based on the WeaponProduct enum
+        switch (weaponProduct)
+        {
+            case WeaponProduct.FireBall:
+                weaponProducts = transform.GetComponentsInChildren<FireBall>();
+                break;
+            case WeaponProduct.IceBall:
+                weaponProducts = transform.GetComponentsInChildren<IceBall>();
+                break;
+            case WeaponProduct.Knife:
+                weaponProducts = transform.GetComponentsInChildren<Knife>();
+                break;
+            case WeaponProduct.Sword:
+                weaponProducts = transform.GetComponentsInChildren<Sword>();
+                break;
+                
+            // Add cases for other weapon types
+            default:
+                Debug.LogWarning("Unsupported weapon type: " + weaponProduct);
+                return new IWeaponProduct[0]; // Return an empty array if the weapon type is unsupported
+        }
+
+        // Check if we found any weapon products of the specified type
+        if (weaponProducts.Length > 0)
+        {
+            return weaponProducts; // Return the array of weapon products
+        }
+
+        Debug.LogWarning("No weapon of type " + weaponProduct + " found.");
+        return new IWeaponProduct[0]; // Return an empty array if no weapon products were found
     }
 
     protected void StartToggleParentActiveState(float inactiveDuration, float activeDuration, Transform transform)

@@ -133,4 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede39320ff886ff4eb5ffd460d303efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holderName: IceBalls
+  p_ParticleSystem: {fileID: 0}
+  weaponTypeSelected: 1
+  s_DamageMultiple: 1.2
+  s_RangeMultiple: 2
+  s_SpeedMultiple: 0.5
+  shouldKnockBack: 1
+  p_HolderName: IceBalls
+  p_ProductName: IceBall

@@ -143,4 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b828b68443365419af32c2c5f32758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holderName: Swords
+  p_ParticleSystem: {fileID: 0}
+  weaponTypeSelected: 3
+  s_DamageMultiple: 0
+  s_RangeMultiple: 0
+  s_SpeedMultiple: 0
+  shouldKnockBack: 0
+  p_HolderName: Swords
+  p_ProductName: Sword

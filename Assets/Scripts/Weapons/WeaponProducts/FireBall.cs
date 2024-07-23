@@ -1,40 +1,27 @@
 using UnityEngine;
+using static WeaponEnums;
 
-public class FireBalls : MonoBehaviour, IWeaponProduct
+public class FireBall : WeaponProductBase, IWeaponProduct
 {
-    // [Tooltip("Why this cannot attached by any Gameobject?")]
-    // [SerializeField] private GameObject holderPrefab;
+    [SerializeField] private string p_HolderName = "FireBalls";
+    [SerializeField] private string p_ProductName = "FireBall";
+    public string HolderWeaponName { get => p_HolderName; set => p_HolderName = value; }
+    public string ProductWeaponName { get => p_ProductName; set => p_ProductName = value; }
 
-    [Tooltip("This name have to match 100% with the holder gameobject name")]
-    [SerializeField] private string m_HolderName = "FireBalls";
-    public string HolderWeaponName { get => m_HolderName; set => m_HolderName = value; }
-    
-    [SerializeField] private string m_ProductName = "FireBall";
-    public string ProductWeaponName { get => m_ProductName; set => m_ProductName = value; }
-
-    [SerializeField] private float s_DamageMultiple;
-    [SerializeField] private float s_RangeMultiple;
-    [SerializeField] private float s_SpeedMultiple;
-    [SerializeField] private bool shouldKnockBack;
     private float p_Damage;
     private float p_OrbitDistance;
     private float p_OrbitSpeed;
 
     private float p_CurrentAngle;
-    private ParticleSystem p_ParticleSystem;
-
-    public void Initialize(float damage, float range, float speed)
+    
+    public void Initialize()
     {
-        // Add any unique set up logic here
-        gameObject.name = m_ProductName;
+        Initialize(ProductWeaponName);
+    }
 
-        p_ParticleSystem = GetComponentInChildren<ParticleSystem>();
-
-        if (p_ParticleSystem != null)
-        {
-            p_ParticleSystem.Stop();
-            p_ParticleSystem.Play();
-        }
+    public bool IsSelectedWeapon(WeaponProduct weaponProduct)
+    {
+        return weaponProduct == weaponTypeSelected;
     }
 
     private void Update()
