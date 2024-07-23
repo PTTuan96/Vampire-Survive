@@ -8,8 +8,11 @@ public class IceBall : WeaponProductBase, IWeaponProduct
     [Tooltip("This name have to match 100% with the holder gameobject name")]
     [SerializeField] private string p_HolderName = "IceBalls";
     [SerializeField] private string p_ProductName = "IceBall";
+    [SerializeField] protected WeaponProduct p_WeaponTypeSelected = WeaponProduct.IceBall; // Have to validate this
+    
     public string HolderWeaponName { get => p_HolderName; set => p_HolderName = value; }
     public string ProductWeaponName { get => p_ProductName; set => p_ProductName = value; }
+    public WeaponProduct WeaponTypeSelected { get => p_WeaponTypeSelected; set => p_WeaponTypeSelected = value; }
 
     private float p_Damage;
     private float p_OrbitDistance;
@@ -24,7 +27,7 @@ public class IceBall : WeaponProductBase, IWeaponProduct
 
     public bool IsSelectedWeapon(WeaponProduct weaponProduct)
     {
-        return weaponProduct == weaponTypeSelected;
+        return weaponProduct == WeaponTypeSelected;
     }
 
     private void Update()

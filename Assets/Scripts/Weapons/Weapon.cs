@@ -17,19 +17,21 @@ public class Weapon : MonoBehaviour
         InitializeWeaponMappings();
         if (isFireBallsActive)
         {
-            TrySpawnWeapon(WeaponProduct.FireBall);
+            TrySpawnWeapon(WeaponProduct.FireBall, false);
+            TrySpawnWeapon(WeaponProduct.FireBall, true);
         }
         if (isIceBallsActive)
         {
-            TrySpawnWeapon(WeaponProduct.IceBall);
+            TrySpawnWeapon(WeaponProduct.IceBall, false);
+            TrySpawnWeapon(WeaponProduct.IceBall, true);
         }
         if (isKnifesActive)
         {
-            TrySpawnWeapon(WeaponProduct.Knife);
+            TrySpawnWeapon(WeaponProduct.Knife, false);
         }
         if (isSwordsActive)
         {
-            TrySpawnWeapon(WeaponProduct.Sword);
+            TrySpawnWeapon(WeaponProduct.Sword, false);
         }
     }
 
@@ -42,29 +44,29 @@ public class Weapon : MonoBehaviour
             {
                 if(i == 1)
                 {
-                    TrySpawnWeapon(WeaponProduct.FireBall);
+                    TrySpawnWeapon(WeaponProduct.FireBall, true);
                     // UpdateStats();
                 }
 
                 if(i == 2)
                 {
-                    TrySpawnWeapon(WeaponProduct.IceBall);
+                    TrySpawnWeapon(WeaponProduct.IceBall, true);
                 }
 
                 if(i == 3)
                 {
-                    TrySpawnWeapon(WeaponProduct.Knife);
+                    TrySpawnWeapon(WeaponProduct.Knife, true);
                 }
 
                 if(i == 4)
                 {
-                    TrySpawnWeapon(WeaponProduct.Sword);
+                    TrySpawnWeapon(WeaponProduct.Sword, true);
                 }
             }
         }
     }
 
-    private void TrySpawnWeapon(WeaponProduct weaponProductParameter)
+    private void TrySpawnWeapon(WeaponProduct weaponProductParameter, bool isUpdate)
     {
         if (m_WeaponFactories == null)
         {
@@ -81,7 +83,10 @@ public class Weapon : MonoBehaviour
 
             if(GetWeaponType(weaponProductParameter) == factory.weaponType)
             {
-                factory.GetSpecificWeapon(transform.position, weaponProductParameter);
+                if(!isUpdate)
+                    factory.GetSpecificWeapon(transform.position, weaponProductParameter);
+                else
+                    factory.SetStatsWeaponEachFactory(weaponProductParameter);
             }
         }
     }

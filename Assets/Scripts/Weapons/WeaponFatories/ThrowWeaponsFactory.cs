@@ -36,6 +36,11 @@ public class ThrowWeaponsFactory : WeaponFactory
         return null;
     }
 
+    public override void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
+    {
+        throw new System.NotImplementedException();
+    }
+
     void Update()
     {
         // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)

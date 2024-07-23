@@ -6,9 +6,10 @@ using static WeaponEnums;
 
 public abstract class WeaponFactory : MonoBehaviour
 {
+    [SerializeField] public WeaponType weaponType; 
     [SerializeField] protected List<Attributes> stats;
     [SerializeField] protected int weaponLevel;
-    [SerializeField] public WeaponType weaponType; 
+    protected bool statsUpdated;
 
     private Coroutine toggleCoroutine;
 
@@ -20,6 +21,7 @@ public abstract class WeaponFactory : MonoBehaviour
 
     // Abstract method to get a product instance.
     public abstract IWeaponProduct GetSpecificWeapon(Vector3 position, WeaponProduct weaponProduct);
+    public abstract void SetStatsWeaponEachFactory(WeaponProduct weaponProduct);
 
     protected void AddWeapon(string holderName)
     {
@@ -113,6 +115,16 @@ public abstract class WeaponFactory : MonoBehaviour
             Debug.LogWarning("IWeaponProduct does not have an associated GameObject.");
         }
     }
+    }
+
+    public void LevelUp()
+    {
+        if(weaponLevel < stats.Count - 1)
+        {
+            weaponLevel++;
+
+            statsUpdated = true;
+        }
     }
 
     public string GetLog(IEnemyProduct product)

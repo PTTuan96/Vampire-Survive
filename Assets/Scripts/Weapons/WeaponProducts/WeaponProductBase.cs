@@ -7,9 +7,6 @@ public class WeaponProductBase : MonoBehaviour
     // [SerializeField] private GameObject holderPrefab;
     [SerializeField] protected ParticleSystem p_ParticleSystem;
 
-    // Have to validate this
-    [SerializeField] protected WeaponProduct weaponTypeSelected;
-
     [SerializeField] protected float s_DamageMultiple;
     [SerializeField] protected float s_RangeMultiple;
     [SerializeField] protected float s_SpeedMultiple;

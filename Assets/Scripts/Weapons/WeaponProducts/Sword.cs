@@ -7,9 +7,11 @@ public class Sword : WeaponProductBase, IWeaponProduct
 {
     [SerializeField] private string p_HolderName = "Swords";
     [SerializeField] private string p_ProductName = "Sword";
+    [SerializeField] protected WeaponProduct p_WeaponTypeSelected = WeaponProduct.Sword; // Have to validate this
+    
     public string HolderWeaponName { get => p_HolderName; set => p_HolderName = value; }
     public string ProductWeaponName { get => p_ProductName; set => p_ProductName = value; }
-
+    public WeaponProduct WeaponTypeSelected { get => p_WeaponTypeSelected; set => p_WeaponTypeSelected = value; }
     private float p_Damage;
     private float p_OrbitDistance;
     private float p_OrbitSpeed;
@@ -23,7 +25,7 @@ public class Sword : WeaponProductBase, IWeaponProduct
 
     public bool IsSelectedWeapon(WeaponProduct weaponProduct)
     {
-        return weaponProduct == weaponTypeSelected;
+        return weaponProduct == WeaponTypeSelected;
     }
 
 

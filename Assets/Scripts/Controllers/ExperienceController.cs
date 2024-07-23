@@ -6,6 +6,7 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
 {
     private UIController uiController;
 
+    [SerializeField] private WeaponFactory[] weaponFactories;
     [SerializeField]  private ExpItem expItem;
     public int currentExp;
 
@@ -55,6 +56,11 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
         if(currentLv >= expLevels.Length)
         {
             currentLv = expLevels.Length - 1;
+        }
+
+        foreach(WeaponFactory  weaponFactory in weaponFactories)
+        {
+            weaponFactory.LevelUp();
         }
     }
 }

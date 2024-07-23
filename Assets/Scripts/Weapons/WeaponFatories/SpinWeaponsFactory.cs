@@ -30,9 +30,6 @@ public class SpinWeaponsFactory : WeaponFactory
                         // Initialize the created weapon product
                         createdProduct.Initialize();
 
-                        // Update stats for the weapon based on its type
-                        SetStatsWeaponEachFactory(weaponProduct);
-
                         // Return the created weapon product
                         return createdProduct;
                     }
@@ -46,9 +43,24 @@ public class SpinWeaponsFactory : WeaponFactory
 
     void Update()
     {
+        if(statsUpdated)
+        {
+            statsUpdated = false;
+
+            foreach (GameObject prefab in spinWeaponPrefabs)
+            {
+                // Check if the prefab has an IWeaponProduct component
+                if (prefab.TryGetComponent<IWeaponProduct>(out var component))
+                {
+                    GetSpecificWeapon(transform.position, component.WeaponTypeSelected);
+                    // Update stats for the weapon based on its type
+                    SetStatsWeaponEachFactory(component.WeaponTypeSelected);
+                }
+            }
+        }
     }
 
-    protected void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
+    public override void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
     {
         IWeaponProduct[] weaponProducts = GetWeaponProduct(weaponProduct);
 

@@ -7,6 +7,6 @@ public class Attributes
     public float damage;
     public float range;
     public float timeBetweenAttacks;
-    public float amount;
     public float duration;
+    // public float amount;
 }
