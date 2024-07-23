@@ -67,7 +67,7 @@ public class IceBall : WeaponProductBase, IWeaponProduct
         if(collider2D.CompareTag("Enemy"))
         {
             // CheckCollisionInterfaces(collider2D);
-            
+
             var damageable = collider2D.GetComponent<IDamageable>();
             damageable?.TakeDamage(p_Damage, shouldKnockBack);
         }

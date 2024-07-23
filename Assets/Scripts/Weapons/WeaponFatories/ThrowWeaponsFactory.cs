@@ -39,6 +39,6 @@ public class ThrowWeaponsFactory : WeaponFactory
     void Update()
     {
         // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)
-        StartToggleParentActiveState(stats[weaponLevel].timeBetweenAttacks, stats[weaponLevel].duration, transform);
+        // StartToggleParentActiveState(stats[weaponLevel].timeBetweenAttacks, stats[weaponLevel].duration, transform);
     }
 }

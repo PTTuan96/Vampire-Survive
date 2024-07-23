@@ -46,8 +46,6 @@ public class SpinWeaponsFactory : WeaponFactory
 
     void Update()
     {
-        // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)
-        // StartToggleParentActiveState(stats[weaponLevel].timeBetweenAttacks, stats[weaponLevel].duration, transform);
     }
 
     protected void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
@@ -75,6 +73,16 @@ public class SpinWeaponsFactory : WeaponFactory
                 stats[weaponLevel].speed
             );
             i++;
+
+            // Example usage: add weapons to the list and start the toggle coroutine
+            activeWeapons.Add(weapon);
         }
+
+        // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)
+            StartToggleParentActiveState(
+                stats[weaponLevel].timeBetweenAttacks, 
+                stats[weaponLevel].duration, 
+                activeWeapons
+            );
     }
 }

@@ -1189,9 +1189,9 @@ MonoBehaviour:
   - speed: 10
     damage: 2
     range: 2
-    timeBetweenAttacks: 0
+    timeBetweenAttacks: 3
     amount: 0
-    duration: 0
+    duration: 4
   weaponLevel: 0
   weaponType: 0
   StatsChange:

@@ -10,9 +10,12 @@ public abstract class WeaponFactory : MonoBehaviour
     [SerializeField] protected int weaponLevel;
     [SerializeField] public WeaponType weaponType; 
 
+    private Coroutine toggleCoroutine;
+
     [Tooltip("Notifies listeners of updated Stats percentage")]
     public UnityEvent<float> StatsChange; 
 
+    protected List<IWeaponProduct> activeWeapons = new List<IWeaponProduct>();
     protected GameObject productInstance;
 
     // Abstract method to get a product instance.
@@ -70,42 +73,46 @@ public abstract class WeaponFactory : MonoBehaviour
         return new IWeaponProduct[0]; // Return an empty array if no weapon products were found
     }
 
-    protected void StartToggleParentActiveState(float inactiveDuration, float activeDuration, Transform transform)
+    protected void StartToggleParentActiveState(float inactiveDuration, float activeDuration, List<IWeaponProduct> weaponProducts)
     {
-
-        List<GameObject> holders = Utils.GetAllChildren(transform.gameObject);
-        foreach(GameObject holder in holders)
-            {
-                if (holders != null)
-            {
-                StartCoroutine(ToggleParentActiveCoroutine(inactiveDuration, activeDuration, holder));
-            }
-            else
-            {
-                Debug.LogWarning("m_ProductParent GameObject is not assigned.");
-            }
+        // Stop any existing coroutine before starting a new one
+        if (toggleCoroutine != null)
+        {
+            StopCoroutine(toggleCoroutine);
         }
-        
+
+        // Update the list of active weapons
+        activeWeapons = weaponProducts;
+
+        StartCoroutine(ToggleParentActiveCoroutine(inactiveDuration, activeDuration));
     }
 
-    private IEnumerator ToggleParentActiveCoroutine(float inactiveDuration, float activeDuration, GameObject holder)
+    protected IEnumerator ToggleParentActiveCoroutine(float inactiveDuration, float activeDuration)
     {
         while (true) // Loop indefinitely
         {
-            SetChildObjectsActive(true, holder); // Activate the object
+            SetChildObjectsActive(true); // Activate the object
             yield return new WaitForSeconds(activeDuration); // Wait for the active duration
 
-            SetChildObjectsActive(false, holder); // Deactivate the object
+            SetChildObjectsActive(false); // Deactivate the object
             yield return new WaitForSeconds(inactiveDuration); // Wait for the inactive duration
         }
     }
 
-    void SetChildObjectsActive(bool isActive, GameObject holder)
+    protected void SetChildObjectsActive(bool isActive)
     {
-        foreach (GameObject child in Utils.GetAllChildren(holder))
+        foreach (IWeaponProduct weaponProduct in activeWeapons)
+    {
+        GameObject weaponGameObject = (weaponProduct as MonoBehaviour)?.gameObject;
+        if (weaponGameObject != null)
         {
-            child.SetActive(isActive);
+            weaponGameObject.SetActive(isActive); // Set the active state of the GameObject
         }
+        else
+        {
+            Debug.LogWarning("IWeaponProduct does not have an associated GameObject.");
+        }
+    }
     }
 
     public string GetLog(IEnemyProduct product)
