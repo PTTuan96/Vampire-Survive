@@ -3,10 +3,12 @@ using UnityEngine;
 [System.Serializable]
 public class Attributes
 {
-    public float speed;
-    public float damage;
-    public float range;
-    public float timeBetweenAttacks;
-    public float duration;
-    // public float amount;
+    public float Speed;
+    public float Damage;
+    public float Range;
+    public float TimeBetweenAttacks;
+    public float Duration;
+    public float Amount;
+
+    public string UpgradeText;
 }

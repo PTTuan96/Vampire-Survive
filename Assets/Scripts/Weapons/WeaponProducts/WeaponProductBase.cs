@@ -6,7 +6,7 @@ public class WeaponProductBase : MonoBehaviour
     // [Tooltip("Why this cannot attached by any Gameobject?")]
     // [SerializeField] private GameObject holderPrefab;
     [SerializeField] protected ParticleSystem p_ParticleSystem;
-
+    [SerializeField] protected Sprite p_SpriteRenderer; 
     [SerializeField] protected float s_DamageMultiple;
     [SerializeField] protected float s_RangeMultiple;
     [SerializeField] protected float s_SpeedMultiple;

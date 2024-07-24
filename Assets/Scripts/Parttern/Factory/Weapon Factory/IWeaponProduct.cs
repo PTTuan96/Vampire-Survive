@@ -1,9 +1,11 @@
+using UnityEngine;
 using static WeaponEnums;
 
 public interface IWeaponProduct
 {
     string HolderWeaponName { get; set; }
     string ProductWeaponName { get; set; }
+    Sprite SpriteRenderer  { get; set;}
     WeaponProduct WeaponTypeSelected { get; set; }
 
     void Initialize();

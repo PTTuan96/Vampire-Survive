@@ -7,7 +7,7 @@ public class SpinWeaponsFactory : WeaponFactory
     [Tooltip("List of spin weapon prefabs")]
     [SerializeField] private List<GameObject> spinWeaponPrefabs;
 
-    public override IWeaponProduct GetSpecificWeapon(Vector3 position, WeaponProduct weaponProduct)
+    public override IWeaponProduct CreateWeaponProduct(WeaponProduct weaponProduct)
     {
         // Iterate through all weapon prefabs
         foreach (GameObject prefab in spinWeaponPrefabs)
@@ -19,17 +19,17 @@ public class SpinWeaponsFactory : WeaponFactory
                 if (component.IsSelectedWeapon(weaponProduct))
                 {
                     // Instantiate the prefab at the specified position
-                    productInstance = Instantiate(prefab, position, Quaternion.identity);
+                    GameObject productInstance = Instantiate(prefab, transform.position, Quaternion.identity);
                     
                     // Check if the instantiated product has an IWeaponProduct component
                     if (productInstance.TryGetComponent<IWeaponProduct>(out var createdProduct))
                     {
                         // Add the weapon to the factory's collection (if applicable)
-                        AddWeapon(createdProduct.HolderWeaponName);
+                        AddWeapon(createdProduct.HolderWeaponName, productInstance);
 
                         // Initialize the created weapon product
                         createdProduct.Initialize();
-
+                        
                         // Return the created weapon product
                         return createdProduct;
                     }
@@ -41,60 +41,72 @@ public class SpinWeaponsFactory : WeaponFactory
         return null;
     }
 
+    void Start()
+    {
+        // uIController.LevelUpButtons[0].UpdateButtonDisplay(this); // this = WeaponFactory
+    }
+
     void Update()
     {
-        if(statsUpdated)
-        {
-            statsUpdated = false;
+        // if(statsUpdated)
+        // {
+        //     statsUpdated = false;
 
-            foreach (GameObject prefab in spinWeaponPrefabs)
-            {
-                // Check if the prefab has an IWeaponProduct component
-                if (prefab.TryGetComponent<IWeaponProduct>(out var component))
-                {
-                    GetSpecificWeapon(transform.position, component.WeaponTypeSelected);
-                    // Update stats for the weapon based on its type
-                    SetStatsWeaponEachFactory(component.WeaponTypeSelected);
-                }
-            }
-        }
+        //     foreach (GameObject prefab in spinWeaponPrefabs)
+        //     {
+        //         // Check if the prefab has an IWeaponProduct component
+        //         if (prefab.TryGetComponent<IWeaponProduct>(out var component))
+        //         {
+        //             CreateWeaponProduct(component.WeaponTypeSelected);
+        //             // Update stats for the weapon based on its type
+        //             SetStatsWeaponEachFactory(component.WeaponTypeSelected);
+        //         }
+        //     }
+        // }
     }
 
     public override void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
     {
-        IWeaponProduct[] weaponProducts = GetWeaponProduct(weaponProduct);
-
-        if (weaponProducts == null || weaponProducts.Length == 0)
+        if(Stats.Count > 0)
         {
-            Debug.LogWarning("No weapons of type " + weaponProduct + " found under the transform.");
-            return;
-        }
+            IWeaponProduct[] weaponProducts = GetWeaponProduct(weaponProduct);
 
-        // Calculate the angle step based on the number of weapons
-        float angleStep = 360f / weaponProducts.Length;
-        int i = 1;
+            if (weaponProducts == null || weaponProducts.Length == 0)
+            {
+                Debug.LogWarning("No weapons of type " + weaponProduct + " found under the transform.");
+                return;
+            }
 
-        foreach (IWeaponProduct weapon in weaponProducts)
-        {
-            // Calculate the angle for this weapon
-            float angle = i * angleStep * Mathf.Deg2Rad;
-            weapon.UpdateStats(
-                angle, 
-                stats[weaponLevel].damage, 
-                stats[weaponLevel].range, 
-                stats[weaponLevel].speed
-            );
-            i++;
+            int weaponLevel = GetWeaponLevel(weaponProduct);
 
-            // Example usage: add weapons to the list and start the toggle coroutine
-            activeWeapons.Add(weapon);
-        }
+            // Calculate the angle step based on the number of weapons
+            float angleStep = 360f / weaponProducts.Length;
+            int i = 1;
 
-        // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)
+            foreach (IWeaponProduct weapon in weaponProducts)
+            {
+                // Calculate the angle for this weapon
+                float angle = i * angleStep * Mathf.Deg2Rad;
+                weapon.UpdateStats(
+                    angle, 
+                    Stats[weaponLevel].Damage, 
+                    Stats[weaponLevel].Range, 
+                    Stats[weaponLevel].Speed
+                );
+                i++;
+
+                // Example usage: add weapons to the list and start the toggle coroutine
+                activeWeapons.Add(weapon);
+            }
+
+            // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)
             StartToggleParentActiveState(
-                stats[weaponLevel].timeBetweenAttacks, 
-                stats[weaponLevel].duration, 
-                activeWeapons
+                Stats[weaponLevel].TimeBetweenAttacks, 
+                Stats[weaponLevel].Duration
             );
+        } else
+        {
+            Debug.Log("Stats.Count = 0 in SetStatsWeaponEachFactory method");
+        }
     }
 }

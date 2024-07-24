@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1904622686988428872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0059, y: 0.0177, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -134,12 +134,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130c89049f958f64894798ac7f1e9880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HolderName: FireBalls
-  m_ProductName: FireBall
+  p_ParticleSystem: {fileID: 6205710592234414663}
+  p_SpriteRenderer: {fileID: -196789849, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   s_DamageMultiple: 1
   s_RangeMultiple: 1
   s_SpeedMultiple: 1
   shouldKnockBack: 1
+  p_HolderName: FireBalls
+  p_ProductName: FireBall
+  p_WeaponTypeSelected: 0
 --- !u!1 &7917773993465934425
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6470185105590653225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0331, y: 0.0816, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -144,10 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p_ParticleSystem: {fileID: 0}
-  weaponTypeSelected: 2
-  s_DamageMultiple: 0
-  s_RangeMultiple: 0
-  s_SpeedMultiple: 0
+  p_SpriteRenderer: {fileID: -1283994490, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
+  s_DamageMultiple: 1.5
+  s_RangeMultiple: 1
+  s_SpeedMultiple: 10
   shouldKnockBack: 0
   p_HolderName: Knifes
   p_ProductName: Knife
+  p_WeaponTypeSelected: 2

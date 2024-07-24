@@ -1,16 +1,27 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviourSingleton<UIController>
 {
-    public Slider expLvlSilder;
-    public TMP_Text expLvlText;
+    public Slider ExpLvlSilder;
+    public TMP_Text ExpLvlText;
+
+    public LevelUpSelectionButton[] LevelUpButtons;
+
+    public GameObject levelUpPanel;
 
     public void UpdateExp(int currentExp, int lvlExp, int currentLvl)
     {
-        expLvlSilder.maxValue = lvlExp;
-        expLvlSilder.value = currentExp;
+        ExpLvlSilder.maxValue = lvlExp;
+        ExpLvlSilder.value = currentExp;
 
-        expLvlText.text = "Level: " + currentLvl;
+        ExpLvlText.text = "Level: " + currentLvl;
+    }
+
+    public void SkipLevelUp()
+    {
+        levelUpPanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

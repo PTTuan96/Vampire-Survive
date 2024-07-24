@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class WeaponEnums
 {
+    public static int Level_1 = 1;
+    public static bool SET_ACTIVE = true;
+    public static bool SET_DEACTIVE = false;
+
     public enum WeaponProduct
     {
         FireBall,

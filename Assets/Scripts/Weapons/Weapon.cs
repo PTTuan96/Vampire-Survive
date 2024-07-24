@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using static WeaponEnums;
 
@@ -7,71 +7,96 @@ public class Weapon : MonoBehaviour
     [Tooltip("List of weapon factories")]
     [SerializeField] private WeaponFactory[] m_WeaponFactories;
 
+    private WeaponFactory weaponFactory;
+
     [SerializeField] private bool isFireBallsActive;
     [SerializeField] private bool isIceBallsActive;
     [SerializeField] private bool isKnifesActive;
     [SerializeField] private bool isSwordsActive;
 
-    void Start()
+    void Awake()
     {
         InitializeWeaponMappings();
-        if (isFireBallsActive)
-        {
-            TrySpawnWeapon(WeaponProduct.FireBall, false);
-            TrySpawnWeapon(WeaponProduct.FireBall, true);
-        }
-        if (isIceBallsActive)
-        {
-            TrySpawnWeapon(WeaponProduct.IceBall, false);
-            TrySpawnWeapon(WeaponProduct.IceBall, true);
-        }
-        if (isKnifesActive)
-        {
-            TrySpawnWeapon(WeaponProduct.Knife, false);
-        }
-        if (isSwordsActive)
-        {
-            TrySpawnWeapon(WeaponProduct.Sword, false);
-        }
+        CreateAllWeapons();
     }
 
     void Update()
     {
-        for (int i = 0; i <= 9; i++)
+        // for (int i = 0; i <= 9; i++)
+        // {
+        //     KeyCode keyCode = KeyCode.Alpha0 + i;
+        //     if (Input.GetKeyDown(keyCode))
+        //     {
+        //         if(i == 1)
+        //         {
+        //             TrySpawnWeapon(WeaponProduct.FireBall, true);
+        //             // UpdateStats();
+        //         }
+
+        //         if(i == 2)
+        //         {
+        //             TrySpawnWeapon(WeaponProduct.IceBall, true);
+        //         }
+
+        //         if(i == 3)
+        //         {
+        //             TrySpawnWeapon(WeaponProduct.Knife, true);
+        //         }
+
+        //         if(i == 4)
+        //         {
+        //             TrySpawnWeapon(WeaponProduct.Sword, true);
+        //         }
+        //     }
+        // }
+    }
+
+    private void CreateAllWeapons()
+    {
+        // Get the type of the WeaponType enum
+        Type enumType = typeof(WeaponType);
+
+        // Get all enum values
+        Array enumValues = Enum.GetValues(enumType);
+
+        foreach (WeaponProduct weaponProduct in enumValues)
         {
-            KeyCode keyCode = KeyCode.Alpha0 + i;
-            if (Input.GetKeyDown(keyCode))
+            foreach(WeaponFactory weaponFactory in m_WeaponFactories)
             {
-                if(i == 1)
+                IWeaponProduct product = weaponFactory.CreateWeaponProduct(weaponProduct);
+                if(product != null)
                 {
-                    TrySpawnWeapon(WeaponProduct.FireBall, true);
-                    // UpdateStats();
-                }
-
-                if(i == 2)
-                {
-                    TrySpawnWeapon(WeaponProduct.IceBall, true);
-                }
-
-                if(i == 3)
-                {
-                    TrySpawnWeapon(WeaponProduct.Knife, true);
-                }
-
-                if(i == 4)
-                {
-                    TrySpawnWeapon(WeaponProduct.Sword, true);
+                    weaponFactory.SetWeaponLevel(weaponProduct, Level_1);
                 }
             }
         }
     }
 
-    private void TrySpawnWeapon(WeaponProduct weaponProductParameter, bool isUpdate)
+    public void SetActiveWeapon(WeaponProduct weaponProduct, bool set)
+    {
+        GetWeaponFactory(weaponProduct).SetActiveWeapon(weaponProduct, set);
+    }
+
+    public int GetWeaponLevel(WeaponProduct weaponProduct)
+    {
+        return GetWeaponFactory(weaponProduct).GetWeaponLevel(weaponProduct);
+    }
+
+    public void TrySpawnWeapon(WeaponProduct weaponProductParameter, bool isUpdate)
+    {
+        weaponFactory = GetWeaponFactory(weaponProductParameter);
+        if(!isUpdate)
+            weaponFactory.CreateWeaponProduct(weaponProductParameter);
+        else
+            weaponFactory.SetStatsWeaponEachFactory(weaponProductParameter);
+    }
+
+    public WeaponFactory GetWeaponFactory(WeaponProduct weaponProductParameter)
     {
         if (m_WeaponFactories == null)
         {
             Debug.LogError("m_WeaponFactories is null!");
-            return;
+            return null;
         }
         foreach (var factory in m_WeaponFactories)
         {
@@ -81,13 +106,16 @@ public class Weapon : MonoBehaviour
                 continue;
             }
 
-            if(GetWeaponType(weaponProductParameter) == factory.weaponType)
+            if(GetWeaponType(weaponProductParameter) == factory.WeaponType)
             {
-                if(!isUpdate)
-                    factory.GetSpecificWeapon(transform.position, weaponProductParameter);
-                else
-                    factory.SetStatsWeaponEachFactory(weaponProductParameter);
+                return factory;
             }
         }
+        return null;
+    }
+
+    public IWeaponProduct GetWeaponInfo(WeaponProduct weaponProduct)
+    {
+        return GetWeaponFactory(weaponProduct).GetWeaponInfo(weaponProduct);
     }
 }

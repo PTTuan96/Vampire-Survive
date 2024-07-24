@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static WeaponEnums;
@@ -8,37 +7,43 @@ public class ThrowWeaponsFactory : WeaponFactory
     [Tooltip("List of throw weapon prefabs")]
     [SerializeField] private List<GameObject> throwWeaponPrefabs;
 
-    public override IWeaponProduct GetSpecificWeapon(Vector3 position, WeaponProduct weaponProduct)
+    public override IWeaponProduct CreateWeaponProduct(WeaponProduct weaponProduct)
     {
+        // Iterate through all weapon prefabs
         foreach (GameObject prefab in throwWeaponPrefabs)
         {
-            IWeaponProduct component = prefab.GetComponent<IWeaponProduct>();
-            if (component != null)
+            // Check if the prefab has an IWeaponProduct component
+            if (prefab.TryGetComponent<IWeaponProduct>(out var component))
             {
-                GameObject productInstance = Instantiate(prefab, position, Quaternion.identity);
-                IWeaponProduct createdProduct = productInstance.GetComponent<IWeaponProduct>();
-                
-                if (createdProduct != null)
+                // Check if the component matches the specified weaponProduct
+                if (component.IsSelectedWeapon(weaponProduct))
                 {
-                    if (createdProduct.IsSelectedWeapon(weaponProduct)) // Use the general method
+                    // Instantiate the prefab at the specified position
+                    GameObject productInstance = Instantiate(prefab, transform.position, Quaternion.identity);
+                    
+                    // Check if the instantiated product has an IWeaponProduct component
+                    if (productInstance.TryGetComponent<IWeaponProduct>(out var createdProduct))
                     {
-                        AddWeapon(createdProduct.HolderWeaponName);
+                        // Add the weapon to the factory's collection (if applicable)
+                        AddWeapon(createdProduct.HolderWeaponName, productInstance);
 
+                        // Initialize the created weapon product
                         createdProduct.Initialize();
-
-                        // SetStatsWeaponEachFactory();
+                        
+                        // Return the created weapon product
                         return createdProduct;
                     }
                 }
             }
         }
 
+        // Return null if no matching weapon was found
         return null;
     }
 
     public override void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     void Update()
