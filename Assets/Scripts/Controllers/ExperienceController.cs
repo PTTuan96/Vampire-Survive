@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static WeaponEnums;
 
@@ -8,14 +9,17 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
     private UIController uIController;
 
     [SerializeField] private ExpItem expItem;
-    [SerializeField] private Weapon assignWeapon;
-    
-    private int currentExp;
-    private int[] expLevels;
-    private int currentLv = 1;
-    private int levelCount = 100;
 
+    [SerializeField] private Weapon assignWeapon;
     private List<WeaponProduct> availableWeaponProducts;
+    private List<IWeaponProduct> weaponProducts;
+
+    [SerializeField] private int levelCount = 100;
+    private int p_CurrentPlayerExp;
+    private int[] p_PlayerExpLevels;
+    private int p_PlayerCurrentLvl = 1;
+    
+
 
     private void Awake()
     {
@@ -25,18 +29,24 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
     // Start is called before the first frame update
     void Start()
     {   
-        // expLevels = new int[levelCount];
-        // expLevels[0] = 10;
-        // for(int i = 1; i < expLevels.Length - 1; i ++)
-        // {   
-        //     expLevels[i] = Mathf.CeilToInt(expLevels[i - 1] * 1.1f);
-        // }
+        InitiatePlayerExp();
 
         // Show level up panel
         uIController.levelUpPanel.SetActive(true);
-
         Time.timeScale = 0f; // pause the game
+
+        weaponProducts = assignWeapon.CreateAllWeapons();
         UpdateWeapon();
+    }
+
+    private void InitiatePlayerExp()
+    {
+        p_PlayerExpLevels = new int[levelCount]; // Number of level -> level Count = 100  
+        p_PlayerExpLevels[0] = 10; // Exp for Level up -> after 10 exp will level up from 0 -> 1
+        for(int i = 1; i < p_PlayerExpLevels.Length - 1; i ++)
+        {   
+            p_PlayerExpLevels[i] = Mathf.CeilToInt(p_PlayerExpLevels[i - 1] * 1.1f); // Each time level up Exp need to up * 1.1
+        }
     }
 
     private void UpdateAvailableWeaponProducts()
@@ -59,39 +69,36 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
         {
             WeaponProduct? randomWeaponProduct = GetRandomWeaponProduct();
             
-            if (randomWeaponProduct.HasValue)
+            if(randomWeaponProduct.HasValue)
             {   
-                IWeaponProduct weaponProduct = assignWeapon.GetWeaponInfo(randomWeaponProduct.Value);
-                if(weaponProduct != null)
+                IWeaponProduct weaponProduct = weaponProducts.FirstOrDefault(weapon => weapon.WeaponTypeSelected == randomWeaponProduct.Value);;
+                int weaponLevel = assignWeapon.GetWeaponLevel(randomWeaponProduct.Value) + 1;
+                if(weaponProduct != null && weaponLevel > 0)
                 {
                     WeaponFactory weaponFactory = assignWeapon.GetWeaponFactory(randomWeaponProduct.Value);
-                    int weaponLevel = assignWeapon.GetWeaponLevel(randomWeaponProduct.Value);
                     button.UpdateButtonDisplay(weaponFactory.Stats[weaponLevel].UpgradeText, weaponLevel, weaponProduct);
-                    if(weaponLevel == Level_1)
-                    {
-                        assignWeapon.SetActiveWeapon(randomWeaponProduct.Value, SET_DEACTIVE);
-                    }
+                } else 
+                {
+                    Debug.Log("randomWeaponProduct.Value: " + randomWeaponProduct.Value + "weaponLevel: " + weaponLevel);
                 }
             }
             else
             {
-                // Handle the case when no valid weapon products are left
-                Debug.Log("No more valid WeaponProducts available.");
-                button.gameObject.SetActive(false);; // Example method to handle this case
+                button.gameObject.SetActive(false);
             }
         }
     }
 
     public void GetExp(int amount)
     {
-        currentExp += amount;
+        p_CurrentPlayerExp += amount;
 
-        if(currentExp >= expLevels[currentLv])
+        if(p_CurrentPlayerExp >= p_PlayerExpLevels[p_PlayerCurrentLvl])
         {
             PlayerLevelUp();
         }
 
-        uIController.UpdateExp(currentExp, expLevels[currentLv], currentLv);
+        uIController.UpdateExp(p_CurrentPlayerExp, p_PlayerExpLevels[p_PlayerCurrentLvl], p_PlayerCurrentLvl);
     }
 
     public void SpawnExp(Vector3 position, int expValue)
@@ -101,13 +108,13 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
 
     public void PlayerLevelUp()
     {
-        currentExp -= expLevels[currentLv];
+        p_CurrentPlayerExp -= p_PlayerExpLevels[p_PlayerCurrentLvl];
         
-        currentLv++;
+        p_PlayerCurrentLvl++;
 
-        if(currentLv >= expLevels.Length)
+        if(p_PlayerCurrentLvl >= p_PlayerExpLevels.Length)
         {
-            currentLv = expLevels.Length - 1;
+            p_PlayerCurrentLvl = p_PlayerExpLevels.Length - 1;
         }
 
         // Show level up panel
@@ -116,8 +123,6 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
         Time.timeScale = 0f; // pause the game
 
         UpdateWeapon();
-
-        // uIController.LevelUpButtons[1].UpdateButtonDisplay(weaponFactories[0]);
     }
 
     public WeaponProduct? GetRandomWeaponProduct()
@@ -140,6 +145,6 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
 
     public void WeaponLevelUp(WeaponProduct weaponProduct)
     {
-        Debug.Log(weaponProduct);
+        assignWeapon.TrySpawnWeapon(weaponProduct);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static WeaponEnums;
 
@@ -41,35 +42,27 @@ public class SpinWeaponsFactory : WeaponFactory
         return null;
     }
 
-    void Start()
-    {
-        // uIController.LevelUpButtons[0].UpdateButtonDisplay(this); // this = WeaponFactory
-    }
-
-    void Update()
-    {
-        // if(statsUpdated)
-        // {
-        //     statsUpdated = false;
-
-        //     foreach (GameObject prefab in spinWeaponPrefabs)
-        //     {
-        //         // Check if the prefab has an IWeaponProduct component
-        //         if (prefab.TryGetComponent<IWeaponProduct>(out var component))
-        //         {
-        //             CreateWeaponProduct(component.WeaponTypeSelected);
-        //             // Update stats for the weapon based on its type
-        //             SetStatsWeaponEachFactory(component.WeaponTypeSelected);
-        //         }
-        //     }
-        // }
-    }
-
     public override void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
     {
         if(Stats.Count > 0)
         {
+            int lvl = GetWeaponLevel(weaponProduct) + 1;
+            // Debug.Log("lvl at SetStatsWeaponEachFactory " + lvl);
             IWeaponProduct[] weaponProducts = GetWeaponProduct(weaponProduct);
+            
+            Debug.Log("GetWeaponLevel(weaponProduct):  " + GetWeaponLevel(weaponProduct));
+            Debug.Log("Stats[lvl].Amount:  " + Stats.Count);
+            
+
+            if(GetWeaponLevel(weaponProduct) < Stats.Count )
+            {
+                foreach (var weapon in activeWeapons.Where(w => w.WeaponTypeSelected == weaponProduct).ToList())
+                {
+                    activeWeapons.Remove(weapon);
+                }
+            }
+            
+            Debug.Log("activeWeapons.Count:  " + activeWeapons.Count);
 
             if (weaponProducts == null || weaponProducts.Length == 0)
             {
@@ -77,21 +70,23 @@ public class SpinWeaponsFactory : WeaponFactory
                 return;
             }
 
-            int weaponLevel = GetWeaponLevel(weaponProduct);
-
             // Calculate the angle step based on the number of weapons
             float angleStep = 360f / weaponProducts.Length;
             int i = 1;
 
             foreach (IWeaponProduct weapon in weaponProducts)
             {
+                if (activeWeapons.Contains(weapon))
+                {
+                    activeWeapons.Remove(weapon);
+                }
                 // Calculate the angle for this weapon
                 float angle = i * angleStep * Mathf.Deg2Rad;
                 weapon.UpdateStats(
                     angle, 
-                    Stats[weaponLevel].Damage, 
-                    Stats[weaponLevel].Range, 
-                    Stats[weaponLevel].Speed
+                    Stats[lvl].Damage, 
+                    Stats[lvl].Range, 
+                    Stats[lvl].Speed
                 );
                 i++;
 
@@ -101,9 +96,10 @@ public class SpinWeaponsFactory : WeaponFactory
 
             // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)
             StartToggleParentActiveState(
-                Stats[weaponLevel].TimeBetweenAttacks, 
-                Stats[weaponLevel].Duration
+                Stats[lvl].TimeBetweenAttacks, 
+                Stats[lvl].Duration
             );
+            GetAndUpdateWeaponLevel(weaponProduct, lvl);
         } else
         {
             Debug.Log("Stats.Count = 0 in SetStatsWeaponEachFactory method");

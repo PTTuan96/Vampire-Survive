@@ -137,7 +137,7 @@ MonoBehaviour:
   p_ParticleSystem: {fileID: 6205710592234414663}
   p_SpriteRenderer: {fileID: -196789849, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   s_DamageMultiple: 1
-  s_RangeMultiple: 1
+  s_RangeMultiple: 0.5
   s_SpeedMultiple: 1
   shouldKnockBack: 1
   p_HolderName: FireBalls

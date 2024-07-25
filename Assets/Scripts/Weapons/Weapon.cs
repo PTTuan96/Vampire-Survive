@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static WeaponEnums;
 
@@ -7,17 +8,9 @@ public class Weapon : MonoBehaviour
     [Tooltip("List of weapon factories")]
     [SerializeField] private WeaponFactory[] m_WeaponFactories;
 
-    private WeaponFactory weaponFactory;
-
-    [SerializeField] private bool isFireBallsActive;
-    [SerializeField] private bool isIceBallsActive;
-    [SerializeField] private bool isKnifesActive;
-    [SerializeField] private bool isSwordsActive;
-
     void Awake()
     {
         InitializeWeaponMappings();
-        CreateAllWeapons();
     }
 
     void Update()
@@ -51,13 +44,15 @@ public class Weapon : MonoBehaviour
         // }
     }
 
-    private void CreateAllWeapons()
+    public List<IWeaponProduct> CreateAllWeapons()
     {
         // Get the type of the WeaponType enum
         Type enumType = typeof(WeaponType);
 
         // Get all enum values
         Array enumValues = Enum.GetValues(enumType);
+
+        List<IWeaponProduct> weaponProducts = new(); 
 
         foreach (WeaponProduct weaponProduct in enumValues)
         {
@@ -66,15 +61,14 @@ public class Weapon : MonoBehaviour
                 IWeaponProduct product = weaponFactory.CreateWeaponProduct(weaponProduct);
                 if(product != null)
                 {
-                    weaponFactory.SetWeaponLevel(weaponProduct, Level_1);
+                    weaponProducts.Add(product);
+                    weaponFactory.SetWeaponLevel(weaponProduct, Level_0);
+                    weaponFactory.DestroyProduct(weaponProduct);
                 }
             }
         }
-    }
 
-    public void SetActiveWeapon(WeaponProduct weaponProduct, bool set)
-    {
-        GetWeaponFactory(weaponProduct).SetActiveWeapon(weaponProduct, set);
+        return weaponProducts;
     }
 
     public int GetWeaponLevel(WeaponProduct weaponProduct)
@@ -82,13 +76,14 @@ public class Weapon : MonoBehaviour
         return GetWeaponFactory(weaponProduct).GetWeaponLevel(weaponProduct);
     }
 
-    public void TrySpawnWeapon(WeaponProduct weaponProductParameter, bool isUpdate)
+    public void TrySpawnWeapon(WeaponProduct weaponProduct)
     {
-        weaponFactory = GetWeaponFactory(weaponProductParameter);
-        if(!isUpdate)
-            weaponFactory.CreateWeaponProduct(weaponProductParameter);
-        else
-            weaponFactory.SetStatsWeaponEachFactory(weaponProductParameter);
+        WeaponFactory weaponFactory = GetWeaponFactory(weaponProduct);
+        if(weaponFactory.GetWeaponLevel(weaponProduct) < weaponFactory.Stats.Count)
+        {
+            weaponFactory.CreateWeaponProduct(weaponProduct);
+        }
+        weaponFactory.SetStatsWeaponEachFactory(weaponProduct);
     }
 
     public WeaponFactory GetWeaponFactory(WeaponProduct weaponProductParameter)
@@ -112,10 +107,5 @@ public class Weapon : MonoBehaviour
             }
         }
         return null;
-    }
-
-    public IWeaponProduct GetWeaponInfo(WeaponProduct weaponProduct)
-    {
-        return GetWeaponFactory(weaponProduct).GetWeaponInfo(weaponProduct);
     }
 }

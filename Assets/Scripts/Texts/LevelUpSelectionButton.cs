@@ -10,6 +10,7 @@ public class LevelUpSelectionButton : MonoBehaviour
     public TMP_Text upgradeDescText, nameLevelText;
     public Image weaponIcon;
     private WeaponProduct weaponProduct;
+    private int currentWeaponLevel;
 
     private void Awake()
     {
@@ -26,11 +27,12 @@ public class LevelUpSelectionButton : MonoBehaviour
         nameLevelText.text = weaponInfo.ProductWeaponName + " - Lvl " + weaponLevel;
 
         weaponProduct = weaponInfo.WeaponTypeSelected;
+
+        currentWeaponLevel =  weaponLevel;
     }
 
     public void SeletedUpdate()
     {
-        // weaponNeedToLevelUp.LevelUp();
         experienceController.WeaponLevelUp(weaponProduct);
         uIController.levelUpPanel.SetActive(false);
 

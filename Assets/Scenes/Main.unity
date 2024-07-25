@@ -729,10 +729,6 @@ MonoBehaviour:
   m_WeaponFactories:
   - {fileID: 553751862}
   - {fileID: 2067178474}
-  isFireBallsActive: 1
-  isIceBallsActive: 1
-  isKnifesActive: 0
-  isSwordsActive: 0
 --- !u!1 &309162433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,46 +1615,46 @@ MonoBehaviour:
     TimeBetweenAttacks: 0
     Duration: 0
     Amount: 0
-    UpgradeText: 
+    UpgradeText: Select First Weapon
   - Speed: 1
     Damage: 2
     Range: 2
-    TimeBetweenAttacks: 1
+    TimeBetweenAttacks: 2
     Duration: 3
     Amount: 1
     UpgradeText: Basic Attack
   - Speed: 2
     Damage: 4
     Range: 2
-    TimeBetweenAttacks: 0.9
+    TimeBetweenAttacks: 1.9
     Duration: 3.5
     Amount: 2
     UpgradeText: 'Enhanced '
   - Speed: 3
     Damage: 6
     Range: 3
-    TimeBetweenAttacks: 0.8
+    TimeBetweenAttacks: 1.8
     Duration: 4
     Amount: 3
     UpgradeText: 'Advanced '
   - Speed: 4
     Damage: 8
     Range: 3
-    TimeBetweenAttacks: 0.7
+    TimeBetweenAttacks: 1.7
     Duration: 4.5
     Amount: 4
     UpgradeText: Epic
   - Speed: 5
     Damage: 10
     Range: 4
-    TimeBetweenAttacks: 0.6
+    TimeBetweenAttacks: 1.6
     Duration: 5
     Amount: 5
     UpgradeText: Legendary
   - Speed: 6
     Damage: 12
     Range: 4
-    TimeBetweenAttacks: 0.5
+    TimeBetweenAttacks: 1.5
     Duration: 5.5
     Amount: 6
     UpgradeText: 'Mythical '
@@ -3415,6 +3411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expItem: {fileID: 6656326460004675014, guid: bcb3f18f90250754088b508430254757, type: 3}
   assignWeapon: {fileID: 299410037}
+  levelCount: 100
 --- !u!1 &1757712645
 GameObject:
   m_ObjectHideFlags: 0

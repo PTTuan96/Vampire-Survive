@@ -50,7 +50,7 @@ public class Sword : WeaponProductBase, IWeaponProduct
         {
             // CheckCollisionInterfaces(collider2D);
 
-            Debug.Log("Damage FireBall: " + p_Damage);
+            // Debug.Log("Damage FireBall: " + p_Damage);
             var damageable = collider2D.GetComponent<IDamageable>();
             damageable?.TakeDamage(p_Damage, shouldKnockBack);
         }

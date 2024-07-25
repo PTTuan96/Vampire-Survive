@@ -4,9 +4,11 @@ using UnityEngine;
 
 public static class WeaponEnums
 {
-    public static int Level_1 = 1;
+    public static int Level_0 = 0;
     public static bool SET_ACTIVE = true;
     public static bool SET_DEACTIVE = false;
+    public static bool IS_UPDATE = true;
+    public static bool IS_CREATE = false;
 
     public enum WeaponProduct
     {

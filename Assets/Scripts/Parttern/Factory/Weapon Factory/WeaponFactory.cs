@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using static WeaponEnums;
@@ -30,14 +31,6 @@ public abstract class WeaponFactory : MonoBehaviour
     private void Awake()
     {
         uIController = UIController.Instance;
-        // Initialize the dictionary
-        // weaponLevels = new Dictionary<WeaponProduct, int>
-        // {
-        //     { WeaponProduct.FireBall, 1 },
-        //     { WeaponProduct.IceBall, 1 },
-        //     { WeaponProduct.Knife, 1 },
-        //     { WeaponProduct.Sword, 1 }
-        // };
     }
 
     // Abstract method to get a product instance.
@@ -108,22 +101,6 @@ public abstract class WeaponFactory : MonoBehaviour
         productInstance.transform.SetParent(holderObject.transform, true);
     }
 
-    public void SetActiveWeapon(WeaponProduct weaponProduct, bool isActive)
-    {
-        foreach(IWeaponProduct weapon in GetWeaponProduct(weaponProduct))
-        {
-            GameObject weaponGameObject = (weapon as MonoBehaviour)?.gameObject;
-            if (weaponGameObject != null)
-            {
-                weaponGameObject.SetActive(isActive); // Set the active state of the GameObject
-            }
-            else
-            {
-                Debug.LogWarning("IWeaponProduct does not have an associated GameObject.");
-            }
-        }
-    }
-
     protected IWeaponProduct[] GetWeaponProduct(WeaponProduct weaponProduct)
     {
         IWeaponProduct[] weaponProducts;
@@ -156,8 +133,22 @@ public abstract class WeaponFactory : MonoBehaviour
             return weaponProducts; // Return the array of weapon products
         }
 
-        Debug.LogWarning("No weapon of type " + weaponProduct + " found.");
+        // Debug.LogWarning("No weapon of type " + weaponProduct + " found.");
         return new IWeaponProduct[0]; // Return an empty array if no weapon products were found
+    }
+
+    public void RemoveWeapon(WeaponProduct weaponProduct)
+    {
+        // Iterate through the activeWeapons list
+        foreach (IWeaponProduct weapon in activeWeapons.ToList())
+        {
+            // Check if the weapon's type matches the given weaponProduct
+            if (weapon.WeaponTypeSelected == weaponProduct)
+            {
+                // Remove from the list
+                activeWeapons.Remove(weapon);
+            }
+        }
     }
 
     protected void StartToggleParentActiveState(float inactiveDuration, float activeDuration)
@@ -186,7 +177,7 @@ public abstract class WeaponFactory : MonoBehaviour
         }
     }
 
-    protected void SetChildObjectsActive(bool isActive)
+    public void SetChildObjectsActive(bool isActive)
     {
         foreach (IWeaponProduct weaponProduct in activeWeapons)
         {
@@ -202,21 +193,7 @@ public abstract class WeaponFactory : MonoBehaviour
         }
     }
 
-    public IWeaponProduct GetWeaponInfo(WeaponProduct weaponProduct)
-    {
-        IWeaponProduct[] weaponProducts = GetWeaponProduct(weaponProduct);
-        if(weaponProducts.Length > 0)
-        {
-            return weaponProducts[0];
-        } else 
-        {
-            Debug.Log("GetWeaponInfo return null");
-        }
-
-        return null;
-    }
-
-    public void LevelUp()
+    public void InitiateStatsLevel()
     {
         if(Stats.Count > 0 && StatsLevel < Stats.Count - 1)
         {
@@ -232,6 +209,20 @@ public abstract class WeaponFactory : MonoBehaviour
         return logMessage;
     }
 
-    
+    public void DestroyProduct(WeaponProduct weaponProduct)
+    {
+        foreach(IWeaponProduct weapon in GetWeaponProduct(weaponProduct))
+        {
+            GameObject weaponGameObject = (weapon as MonoBehaviour)?.gameObject;
+            if (weaponGameObject != null)
+            {
+                Destroy(weaponGameObject);
+            }
+            else
+            {
+                Debug.LogWarning("IWeaponProduct does not have an associated GameObject.");
+            }
+        }
+    }
 }
 

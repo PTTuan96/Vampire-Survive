@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3979983cbdc6f89479ecbe67b9a03f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 30
+  m_MaxHealth: 4
   m_CurrentHealth: 0
   m_ResetOnStart: 0
   Died:
@@ -137,10 +137,10 @@ MonoBehaviour:
       m_Calls: []
   m_DamageMultiplier: 1
   knockBackTime: 0.5
-  expToGive: 2
+  expToGive: 20
   m_ProductName: Slime
   m_Rigidbody: {fileID: 6732731073765139859}
-  moveSpeed: 1
+  moveSpeed: 10
   m_DamageValue: 8
   hitWaitTime: 0.5
 --- !u!1 &8709450078849408041
