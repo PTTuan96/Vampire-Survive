@@ -1,12 +1,19 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using static WeaponEnums;
 
 public class SpinWeaponsFactory : WeaponFactory
 {
     [Tooltip("List of spin weapon prefabs")]
     [SerializeField] private List<GameObject> spinWeaponPrefabs;
+
+    #region Events
+    // public delegate void StatsChange(WeaponProduct weaponProduct, Attributes attribute);
+    // public event StatsChange OnStatsChange;
+    // public UnityEvent<WeaponProduct , Attributes> OnStatsChange;
+    #endregion
 
     public override IWeaponProduct CreateWeaponProduct(WeaponProduct weaponProduct)
     {
@@ -27,6 +34,7 @@ public class SpinWeaponsFactory : WeaponFactory
                     {
                         // Add the weapon to the factory's collection (if applicable)
                         AddWeapon(createdProduct.HolderWeaponName, productInstance);
+                        // productInstance.transform.SetParent(transform, true);
 
                         // Initialize the created weapon product
                         createdProduct.Initialize();
@@ -47,58 +55,29 @@ public class SpinWeaponsFactory : WeaponFactory
         if(Stats.Count > 0)
         {
             int lvl = GetWeaponLevel(weaponProduct) + 1;
-            // Debug.Log("lvl at SetStatsWeaponEachFactory " + lvl);
-            IWeaponProduct[] weaponProducts = GetWeaponProduct(weaponProduct);
-            
-            Debug.Log("GetWeaponLevel(weaponProduct):  " + GetWeaponLevel(weaponProduct));
-            Debug.Log("Stats[lvl].Amount:  " + Stats.Count);
-            
-
-            if(GetWeaponLevel(weaponProduct) < Stats.Count )
+            if(weaponProduct == WeaponProduct.LightArea)
             {
-                foreach (var weapon in activeWeapons.Where(w => w.WeaponTypeSelected == weaponProduct).ToList())
+                FindComponentsByType(weaponProduct)[0].UpdateStats(0, Stats[lvl]);
+            } else {
+                if(lvl > Level_1)
                 {
-                    activeWeapons.Remove(weapon);
+                    CreateWeaponProduct(weaponProduct);
+                }    
+                // OnStatsChange.Invoke(weaponProduct, Stats[lvl]);
+                List<IWeaponProduct> weaponProducts = FindComponentsByType(weaponProduct);
+                float angleStep = 360f / weaponProducts.Count;
+                int i = 1;
+                foreach (IWeaponProduct weapon in weaponProducts)
+                {
+                    // Calculate the angle for this weapon
+                    float angle = i * angleStep * Mathf.Deg2Rad;
+                    weapon.UpdateStats(
+                        angle,
+                        Stats[lvl]
+                    );
+                    i++;
                 }
             }
-            
-            Debug.Log("activeWeapons.Count:  " + activeWeapons.Count);
-
-            if (weaponProducts == null || weaponProducts.Length == 0)
-            {
-                Debug.LogWarning("No weapons of type " + weaponProduct + " found under the transform.");
-                return;
-            }
-
-            // Calculate the angle step based on the number of weapons
-            float angleStep = 360f / weaponProducts.Length;
-            int i = 1;
-
-            foreach (IWeaponProduct weapon in weaponProducts)
-            {
-                if (activeWeapons.Contains(weapon))
-                {
-                    activeWeapons.Remove(weapon);
-                }
-                // Calculate the angle for this weapon
-                float angle = i * angleStep * Mathf.Deg2Rad;
-                weapon.UpdateStats(
-                    angle, 
-                    Stats[lvl].Damage, 
-                    Stats[lvl].Range, 
-                    Stats[lvl].Speed
-                );
-                i++;
-
-                // Example usage: add weapons to the list and start the toggle coroutine
-                activeWeapons.Add(weapon);
-            }
-
-            // Example usage: deactivate for 3 seconds (timeBetweenAttacks), then reactivate for 2 seconds (duration)
-            StartToggleParentActiveState(
-                Stats[lvl].TimeBetweenAttacks, 
-                Stats[lvl].Duration
-            );
             GetAndUpdateWeaponLevel(weaponProduct, lvl);
         } else
         {

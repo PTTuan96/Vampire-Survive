@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1953408146240911740}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   s_DamageMultiple: 2
   s_RangeMultiple: 1
   s_SpeedMultiple: 2
-  shouldKnockBack: 1
   p_HolderName: Swords
   p_ProductName: Sword
   p_WeaponTypeSelected: 3
+  shouldKnockBack: 1

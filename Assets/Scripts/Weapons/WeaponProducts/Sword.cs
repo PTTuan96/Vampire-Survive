@@ -8,6 +8,7 @@ public class Sword : WeaponProductBase, IWeaponProduct
     [SerializeField] private string p_HolderName = "Swords";
     [SerializeField] private string p_ProductName = "Sword";
     [SerializeField] protected WeaponProduct p_WeaponTypeSelected = WeaponProduct.Sword; // Have to validate this
+    [SerializeField] protected bool shouldKnockBack = true; 
     
     public string HolderWeaponName { get => p_HolderName; set => p_HolderName = value; }
     public string ProductWeaponName { get => p_ProductName; set => p_ProductName = value; }
@@ -15,12 +16,8 @@ public class Sword : WeaponProductBase, IWeaponProduct
     
     public Sprite SpriteRenderer { get => p_SpriteRenderer; set => p_SpriteRenderer = value; }
 
-    private float p_Damage;
-    private float p_OrbitDistance;
-    private float p_OrbitSpeed;
+    private Attributes weaponAttribute;
 
-    private float p_CurrentAngle;
-    
     public void Initialize()
     {
         Initialize(ProductWeaponName);
@@ -31,19 +28,6 @@ public class Sword : WeaponProductBase, IWeaponProduct
         return weaponProduct == WeaponTypeSelected;
     }
 
-
-    public void UpdateStats(float angle, float damage, float range, float speed)
-    {
-        p_Damage = damage * s_DamageMultiple;
-        
-        p_OrbitDistance = range * s_RangeMultiple;
-
-        p_OrbitSpeed = speed * s_SpeedMultiple;;
-
-        // Calculate the angle step based on the number of children
-        p_CurrentAngle = angle;
-    }
-
     private void OnTriggerEnter2D(Collider2D collider2D) // is used for trigger collisions one.
     {
         if(collider2D.CompareTag("Enemy"))
@@ -52,7 +36,13 @@ public class Sword : WeaponProductBase, IWeaponProduct
 
             // Debug.Log("Damage FireBall: " + p_Damage);
             var damageable = collider2D.GetComponent<IDamageable>();
-            damageable?.TakeDamage(p_Damage, shouldKnockBack);
+            damageable?.TakeDamage(weaponAttribute.Damage * s_DamageMultiple, shouldKnockBack);
         }
+    }
+
+    public void UpdateStats(float angle, Attributes attribute)
+    {
+        weaponAttribute = attribute;
+        transform.localScale = new Vector3(weaponAttribute.scale, weaponAttribute.scale, weaponAttribute.scale);
     }
 }

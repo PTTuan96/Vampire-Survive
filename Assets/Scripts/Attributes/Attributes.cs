@@ -6,6 +6,7 @@ public class Attributes
     public float Speed;
     public float Damage;
     public float Range;
+    public float scale;
     public float TimeBetweenAttacks;
     public float Duration;
     public float Amount;

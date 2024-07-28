@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public static class WeaponEnums
 {
     public static int Level_0 = 0;
+    public static int Level_1 = 1;
     public static bool SET_ACTIVE = true;
     public static bool SET_DEACTIVE = false;
     public static bool IS_UPDATE = true;
@@ -15,7 +17,8 @@ public static class WeaponEnums
         FireBall,
         IceBall,
         Knife,
-        Sword
+        Sword, 
+        LightArea
     }
 
     public enum WeaponType
@@ -28,6 +31,7 @@ public static class WeaponEnums
 
     // Dictionary to map WeaponProduct to WeaponType
     private static Dictionary<WeaponProduct, WeaponType> weaponProductToTypeMapping;
+    private static Dictionary<WeaponProduct, Type> weaponProductToComponentMapping;
 
     static void Start()
     {
@@ -46,10 +50,12 @@ public static class WeaponEnums
             { WeaponProduct.FireBall, WeaponType.SpinWeapon },
             { WeaponProduct.IceBall, WeaponType.SpinWeapon },
             { WeaponProduct.Knife, WeaponType.ThrowWeapon },
-            { WeaponProduct.Sword, WeaponType.ThrowWeapon }
+            { WeaponProduct.Sword, WeaponType.ThrowWeapon },
+            { WeaponProduct.LightArea, WeaponType.SpinWeapon }
         };
     }
 
+    
     // Method to get the WeaponType for a given WeaponProduct
     public static WeaponType GetWeaponType(WeaponProduct product)
     {
@@ -62,5 +68,49 @@ public static class WeaponEnums
             Debug.LogWarning("WeaponProduct not found in mapping.");
             return default;
         }
+    }
+
+    public static void InitializeWeaponComponentMappings()
+    {
+        // Initialize the dictionary with enum-to-component mappings
+        weaponProductToComponentMapping = new Dictionary<WeaponProduct, System.Type>
+        {
+            { WeaponProduct.FireBall, typeof(FireBall) },
+            { WeaponProduct.IceBall, typeof(IceBall) },
+            { WeaponProduct.Knife, typeof(Knife) },
+            { WeaponProduct.Sword, typeof(Sword) },
+            { WeaponProduct.LightArea, typeof(LightingArea) }
+        };
+    }
+
+    // Method to find all objects with a specific component type
+    public static List<IWeaponProduct> FindComponentsByType(WeaponProduct type)
+    {
+        List<IWeaponProduct> componentsList = new List<IWeaponProduct>();
+
+        // Check if the type exists in the dictionary
+        if (weaponProductToComponentMapping.TryGetValue(type, out Type componentType))
+        {
+            MonoBehaviour[] componentsArray = (MonoBehaviour[])FindObjectsOfType(componentType);
+            foreach (var component in componentsArray)
+            {
+                if (component is IWeaponProduct weaponProductComponent)
+                {
+                    componentsList.Add(weaponProductComponent);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Component type {type} not found in the dictionary.");
+        }
+
+        return componentsList;
+    }
+
+    // Wrapper for FindObjectsOfType to use reflection
+    private static Array FindObjectsOfType(Type type)
+    {
+        return UnityEngine.Object.FindObjectsOfType(type);
     }
 }

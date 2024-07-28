@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviour
     void Awake()
     {
         InitializeWeaponMappings();
+        InitializeWeaponComponentMappings();
     }
 
     void Update()
@@ -47,7 +48,7 @@ public class Weapon : MonoBehaviour
     public List<IWeaponProduct> CreateAllWeapons()
     {
         // Get the type of the WeaponType enum
-        Type enumType = typeof(WeaponType);
+        Type enumType = typeof(WeaponProduct);
 
         // Get all enum values
         Array enumValues = Enum.GetValues(enumType);
@@ -56,15 +57,12 @@ public class Weapon : MonoBehaviour
 
         foreach (WeaponProduct weaponProduct in enumValues)
         {
-            foreach(WeaponFactory weaponFactory in m_WeaponFactories)
+            WeaponFactory weaponFactory = GetWeaponFactory(weaponProduct);
+            IWeaponProduct product = weaponFactory.CreateWeaponProduct(weaponProduct);
+            if(product != null)
             {
-                IWeaponProduct product = weaponFactory.CreateWeaponProduct(weaponProduct);
-                if(product != null)
-                {
-                    weaponProducts.Add(product);
-                    weaponFactory.SetWeaponLevel(weaponProduct, Level_0);
-                    weaponFactory.DestroyProduct(weaponProduct);
-                }
+                weaponProducts.Add(product);
+                weaponFactory.SetWeaponLevel(weaponProduct, Level_0);
             }
         }
 
@@ -79,10 +77,6 @@ public class Weapon : MonoBehaviour
     public void TrySpawnWeapon(WeaponProduct weaponProduct)
     {
         WeaponFactory weaponFactory = GetWeaponFactory(weaponProduct);
-        if(weaponFactory.GetWeaponLevel(weaponProduct) < weaponFactory.Stats.Count)
-        {
-            weaponFactory.CreateWeaponProduct(weaponProduct);
-        }
         weaponFactory.SetStatsWeaponEachFactory(weaponProduct);
     }
 

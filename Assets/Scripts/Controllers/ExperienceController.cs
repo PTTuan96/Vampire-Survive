@@ -36,7 +36,7 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
         Time.timeScale = 0f; // pause the game
 
         weaponProducts = assignWeapon.CreateAllWeapons();
-        UpdateWeapon();
+        ShowUpdateWeapon();
     }
 
     private void InitiatePlayerExp()
@@ -62,7 +62,7 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
         }
     }
 
-    public void UpdateWeapon()
+    public void ShowUpdateWeapon()
     {
         UpdateAvailableWeaponProducts();
         foreach (LevelUpSelectionButton button in uIController.LevelUpButtons)
@@ -122,7 +122,7 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
 
         Time.timeScale = 0f; // pause the game
 
-        UpdateWeapon();
+        ShowUpdateWeapon();
     }
 
     public WeaponProduct? GetRandomWeaponProduct()

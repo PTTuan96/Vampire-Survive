@@ -13,17 +13,6 @@ public abstract class WeaponFactory : MonoBehaviour
     [SerializeField] public WeaponType WeaponType; 
     [SerializeField] public List<Attributes> Stats;
     [SerializeField] public int StatsLevel; // use for initiate List Stats
-    
-    // [SerializeField] public Sprite[] Icons;
-
-    protected bool statsUpdated;
-
-    private Coroutine toggleCoroutine;
-
-    [Tooltip("Notifies listeners of updated Stats percentage")]
-    public UnityEvent<float> StatsChange; 
-
-    protected List<IWeaponProduct> activeWeapons = new();
 
     // Create a dictionary to store WeaponType and its corresponding level
     protected Dictionary<WeaponProduct, int> weaponLevels = new();
@@ -101,127 +90,11 @@ public abstract class WeaponFactory : MonoBehaviour
         productInstance.transform.SetParent(holderObject.transform, true);
     }
 
-    protected IWeaponProduct[] GetWeaponProduct(WeaponProduct weaponProduct)
-    {
-        IWeaponProduct[] weaponProducts;
-
-        // Find the correct weapon product based on the WeaponProduct enum
-        switch (weaponProduct)
-        {
-            case WeaponProduct.FireBall:
-                weaponProducts = transform.GetComponentsInChildren<FireBall>();
-                break;
-            case WeaponProduct.IceBall:
-                weaponProducts = transform.GetComponentsInChildren<IceBall>();
-                break;
-            case WeaponProduct.Knife:
-                weaponProducts = transform.GetComponentsInChildren<Knife>();
-                break;
-            case WeaponProduct.Sword:
-                weaponProducts = transform.GetComponentsInChildren<Sword>();
-                break;
-                
-            // Add cases for other weapon types
-            default:
-                Debug.LogWarning("Unsupported weapon type: " + weaponProduct);
-                return new IWeaponProduct[0]; // Return an empty array if the weapon type is unsupported
-        }
-
-        // Check if we found any weapon products of the specified type
-        if (weaponProducts.Length > 0)
-        {
-            return weaponProducts; // Return the array of weapon products
-        }
-
-        // Debug.LogWarning("No weapon of type " + weaponProduct + " found.");
-        return new IWeaponProduct[0]; // Return an empty array if no weapon products were found
-    }
-
-    public void RemoveWeapon(WeaponProduct weaponProduct)
-    {
-        // Iterate through the activeWeapons list
-        foreach (IWeaponProduct weapon in activeWeapons.ToList())
-        {
-            // Check if the weapon's type matches the given weaponProduct
-            if (weapon.WeaponTypeSelected == weaponProduct)
-            {
-                // Remove from the list
-                activeWeapons.Remove(weapon);
-            }
-        }
-    }
-
-    protected void StartToggleParentActiveState(float inactiveDuration, float activeDuration)
-    {
-        // Stop any existing coroutine before starting a new one
-        if (toggleCoroutine != null)
-        {
-            StopCoroutine(toggleCoroutine);
-        }
-
-        // Update the list of active weapons
-        // activeWeapons = weaponProducts;
-
-        StartCoroutine(ToggleParentActiveCoroutine(inactiveDuration, activeDuration));
-    }
-
-    protected IEnumerator ToggleParentActiveCoroutine(float inactiveDuration, float activeDuration)
-    {
-        while (true) // Loop indefinitely
-        {
-            SetChildObjectsActive(SET_ACTIVE); // Activate the object
-            yield return new WaitForSeconds(activeDuration); // Wait for the active duration
-
-            SetChildObjectsActive(SET_DEACTIVE); // Deactivate the object
-            yield return new WaitForSeconds(inactiveDuration); // Wait for the inactive duration
-        }
-    }
-
-    public void SetChildObjectsActive(bool isActive)
-    {
-        foreach (IWeaponProduct weaponProduct in activeWeapons)
-        {
-            GameObject weaponGameObject = (weaponProduct as MonoBehaviour)?.gameObject;
-            if (weaponGameObject != null)
-            {
-                weaponGameObject.SetActive(isActive); // Set the active state of the GameObject
-            }
-            else
-            {
-                Debug.LogWarning("IWeaponProduct does not have an associated GameObject.");
-            }
-        }
-    }
-
     public void InitiateStatsLevel()
     {
         if(Stats.Count > 0 && StatsLevel < Stats.Count - 1)
         {
-            StatsLevel++;
-
-            statsUpdated = true;
-        }
-    }
-
-    public string GetLog(IEnemyProduct product)
-    {
-        string logMessage = "Factory: created product " + product.ProductName;
-        return logMessage;
-    }
-
-    public void DestroyProduct(WeaponProduct weaponProduct)
-    {
-        foreach(IWeaponProduct weapon in GetWeaponProduct(weaponProduct))
-        {
-            GameObject weaponGameObject = (weapon as MonoBehaviour)?.gameObject;
-            if (weaponGameObject != null)
-            {
-                Destroy(weaponGameObject);
-            }
-            else
-            {
-                Debug.LogWarning("IWeaponProduct does not have an associated GameObject.");
-            }
+            
         }
     }
 }

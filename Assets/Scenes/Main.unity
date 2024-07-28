@@ -1612,13 +1612,15 @@ MonoBehaviour:
   - Speed: 0
     Damage: 0
     Range: 0
+    scale: 0
     TimeBetweenAttacks: 0
     Duration: 0
-    Amount: 0
+    Amount: 1
     UpgradeText: Select First Weapon
   - Speed: 1
     Damage: 2
     Range: 2
+    scale: 1
     TimeBetweenAttacks: 2
     Duration: 3
     Amount: 1
@@ -1626,6 +1628,7 @@ MonoBehaviour:
   - Speed: 2
     Damage: 4
     Range: 2
+    scale: 2
     TimeBetweenAttacks: 1.9
     Duration: 3.5
     Amount: 2
@@ -1633,6 +1636,7 @@ MonoBehaviour:
   - Speed: 3
     Damage: 6
     Range: 3
+    scale: 3
     TimeBetweenAttacks: 1.8
     Duration: 4
     Amount: 3
@@ -1640,6 +1644,7 @@ MonoBehaviour:
   - Speed: 4
     Damage: 8
     Range: 3
+    scale: 4
     TimeBetweenAttacks: 1.7
     Duration: 4.5
     Amount: 4
@@ -1647,6 +1652,7 @@ MonoBehaviour:
   - Speed: 5
     Damage: 10
     Range: 4
+    scale: 5
     TimeBetweenAttacks: 1.6
     Duration: 5
     Amount: 5
@@ -1654,17 +1660,43 @@ MonoBehaviour:
   - Speed: 6
     Damage: 12
     Range: 4
+    scale: 6
     TimeBetweenAttacks: 1.5
     Duration: 5.5
     Amount: 6
     UpgradeText: 'Mythical '
   StatsLevel: 0
-  StatsChange:
-    m_PersistentCalls:
-      m_Calls: []
   spinWeaponPrefabs:
   - {fileID: 1904622686988428872, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
   - {fileID: 6470185105590653225, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
+  - {fileID: 1041656988623529016, guid: 99a3951f621ea4c448edfae56348aaa6, type: 3}
+  OnStatsChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4473725200986738468, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
+        m_TargetAssemblyTypeName: FireBall, Assembly-CSharp
+        m_MethodName: UpdateStats
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7569127259343306676, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
+        m_TargetAssemblyTypeName: IceBall, Assembly-CSharp
+        m_MethodName: UpdateStats
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &604089691
 GameObject:
   m_ObjectHideFlags: 0
@@ -134249,9 +134281,6 @@ MonoBehaviour:
   WeaponType: 1
   Stats: []
   StatsLevel: 0
-  StatsChange:
-    m_PersistentCalls:
-      m_Calls: []
   throwWeaponPrefabs:
   - {fileID: 6470185105590653225, guid: 7bea019f68cb090408edca0d0f445108, type: 3}
   - {fileID: 6470185105590653225, guid: a662b7980fe508948b67145c7ed22d59, type: 3}
