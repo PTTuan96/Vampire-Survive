@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -70,6 +71,31 @@ public class PlayerInput : MonoBehaviour
             positionY = isEndMove ? 0 : value;
         }
     }
+
+    // public Transform tiltTransform;
+    // public Vector3 m_AimOffset = Vector3.zero; // Offset for aiming, if any
+    // [Tooltip("Notifies listeners that this object is face this direction")]
+    // public float tiltSpeed = 5.0f;    // Speed of the rotation
+    // public UnityEvent<Transform> FaceDirection;
+
+    // private void RotateTowards(Vector3 targetPosition)
+    // {
+    //     if (tiltTransform == null)
+    //         return;
+
+    //     // Direction to target in world space
+    //     Vector3 directionToTarget = m_AimOffset + targetPosition - tiltTransform.position;
+
+    //     // Calculate the angle in degrees
+    //     float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+
+    //     // Apply the rotation around the Z-axis
+    //     Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+        
+    //     tiltTransform.rotation = Quaternion.Slerp(tiltTransform.rotation, targetRotation, tiltSpeed * Time.deltaTime);
+
+    //     FaceDirection.Invoke(tiltTransform);
+    // }
 }
 
 

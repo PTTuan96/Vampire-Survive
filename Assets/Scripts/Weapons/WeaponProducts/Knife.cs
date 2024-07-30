@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using static WeaponEnums;
 
-public class Knife : WeaponProductBase, IWeaponProduct
+public class Knife : WeaponProductBase, IWeaponProduct, IPooledWeapon
 {
     [SerializeField] private string p_HolderName = "Knifes";
     [SerializeField] private string p_ProductName = "Knife";
@@ -32,11 +33,16 @@ public class Knife : WeaponProductBase, IWeaponProduct
     {
         if(collider2D.CompareTag("Enemy"))
         {
-            // CheckCollisionInterfaces(collider2D);
+            // Deactivate immediately on collision
+            StopCoroutine(DeactivateRoutine(timeoutDelay));
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            // Release the projectile back to the pool
+            objectPool?.Release(this);
 
-            // Debug.Log("Damage FireBall: " + p_Damage);
             var damageable = collider2D.GetComponent<IDamageable>();
-            damageable?.TakeDamage(weaponAttribute.Damage * s_DamageMultiple);
+            // damageable?.TakeDamage(weaponAttribute.Damage * s_DamageMultiple);
+            // Destroy(gameObject);
         }
     }
 
@@ -44,5 +50,45 @@ public class Knife : WeaponProductBase, IWeaponProduct
     {
         weaponAttribute = attribute;
         transform.localScale = new Vector3(weaponAttribute.scale, weaponAttribute.scale, weaponAttribute.scale);
+    }
+
+
+
+
+
+    [SerializeField] private float timeoutDelay = 3f;
+
+    public IObjectPool<IPooledWeapon> Pool { get; set; }
+
+    [SerializeField] private Rigidbody2D rb;
+
+    public void Deactivate()
+    {
+        StartCoroutine(DeactivateRoutine(timeoutDelay));
+    }
+
+    private void OnEnable()
+    {
+        // Start the timeout coroutine when the knife is enabled
+        StartCoroutine(DeactivateRoutine(timeoutDelay));
+    }
+
+    IEnumerator DeactivateRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Reset the moving Rigidbody
+        rb = GetComponent<Rigidbody2D>();
+        // rBody.linearVelocity = new Vector3(0f, 0f, 0f);
+        rb.angularVelocity = 0f;
+
+        // Check if objectPool is not null before releasing
+        // Release the projectile back to the pool
+        objectPool?.Release(this);
+    }
+
+    public void Launch(Vector3 direction)
+    {
+        rb.velocity = direction * 10f; //weaponAttribute.Speed;
     }
 }

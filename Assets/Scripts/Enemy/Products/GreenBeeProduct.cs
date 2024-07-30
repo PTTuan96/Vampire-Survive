@@ -46,6 +46,7 @@ public class GreenBeeProduct : EnemyTakeDamage<GreenBeeProduct>, IEnemyProduct
 
     public void MoveTowardsPlayer()
     {
+        if(FindObjectOfType<PlayerMovement>())
         if (target != null && m_Rigidbody != null)
         {
             m_Rigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
@@ -78,6 +79,11 @@ public class GreenBeeProduct : EnemyTakeDamage<GreenBeeProduct>, IEnemyProduct
     public void Defend()
     {
         Debug.Log("Green Bee defends.");
+    }
+
+        public void StopEnemy()
+    {
+        moveSpeed = 0f;
     }
 }
 

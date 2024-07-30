@@ -52,10 +52,11 @@ public class ExperienceController : MonoBehaviourSingleton<ExperienceController>
     private void UpdateAvailableWeaponProducts()
     {
         availableWeaponProducts = new List<WeaponProduct>();
-
+        int weaponLvl;
         foreach (WeaponProduct weapon in Enum.GetValues(typeof(WeaponProduct)))
         {
-            if (assignWeapon.GetWeaponLevel(weapon) < assignWeapon.GetWeaponFactory(weapon).Stats.Count)
+            weaponLvl = assignWeapon.GetWeaponLevel(weapon);
+            if (weaponLvl >= 0 && weaponLvl < assignWeapon.GetWeaponFactory(weapon).Stats.Count)
             {
                 availableWeaponProducts.Add(weapon);
             }

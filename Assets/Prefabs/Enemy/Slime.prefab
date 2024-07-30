@@ -140,7 +140,7 @@ MonoBehaviour:
   expToGive: 20
   m_ProductName: Slime
   m_Rigidbody: {fileID: 6732731073765139859}
-  moveSpeed: 10
+  moveSpeed: 0
   m_DamageValue: 8
   hitWaitTime: 0.5
 --- !u!1 &8709450078849408041

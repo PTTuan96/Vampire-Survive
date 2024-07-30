@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 // This class will apply for multiple players
 public class PlayerTakeDamage : ObjectTakeDamage, IPlayerDieAnimation

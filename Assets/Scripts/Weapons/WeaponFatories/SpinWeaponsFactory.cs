@@ -6,14 +6,8 @@ using static WeaponEnums;
 
 public class SpinWeaponsFactory : WeaponFactory
 {
-    [Tooltip("List of spin weapon prefabs")]
+    // [Tooltip("List of spin weapon prefabs")]
     [SerializeField] private List<GameObject> spinWeaponPrefabs;
-
-    #region Events
-    // public delegate void StatsChange(WeaponProduct weaponProduct, Attributes attribute);
-    // public event StatsChange OnStatsChange;
-    // public UnityEvent<WeaponProduct , Attributes> OnStatsChange;
-    #endregion
 
     public override IWeaponProduct CreateWeaponProduct(WeaponProduct weaponProduct)
     {
@@ -50,11 +44,23 @@ public class SpinWeaponsFactory : WeaponFactory
         return null;
     }
 
+    #region Events
+    // public delegate void StatsChange(WeaponProduct weaponProduct, Attributes attribute);
+    // public event StatsChange OnStatsChange;
+    // public UnityEvent<WeaponProduct , Attributes> OnStatsChange;
+    #endregion
+
     public override void SetStatsWeaponEachFactory(WeaponProduct weaponProduct)
     {
         if(Stats.Count > 0)
         {
-            int lvl = GetWeaponLevel(weaponProduct) + 1;
+            int lvl = GetWeaponLevel(weaponProduct);
+            if(lvl < 0)
+            {
+                return;
+            }
+
+            lvl++;
             if(weaponProduct == WeaponProduct.LightArea)
             {
                 FindComponentsByType(weaponProduct)[0].UpdateStats(0, Stats[lvl]);

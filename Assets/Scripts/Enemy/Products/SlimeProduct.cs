@@ -83,4 +83,9 @@ public class SlimeProduct : EnemyTakeDamage<SlimeProduct>, IEnemyProduct
     {
         Debug.Log("Slime defends.");
     }
+
+    public void StopEnemy()
+    {
+        moveSpeed = 0f;
+    }
 }

@@ -85,6 +85,6 @@ public class Health : MonoBehaviour
 
         // Here the event send when an Oobject die
         Died.Invoke();
-        // gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

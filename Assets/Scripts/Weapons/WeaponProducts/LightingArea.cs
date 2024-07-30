@@ -20,10 +20,10 @@ public class LightingArea : WeaponProductBase, IWeaponProduct
     private List<IDamageable> enemies = new List<IDamageable>();
 
     private float damageCounter;
-    private float timeBetweenDamage = 1f; // Example value, set your desired time between damage
+    private float timeBetweenDamage = 1f; 
 
     private float hitCounter;
-    private float hitCooldown = 1f; // Set your desired cooldown duration here
+    private float hitCooldown = .5f; 
 
     public void Initialize()
     {

@@ -823,6 +823,7 @@ GameObject:
   - component: {fileID: 354371511}
   - component: {fileID: 354371515}
   - component: {fileID: 354371516}
+  - component: {fileID: 354371518}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -841,7 +842,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1646366641}
   - {fileID: 1559822329}
@@ -999,7 +1000,19 @@ MonoBehaviour:
   m_ResetOnStart: 0
   Died:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1923328559}
+        m_TargetAssemblyTypeName: EnemySpawner, Assembly-CSharp
+        m_MethodName: CheckPlayerDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   HealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1032,6 +1045,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &354371518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354371504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1cf86ebd9d70f47823fbd98f9dd71d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knifePool: {fileID: 2067178474}
 --- !u!1 &370350289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,6 +1208,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405364769}
   m_CullTransparentMesh: 1
+--- !u!1 &405898978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405898979}
+  - component: {fileID: 405898980}
+  m_Layer: 0
+  m_Name: MousePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405898979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405898978}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &405898980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405898978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f37c0722521fc4aab223ff98e5ccdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SpriteRenderer: {fileID: 0}
+  m_Offset: {x: 0, y: 0, z: 0}
+  m_MainCamera: {fileID: 417104258}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_ScreenDeadZone:
+    percentage:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
 --- !u!1 &410287266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,7 +1461,7 @@ Camera:
   near clip plane: 9.9
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 8
   m_Depth: -1
   m_CullingMask:
@@ -1422,7 +1505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce051cbb96102ce4a97ec39554f60999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.226
+  smoothTime: 0.25
   positionOffset: {x: 0, y: 0, z: -10}
   xLimit: {x: -67, y: 67}
   yLimit: {x: -43, y: 43}
@@ -1607,6 +1690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad5f47e529540e48908642ed9a92c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponProductPrefabs:
+  - {fileID: 1904622686988428872, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
+  - {fileID: 6470185105590653225, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
+  - {fileID: 1041656988623529016, guid: 99a3951f621ea4c448edfae56348aaa6, type: 3}
   WeaponType: 0
   Stats:
   - Speed: 0
@@ -1666,37 +1753,6 @@ MonoBehaviour:
     Amount: 6
     UpgradeText: 'Mythical '
   StatsLevel: 0
-  spinWeaponPrefabs:
-  - {fileID: 1904622686988428872, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
-  - {fileID: 6470185105590653225, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
-  - {fileID: 1041656988623529016, guid: 99a3951f621ea4c448edfae56348aaa6, type: 3}
-  OnStatsChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4473725200986738468, guid: 7117e7fca17237f41967f7343ca5ebef, type: 3}
-        m_TargetAssemblyTypeName: FireBall, Assembly-CSharp
-        m_MethodName: UpdateStats
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7569127259343306676, guid: eaee1c52b2191b24198aedd2431bc90d, type: 3}
-        m_TargetAssemblyTypeName: IceBall, Assembly-CSharp
-        m_MethodName: UpdateStats
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &604089691
 GameObject:
   m_ObjectHideFlags: 0
@@ -3369,7 +3425,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1883766549
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: -1714587360, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3392,8 +3448,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 354371505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4247,7 +4303,7 @@ GameObject:
   - component: {fileID: 1951941031}
   - component: {fileID: 1951941033}
   - component: {fileID: 1951941032}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4308,7 +4364,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -591866505
-  m_SortingLayer: -1
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -134245,7 +134301,7 @@ GameObject:
   - component: {fileID: 2067178473}
   - component: {fileID: 2067178474}
   m_Layer: 0
-  m_Name: ThrowWeapons
+  m_Name: ProjectileWeapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134278,12 +134334,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51eb5c0095325e34c8ac87e8a21dcf6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponProductPrefabs:
+  - {fileID: 6470185105590653225, guid: 7bea019f68cb090408edca0d0f445108, type: 3}
   WeaponType: 1
   Stats: []
   StatsLevel: 0
-  throwWeaponPrefabs:
-  - {fileID: 6470185105590653225, guid: 7bea019f68cb090408edca0d0f445108, type: 3}
-  - {fileID: 6470185105590653225, guid: a662b7980fe508948b67145c7ed22d59, type: 3}
+  poolParentTransform: {fileID: 2067178473}
+  KnifeWeaponPrefabs: {fileID: 7785377840235993616, guid: 7bea019f68cb090408edca0d0f445108, type: 3}
+  muzzleVelocity: 1500
+  muzzlePosition: {fileID: 2067178473}
+  cooldownWindow: 0.1
+  m_KnifeThrowed:
+    m_PersistentCalls:
+      m_Calls: []
+  collectionCheck: 1
+  defaultCapacity: 20
+  maxSize: 100
 --- !u!1 &2129518272
 GameObject:
   m_ObjectHideFlags: 0
@@ -134506,3 +134572,4 @@ SceneRoots:
   - {fileID: 1252708125}
   - {fileID: 1730732716}
   - {fileID: 747932974}
+  - {fileID: 405898979}

@@ -23,7 +23,8 @@ public class EnemySpawner : MonoBehaviour
 
     private Dictionary<System.Type, GameObject> enemyParentMap = new Dictionary<System.Type, GameObject>();
 
-    private List<GameObject> m_CreatedProduct = new();
+    private List<IEnemyProduct> m_CreatedProduct = new();
+    private bool isPlayerDead = false;
 
     void Start()
     {
@@ -42,39 +43,42 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        UpdateTimers();
+        if(!isPlayerDead)
+        {
+            UpdateTimers();
+        }
     }
 
     private void UpdateTimers()
     {
         if (isWaveActive)
-    {
-        waveTimer -= Time.deltaTime;
-        enemySpawnTimer -= Time.deltaTime;
+        {
+            waveTimer -= Time.deltaTime;
+            enemySpawnTimer -= Time.deltaTime;
 
-        if (waveTimer <= 0)
-        {
-            isWaveActive = false;
-            waveTimer = waveLength;
-            // Perform end of wave actions here if any
-        }
+            if (waveTimer <= 0)
+            {
+                isWaveActive = false;
+                waveTimer = waveLength;
+                // Perform end of wave actions here if any
+            }
 
-        if (enemySpawnTimer <= 0)
-        {
-            enemySpawnTimer = timeToSpawn;
-            SpawnObjectWithFactory();
+            if (enemySpawnTimer <= 0)
+            {
+                enemySpawnTimer = timeToSpawn;
+                SpawnObjectWithFactory();
+            }
         }
-    }
-    else
-    {
-        timeBetweenSpawnsWave -= Time.deltaTime;
-        if (timeBetweenSpawnsWave <= 0)
+        else
         {
-            isWaveActive = true;
-            timeBetweenSpawnsWave = waveLength; // Reset the wave length timer
-            // Perform start of wave actions here if any
+            timeBetweenSpawnsWave -= Time.deltaTime;
+            if (timeBetweenSpawnsWave <= 0)
+            {
+                isWaveActive = true;
+                timeBetweenSpawnsWave = waveLength; // Reset the wave length timer
+                // Perform start of wave actions here if any
+            }
         }
-    }
     }
 
     private void SpawnObjectWithFactory()
@@ -87,10 +91,9 @@ public class EnemySpawner : MonoBehaviour
             IEnemyProduct product = selectedFactory.GetProduct(randomPosition);
             if (product != null)
             {
+                m_CreatedProduct.Add(product);
                 if (product is Component component)
                 {
-                    m_CreatedProduct.Add(component.gameObject);
-
                     GameObject parent;
                     if (enemyParentMap.TryGetValue(product.GetType(), out parent))
                     {
@@ -109,6 +112,15 @@ public class EnemySpawner : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public void CheckPlayerDead()
+    {
+        isPlayerDead = true;
+        foreach(IEnemyProduct enemy in m_CreatedProduct)
+        {
+            enemy.StopEnemy();
         }
     }
 }

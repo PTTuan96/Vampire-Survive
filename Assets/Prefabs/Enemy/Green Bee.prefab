@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1658134367
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 1541938654, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -224,6 +224,6 @@ MonoBehaviour:
   expToGive: 10
   m_ProductName: GreenBee
   m_Rigidbody: {fileID: 8699642074269188413}
-  moveSpeed: 20
+  moveSpeed: 0
   m_DamageValue: 13
   hitWaitTime: 1

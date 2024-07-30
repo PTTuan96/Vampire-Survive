@@ -7,6 +7,11 @@ public abstract class EnemyFactory : MonoBehaviour// Health
     // Abstract method to get a product instance.
     public abstract IEnemyProduct GetProduct(Vector3 position);
 
+    public void StopEnemy()
+    {
+        
+    }
+
     // Shared method with all factories.
     public string GetLog(IEnemyProduct product)
     {

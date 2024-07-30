@@ -12,6 +12,7 @@ public interface IEnemyProduct
 
     // customize this for each concrete product
     // public void Initialize(Transform playerTranform);
+    void StopEnemy();
 
     void MoveTowardsPlayer();
 

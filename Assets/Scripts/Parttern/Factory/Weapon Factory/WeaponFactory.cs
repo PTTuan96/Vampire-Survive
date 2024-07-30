@@ -8,6 +8,9 @@ using static WeaponEnums;
 
 public abstract class WeaponFactory : MonoBehaviour
 {
+    // [Tooltip("List of throw weapon prefabs")]
+    // [SerializeField] private List<GameObject> weaponProductPrefabs;
+
     protected UIController uIController;
 
     [SerializeField] public WeaponType WeaponType; 
@@ -60,13 +63,13 @@ public abstract class WeaponFactory : MonoBehaviour
         if (weaponLevels.TryGetValue(weaponProduct, out int currentLevel))
         {
             // Print or use the current level if needed
-            Debug.Log("Current Level of " + weaponProduct + ": " + currentLevel);
+            // Debug.Log("Current Level of " + weaponProduct + ": " + currentLevel);
 
             // Update the level
             weaponLevels[weaponProduct] = newLevel;
 
             // Print or use the updated level if needed
-            Debug.Log("Updated Level of " + weaponProduct + ": " + newLevel);
+            // Debug.Log("Updated Level of " + weaponProduct + ": " + newLevel);
         }
         else
         {
