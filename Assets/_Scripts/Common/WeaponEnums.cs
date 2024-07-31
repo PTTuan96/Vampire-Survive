@@ -32,6 +32,7 @@ public static class WeaponEnums
     // Dictionary to map WeaponProduct to WeaponType
     private static Dictionary<WeaponProduct, WeaponType> weaponProductToTypeMapping;
     private static Dictionary<WeaponProduct, Type> weaponProductToComponentMapping;
+    public static Dictionary<WeaponProduct, (GameObject prefab, Type componentType)> weaponProductMappings;
 
     static void Start()
     {
@@ -55,6 +56,18 @@ public static class WeaponEnums
         };
     }
 
+    public static void InitializeWeaponComponentMappings(List<GameObject> prefabs)
+    {
+        // Initialize the dictionary with enum-to-(prefab, component type) mappings
+        weaponProductMappings = new Dictionary<WeaponProduct, (GameObject, System.Type)>
+        {
+            { WeaponProduct.FireBall, (prefabs.Find(p => p.GetComponent<FireBall>() != null), typeof(FireBall)) },
+            { WeaponProduct.IceBall, (prefabs.Find(p => p.GetComponent<IceBall>() != null), typeof(IceBall)) },
+            { WeaponProduct.Knife, (prefabs.Find(p => p.GetComponent<Knife>() != null), typeof(Knife)) },
+            { WeaponProduct.Sword, (prefabs.Find(p => p.GetComponent<Sword>() != null), typeof(Sword)) },
+            { WeaponProduct.LightArea, (prefabs.Find(p => p.GetComponent<LightingArea>() != null), typeof(LightingArea)) }
+        };
+    }
     
     // Method to get the WeaponType for a given WeaponProduct
     public static WeaponType GetWeaponType(WeaponProduct product)

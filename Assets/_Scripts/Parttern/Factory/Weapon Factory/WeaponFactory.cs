@@ -8,8 +8,8 @@ using static WeaponEnums;
 
 public abstract class WeaponFactory : MonoBehaviour
 {
-    // [Tooltip("List of throw weapon prefabs")]
-    // [SerializeField] private List<GameObject> weaponProductPrefabs;
+    [Tooltip("List of throw weapon prefabs")]
+    [SerializeField] private List<GameObject> weaponProductPrefabs;
 
     protected UIController uIController;
 
@@ -26,7 +26,40 @@ public abstract class WeaponFactory : MonoBehaviour
     }
 
     // Abstract method to get a product instance.
-    public abstract IWeaponProduct CreateWeaponProduct(WeaponProduct weaponProduct);
+    public IWeaponProduct CreateWeaponProduct(WeaponProduct weaponProduct)
+    {
+        // Iterate through all weapon prefabs
+        foreach (GameObject prefab in weaponProductPrefabs)
+        {
+            // Check if the prefab has an IWeaponProduct component
+            if (prefab.TryGetComponent<IWeaponProduct>(out var component))
+            {
+                // Check if the component matches the specified weaponProduct
+                if (component.IsSelectedWeapon(weaponProduct))
+                {
+                    // Instantiate the prefab at the specified position
+                    GameObject productInstance = Instantiate(prefab, transform.position, Quaternion.identity);
+                    
+                    // Check if the instantiated product has an IWeaponProduct component
+                    if (productInstance.TryGetComponent<IWeaponProduct>(out var createdProduct))
+                    {
+                        // Add the weapon to the factory's collection (if applicable)
+                        AddWeapon(createdProduct.HolderWeaponName, productInstance);
+                        // productInstance.transform.SetParent(transform, true);
+
+                        // Initialize the created weapon product
+                        createdProduct.Initialize();
+                        
+                        // Return the created weapon product
+                        return createdProduct;
+                    }
+                }
+            }
+        }
+
+        // Return null if no matching weapon was found
+        return null;
+    }
 
     public abstract void SetStatsWeaponEachFactory(WeaponProduct weaponProduct);
 

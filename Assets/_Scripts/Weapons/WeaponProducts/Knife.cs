@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using static WeaponEnums;
 
-public class Knife : WeaponProductBase, IWeaponProduct, IPooledWeapon
+public class Knife : WeaponProductBase, IWeaponProduct
 {
     [SerializeField] private string p_HolderName = "Knifes";
     [SerializeField] private string p_ProductName = "Knife";
@@ -34,9 +34,8 @@ public class Knife : WeaponProductBase, IWeaponProduct, IPooledWeapon
         if(collider2D.CompareTag("Enemy"))
         {
             // Deactivate immediately on collision
-            StopCoroutine(DeactivateRoutine(timeoutDelay));
-            rb.velocity = Vector2.zero;
-            rb.angularVelocity = 0f;
+            // StopCoroutine(DeactivateRoutine(timeoutDelay));
+
             // Release the projectile back to the pool
             objectPool?.Release(this);
 
@@ -55,40 +54,61 @@ public class Knife : WeaponProductBase, IWeaponProduct, IPooledWeapon
 
 
 
-
-    [SerializeField] private float timeoutDelay = 3f;
-
-    public IObjectPool<IPooledWeapon> Pool { get; set; }
-
     [SerializeField] private Rigidbody2D rb;
 
-    public void Deactivate()
+    [Tooltip("Projectile force")]
+    [SerializeField] private float muzzleVelocity = 1500f;
+
+    private IObjectPool<Knife> objectPool;
+    public IObjectPool<Knife> ObjectPool
     {
-        StartCoroutine(DeactivateRoutine(timeoutDelay));
+        get => objectPool;
+        set => objectPool = value;
     }
 
-    private void OnEnable()
-    {
-        // Start the timeout coroutine when the knife is enabled
-        StartCoroutine(DeactivateRoutine(timeoutDelay));
-    }
+    [SerializeField] private float throwDelay = 0.5f; // Delay before the knife is thrown
+    [SerializeField] private float lifeTime = 5f;      // Time before the knife is deactivated
 
-    IEnumerator DeactivateRoutine(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        // Reset the moving Rigidbody
-        rb = GetComponent<Rigidbody2D>();
-        // rBody.linearVelocity = new Vector3(0f, 0f, 0f);
-        rb.angularVelocity = 0f;
-
-        // Check if objectPool is not null before releasing
-        // Release the projectile back to the pool
-        objectPool?.Release(this);
-    }
+    private bool isThrown = false;
 
     public void Launch(Vector3 direction)
     {
-        rb.velocity = direction * 10f; //weaponAttribute.Speed;
+        if (isThrown) return; // Prevent re-launching if already thrown
+
+        StartCoroutine(LaunchWithDelay(direction));
+    }
+
+    private IEnumerator LaunchWithDelay(Vector3 direction)
+    {
+        isThrown = true;
+
+        yield return new WaitForSeconds(throwDelay);
+
+        // Detach knife from its parent to ensure it doesn’t follow parent’s position
+        Transform originalParent = transform.parent;
+        transform.SetParent(null);
+
+        // Launch the knife
+        StartCoroutine(MoveKnife(direction));
+
+        // Optionally, reattach the knife to its parent if needed
+        // transform.SetParent(originalParent);
+    }
+
+    private IEnumerator MoveKnife(Vector3 direction)
+    {
+        Vector3 startPosition = direction;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < lifeTime)
+        {
+            float step =  Time.deltaTime * 10; //  weaponAttribute.speed
+            transform.position += direction.normalized * step;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Deactivate or return the knife to the pool after the lifetime
+        gameObject.SetActive(false); // Or use ObjectPool.Release(this) if using an object pool
     }
 }

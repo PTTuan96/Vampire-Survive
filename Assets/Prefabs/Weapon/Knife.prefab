@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3157426134904353890}
   - component: {fileID: 5475367417017102760}
   - component: {fileID: -8981929031884057459}
-  - component: {fileID: 3889500753171099643}
   - component: {fileID: 7785377840235993616}
   m_Layer: 0
   m_Name: Knife
@@ -73,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -16581979
-  m_SortingLayer: 5
+  m_SortingLayerID: -957471013
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -1283994490, guid: 99f10abcf979e904b883da0c6922d74f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,33 +131,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.52831304, y: 0.51949644}
   m_EdgeRadius: 0
---- !u!50 &3889500753171099643
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6470185105590653225}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &7785377840235993616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,5 +151,5 @@ MonoBehaviour:
   p_HolderName: Knifes
   p_ProductName: Knife
   p_WeaponTypeSelected: 2
-  timeoutDelay: 3
-  rb: {fileID: 3889500753171099643}
+  rb: {fileID: 0}
+  muzzleVelocity: 1500

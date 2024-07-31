@@ -9,7 +9,7 @@ public class Attributes
     public float scale;
     public float TimeBetweenAttacks;
     public float Duration;
-    public float Amount;
+    public int Amount;
 
     public string UpgradeText;
 }
