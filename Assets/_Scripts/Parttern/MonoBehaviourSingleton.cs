@@ -26,7 +26,6 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour
 	}
 }
 
-
 public class MonoBehaviourSingletonPersistent<T> : MonoBehaviour
 	where T : Component
 {
